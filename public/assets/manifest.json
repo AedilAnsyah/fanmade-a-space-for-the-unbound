@@ -1,0 +1,466 @@
+[
+  {
+    "id": "group_01_trio",
+    "category": "images/group",
+    "filename": "group_01_trio.webp",
+    "webPath": "/assets/images/group/group_01_trio.webp",
+    "sizeKb": 61.0,
+    "type": "webp_image",
+    "sourceUrl": "https://wallpaperaccess.com/full/29447338.jpg"
+  },
+  {
+    "id": "group_02_cast_a",
+    "category": "images/group",
+    "filename": "group_02_cast_a.webp",
+    "webPath": "/assets/images/group/group_02_cast_a.webp",
+    "sizeKb": 121.2,
+    "type": "webp_image",
+    "sourceUrl": "https://wallpaperaccess.com/full/29447353.jpg"
+  },
+  {
+    "id": "group_02_cast_b",
+    "category": "images/group",
+    "filename": "group_02_cast_b.webp",
+    "webPath": "/assets/images/group/group_02_cast_b.webp",
+    "sizeKb": 142.5,
+    "type": "webp_image",
+    "sourceUrl": "https://wallpaperaccess.com/full/29447333.jpg"
+  },
+  {
+    "id": "group_02_cast_c",
+    "category": "images/group",
+    "filename": "group_02_cast_c.webp",
+    "webPath": "/assets/images/group/group_02_cast_c.webp",
+    "sizeKb": 85.8,
+    "type": "webp_image",
+    "sourceUrl": "https://wallpaperaccess.com/full/29447347.jpg"
+  },
+  {
+    "id": "group_03_trio_igdb",
+    "category": "images/group",
+    "filename": "group_03_trio_igdb.webp",
+    "webPath": "/assets/images/group/group_03_trio_igdb.webp",
+    "sizeKb": 42.0,
+    "type": "webp_image",
+    "sourceUrl": "https://images.igdb.com/igdb/image/upload/t_720p/arjw5.webp"
+  },
+  {
+    "id": "raya_01_steam",
+    "category": "images/characters",
+    "filename": "raya_01_steam.webp",
+    "webPath": "/assets/images/characters/raya_01_steam.webp",
+    "sizeKb": 21.2,
+    "type": "webp_image",
+    "sourceUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1201270/ss_07a0aaf3598903b39589e0484b2f87330cf72b19.1920x1080.jpg?t=1783577808"
+  },
+  {
+    "id": "raya_02_artstation",
+    "category": "images/characters",
+    "filename": "raya_02_artstation.webp",
+    "webPath": "/assets/images/characters/raya_02_artstation.webp",
+    "sizeKb": 48.8,
+    "type": "webp_image",
+    "sourceUrl": "https://cdnb.artstation.com/p/assets/images/images/003/158/675/large/dimas-novan-2016-05-21-a-space-santai-work.jpg?1470416004"
+  },
+  {
+    "id": "nirmala_01_senja",
+    "category": "images/characters",
+    "filename": "nirmala_01_senja.webp",
+    "webPath": "/assets/images/characters/nirmala_01_senja.webp",
+    "sizeKb": 48.9,
+    "type": "webp_image",
+    "sourceUrl": "https://wallpaperaccess.com/full/29447348.jpg"
+  },
+  {
+    "id": "nirmala_02_jembatan",
+    "category": "images/characters",
+    "filename": "nirmala_02_jembatan.webp",
+    "webPath": "/assets/images/characters/nirmala_02_jembatan.webp",
+    "sizeKb": 91.5,
+    "type": "webp_image",
+    "sourceUrl": "https://wallpaperaccess.com/full/29447363.png"
+  },
+  {
+    "id": "raya_03_power",
+    "category": "images/characters",
+    "filename": "raya_03_power.webp",
+    "webPath": "/assets/images/characters/raya_03_power.webp",
+    "sizeKb": 51.7,
+    "type": "webp_image",
+    "sourceUrl": "https://images.steamusercontent.com/ugc/2056492292345981129/9632FD3DB2888132ADEF0B9F9DCC7A02500EC406/?imw=1920&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
+  },
+  {
+    "id": "atma_01_jatuh",
+    "category": "images/characters",
+    "filename": "atma_01_jatuh.webp",
+    "webPath": "/assets/images/characters/atma_01_jatuh.webp",
+    "sizeKb": 94.4,
+    "type": "webp_image",
+    "sourceUrl": "https://wallpaperaccess.com/full/29447354.jpg"
+  },
+  {
+    "id": "atma_02_senyum",
+    "category": "images/characters",
+    "filename": "atma_02_senyum.webp",
+    "webPath": "/assets/images/characters/atma_02_senyum.webp",
+    "sizeKb": 59.5,
+    "type": "webp_image",
+    "sourceUrl": "https://wallpaperaccess.com/full/29447382.jpg"
+  },
+  {
+    "id": "atma_03_bubblegum",
+    "category": "images/characters",
+    "filename": "atma_03_bubblegum.webp",
+    "webPath": "/assets/images/characters/atma_03_bubblegum.webp",
+    "sizeKb": 37.4,
+    "type": "webp_image",
+    "sourceUrl": "https://i.pinimg.com/1200x/65/2d/50/652d50ac3110e4752f1f46c958450531.jpg"
+  },
+  {
+    "id": "atma_04_jembatan_danau",
+    "category": "images/characters",
+    "filename": "atma_04_jembatan_danau.webp",
+    "webPath": "/assets/images/characters/atma_04_jembatan_danau.webp",
+    "sizeKb": 78.4,
+    "type": "webp_image",
+    "sourceUrl": "https://wallpapercave.com/wp/wp11919629.png"
+  },
+  {
+    "id": "duo_01_atma_raya",
+    "category": "images/characters",
+    "filename": "duo_01_atma_raya.webp",
+    "webPath": "/assets/images/characters/duo_01_atma_raya.webp",
+    "sizeKb": 59.0,
+    "type": "webp_image",
+    "sourceUrl": "https://wallpaperaccess.com/full/29447335.jpg"
+  },
+  {
+    "id": "duo_02_atma_raya",
+    "category": "images/characters",
+    "filename": "duo_02_atma_raya.webp",
+    "webPath": "/assets/images/characters/duo_02_atma_raya.webp",
+    "sizeKb": 70.9,
+    "type": "webp_image",
+    "sourceUrl": "https://wallpaperaccess.com/full/29447320.jpg"
+  },
+  {
+    "id": "duo_03_atma_nirmala",
+    "category": "images/characters",
+    "filename": "duo_03_atma_nirmala.webp",
+    "webPath": "/assets/images/characters/duo_03_atma_nirmala.webp",
+    "sizeKb": 26.2,
+    "originalKb": 43.7,
+    "type": "webp_image",
+    "sourceUrl": "https://i.pinimg.com/736x/08/c4/88/08c488e8f1162f77a0fd54be5b6ee752.jpg"
+  },
+  {
+    "id": "duo_04_atma_nirmala",
+    "category": "images/characters",
+    "filename": "duo_04_atma_nirmala.webp",
+    "webPath": "/assets/images/characters/duo_04_atma_nirmala.webp",
+    "sizeKb": 70.8,
+    "originalKb": 101.1,
+    "type": "webp_image",
+    "sourceUrl": "https://i.pinimg.com/1200x/13/06/5d/13065d8ad741c1ce5692d2c5222fea8f.jpg"
+  },
+  {
+    "id": "duo_05_atma_raya",
+    "category": "images/characters",
+    "filename": "duo_05_atma_raya.webp",
+    "webPath": "/assets/images/characters/duo_05_atma_raya.webp",
+    "sizeKb": 108.5,
+    "originalKb": 131.8,
+    "type": "webp_image",
+    "sourceUrl": "https://wallpaperaccess.com/full/29447336.png"
+  },
+  {
+    "id": "scene_01_dark_item",
+    "category": "images/scenes",
+    "filename": "scene_01_dark_item.webp",
+    "webPath": "/assets/images/scenes/scene_01_dark_item.webp",
+    "sizeKb": 86.0,
+    "originalKb": 283.1,
+    "type": "webp_image",
+    "sourceUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1201270/ss_ca725a56d2202a22b0bae768a44a9238b7596970.1920x1080.jpg?t=1783577808"
+  },
+  {
+    "id": "scene_02_forest_dialog",
+    "category": "images/scenes",
+    "filename": "scene_02_forest_dialog.webp",
+    "webPath": "/assets/images/scenes/scene_02_forest_dialog.webp",
+    "sizeKb": 128.2,
+    "originalKb": 369.5,
+    "type": "webp_image",
+    "sourceUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1201270/ss_494bd4858dc7a71a33e32dde02af44b5f640c0cd.1920x1080.jpg?t=1783577808"
+  },
+  {
+    "id": "scene_03_combat",
+    "category": "images/scenes",
+    "filename": "scene_03_combat.webp",
+    "webPath": "/assets/images/scenes/scene_03_combat.webp",
+    "sizeKb": 140.0,
+    "originalKb": 243.9,
+    "type": "webp_image",
+    "sourceUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1201270/ss_fece3cd88e9fbeadc92fd36771d8ce84e1e460e9.1920x1080.jpg?t=1783577808"
+  },
+  {
+    "id": "scene_04_room_atma",
+    "category": "images/scenes",
+    "filename": "scene_04_room_atma.webp",
+    "webPath": "/assets/images/scenes/scene_04_room_atma.webp",
+    "sizeKb": 45.8,
+    "originalKb": 158.1,
+    "type": "webp_image",
+    "sourceUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1201270/ss_57524c5480ca71d746f61cd0c10568f8e55f0db7.1920x1080.jpg?t=1783577808"
+  },
+  {
+    "id": "scene_05_fire_room",
+    "category": "images/scenes",
+    "filename": "scene_05_fire_room.webp",
+    "webPath": "/assets/images/scenes/scene_05_fire_room.webp",
+    "sizeKb": 66.0,
+    "originalKb": 123.1,
+    "type": "webp_image",
+    "sourceUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1201270/ss_3c3807fb37fb91db176c8c6a5c90e188e7d7314c.1920x1080.jpg?t=1783577808"
+  },
+  {
+    "id": "scene_06_forest_peek",
+    "category": "images/scenes",
+    "filename": "scene_06_forest_peek.webp",
+    "webPath": "/assets/images/scenes/scene_06_forest_peek.webp",
+    "sizeKb": 83.7,
+    "originalKb": 263.4,
+    "type": "webp_image",
+    "sourceUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1201270/ss_13e5138f96418a2e703238348e45a18dbdcd8a01.1920x1080.jpg?t=1783577808"
+  },
+  {
+    "id": "scene_07_neighborhood",
+    "category": "images/scenes",
+    "filename": "scene_07_neighborhood.webp",
+    "webPath": "/assets/images/scenes/scene_07_neighborhood.webp",
+    "sizeKb": 139.7,
+    "originalKb": 394.4,
+    "type": "webp_image",
+    "sourceUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1201270/ss_f5cc3f084909ebd610dc4172a8afce857793ae6b.1920x1080.jpg?t=1783577808"
+  },
+  {
+    "id": "scene_08_school",
+    "category": "images/scenes",
+    "filename": "scene_08_school.webp",
+    "webPath": "/assets/images/scenes/scene_08_school.webp",
+    "sizeKb": 54.1,
+    "originalKb": 208.8,
+    "type": "webp_image",
+    "sourceUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1201270/ss_d33d6ca8bd2d5091d373f26e2d336fe9a4742e1e.1920x1080.jpg?t=1783577808"
+  },
+  {
+    "id": "scene_09_construction",
+    "category": "images/scenes",
+    "filename": "scene_09_construction.webp",
+    "webPath": "/assets/images/scenes/scene_09_construction.webp",
+    "sizeKb": 95.2,
+    "originalKb": 98.8,
+    "type": "webp_image",
+    "sourceUrl": "https://images.igdb.com/igdb/image/upload/t_720p/sc7o8g.webp"
+  },
+  {
+    "id": "scene_10_monster_cat",
+    "category": "images/scenes",
+    "filename": "scene_10_monster_cat.webp",
+    "webPath": "/assets/images/scenes/scene_10_monster_cat.webp",
+    "sizeKb": 98.1,
+    "originalKb": 103.3,
+    "type": "webp_image",
+    "sourceUrl": "https://images.igdb.com/igdb/image/upload/t_720p/sc7o8b.webp"
+  },
+  {
+    "id": "scene_11_lake_joy",
+    "category": "images/scenes",
+    "filename": "scene_11_lake_joy.webp",
+    "webPath": "/assets/images/scenes/scene_11_lake_joy.webp",
+    "sizeKb": 46.3,
+    "originalKb": 46.9,
+    "type": "webp_image",
+    "sourceUrl": "https://i0.wp.com/www.togeproductions.com/wp-content/uploads/2020/10/sCR-4.jpg?resize=980%2C551&ssl=1"
+  },
+  {
+    "id": "scene_12_forest_man",
+    "category": "images/scenes",
+    "filename": "scene_12_forest_man.webp",
+    "webPath": "/assets/images/scenes/scene_12_forest_man.webp",
+    "sizeKb": 112.9,
+    "originalKb": 153.3,
+    "type": "webp_image",
+    "sourceUrl": "https://i.pinimg.com/1200x/58/e9/3c/58e93c102de0b2f0326c77bf7c011fb6.jpg"
+  },
+  {
+    "id": "scene_13_header_cover",
+    "category": "images/scenes",
+    "filename": "scene_13_header_cover.webp",
+    "webPath": "/assets/images/scenes/scene_13_header_cover.webp",
+    "sizeKb": 25.2,
+    "originalKb": 53.5,
+    "type": "webp_image",
+    "sourceUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1201270/header.jpg?t=1783577808"
+  },
+  {
+    "id": "scene_14_bridge",
+    "category": "images/scenes",
+    "filename": "scene_14_bridge.webp",
+    "webPath": "/assets/images/scenes/scene_14_bridge.webp",
+    "sizeKb": 135.7,
+    "originalKb": 236.1,
+    "type": "webp_image",
+    "sourceUrl": "https://wallpapercave.com/wp/wp11919692.png"
+  },
+  {
+    "id": "gif_01_cinema",
+    "category": "gifs",
+    "filename": "gif_01_cinema.gif",
+    "webPath": "/assets/gifs/gif_01_cinema.gif",
+    "sizeKb": 115.1,
+    "originalKb": 115.1,
+    "type": "gif",
+    "sourceUrl": "https://i0.wp.com/www.togeproductions.com/wp-content/uploads/2020/10/Atma-and-Raya-Cinema480x270.gif?ssl=1"
+  },
+  {
+    "id": "gif_02_cat_wonderland",
+    "category": "gifs",
+    "filename": "gif_02_cat_wonderland.gif",
+    "webPath": "/assets/gifs/gif_02_cat_wonderland.gif",
+    "sizeKb": 67.4,
+    "originalKb": 67.4,
+    "type": "gif",
+    "sourceUrl": "https://i0.wp.com/www.togeproductions.com/wp-content/uploads/2020/10/Atma-in-Cat-Wonderland480x270.gif?ssl=1"
+  },
+  {
+    "id": "video_01_forest_talk",
+    "category": "videos",
+    "filename": "video_01_forest_talk.webm",
+    "webPath": "/assets/videos/video_01_forest_talk.webm",
+    "sizeKb": 1045.1,
+    "originalKb": 1045.1,
+    "type": "video",
+    "sourceUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1201270/extras/e483eedbebfe2638b285248c6c60e447.webm?t=1783577808"
+  },
+  {
+    "id": "gif_03_newspaper_park",
+    "category": "gifs",
+    "filename": "gif_03_newspaper_park.gif",
+    "webPath": "/assets/gifs/gif_03_newspaper_park.gif",
+    "sizeKb": 11.0,
+    "originalKb": 11.0,
+    "type": "gif",
+    "sourceUrl": "https://i0.wp.com/www.togeproductions.com/wp-content/uploads/2020/10/SOL-newspaper_park.gif?resize=432%2C372&ssl=1"
+  },
+  {
+    "id": "gif_04_nirmala_wind",
+    "category": "gifs",
+    "filename": "gif_04_nirmala_wind.webp",
+    "webPath": "/assets/gifs/gif_04_nirmala_wind.webp",
+    "sizeKb": 604.3,
+    "originalKb": 2579.5,
+    "type": "webp_image",
+    "sourceUrl": "https://images.steamusercontent.com/ugc/2049736193954814891/C4B9E01EBF881FB0C4C5D909E9D1E5BFB9DF8182/?imw=1920&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
+  },
+  {
+    "id": "gif_05_raya_bridge",
+    "category": "gifs",
+    "filename": "gif_05_raya_bridge.webp",
+    "webPath": "/assets/gifs/gif_05_raya_bridge.webp",
+    "sizeKb": 3436.7,
+    "originalKb": 431.7,
+    "type": "webp_image",
+    "sourceUrl": "https://images.steamusercontent.com/ugc/11191958273035140512/760BEDCFB732C144200AAAFC3FA03F5924BA9311/?imw=1920&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
+  },
+  {
+    "id": "gif_06_kentongan",
+    "category": "gifs",
+    "filename": "gif_06_kentongan.gif",
+    "webPath": "/assets/gifs/gif_06_kentongan.gif",
+    "sizeKb": 5.6,
+    "originalKb": 5.6,
+    "type": "gif",
+    "sourceUrl": "https://media1.tenor.com/m/eFNRxbt1XUAAAAAd/hehe-a-space-for-the-unbound.gif"
+  },
+  {
+    "id": "gif_07_nirmala_laugh",
+    "category": "gifs",
+    "filename": "gif_07_nirmala_laugh.gif",
+    "webPath": "/assets/gifs/gif_07_nirmala_laugh.gif",
+    "sizeKb": 5.6,
+    "originalKb": 5.6,
+    "type": "gif",
+    "sourceUrl": "https://media1.tenor.com/m/B_G1EWZlmxYAAAAC/a-space-for-the-unbound-nirmala.gif"
+  },
+  {
+    "id": "trailer_01_launch",
+    "title": "Official Launch Trailer",
+    "category": "videos",
+    "filename": "trailer_01_launch.mp4",
+    "webPath": "/assets/videos/trailer_01_launch.mp4",
+    "sizeKb": 3052.9,
+    "type": "video",
+    "sourceUrl": "https://youtu.be/8yGznOkpIGM"
+  },
+  {
+    "id": "trailer_02_release_date",
+    "title": "Release Date Announcement",
+    "category": "videos",
+    "filename": "trailer_02_release_date.mp4",
+    "webPath": "/assets/videos/trailer_02_release_date.mp4",
+    "sizeKb": 3228.6,
+    "type": "video",
+    "sourceUrl": "https://youtu.be/_4yvH1x0Nlo"
+  },
+  {
+    "id": "trailer_03_prologue",
+    "title": "Prologue Trailer",
+    "category": "videos",
+    "filename": "trailer_03_prologue.mp4",
+    "webPath": "/assets/videos/trailer_03_prologue.mp4",
+    "sizeKb": 2703.3,
+    "type": "video",
+    "sourceUrl": "https://youtu.be/QU50IxsWTn4"
+  },
+  {
+    "id": "trailer_04_nintendo_indie",
+    "title": "Nintendo Indie World Trailer",
+    "category": "videos",
+    "filename": "trailer_04_nintendo_indie.mp4",
+    "webPath": "/assets/videos/trailer_04_nintendo_indie.mp4",
+    "sizeKb": 3504.5,
+    "type": "video",
+    "sourceUrl": "https://youtu.be/eoUJi7aX9EQ"
+  },
+  {
+    "id": "trailer_05_gameplay",
+    "title": "Official Gameplay Trailer",
+    "category": "videos",
+    "filename": "trailer_05_gameplay.mp4",
+    "webPath": "/assets/videos/trailer_05_gameplay.mp4",
+    "sizeKb": 2699.2,
+    "type": "video",
+    "sourceUrl": "https://youtu.be/60M43B_-GwQ"
+  },
+  {
+    "id": "trailer_06_animated_teaser",
+    "title": "Animated Teaser Trailer",
+    "category": "videos",
+    "filename": "trailer_06_animated_teaser.mp4",
+    "webPath": "/assets/videos/trailer_06_animated_teaser.mp4",
+    "sizeKb": 3426.4,
+    "type": "video",
+    "sourceUrl": "https://youtu.be/RH89oUUrXWU"
+  },
+  {
+    "id": "trailer_07_music_story",
+    "title": "Music & Story Spotlight",
+    "category": "videos",
+    "filename": "trailer_07_music_story.mp4",
+    "webPath": "/assets/videos/trailer_07_music_story.mp4",
+    "sizeKb": 8577.8,
+    "type": "video",
+    "sourceUrl": "https://youtu.be/TXv3dqZQlvs"
+  }
+]
