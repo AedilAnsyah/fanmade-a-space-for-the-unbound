@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import RetroImage from "@/components/ui/RetroImage";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Starfield from "@/components/effects/Starfield";
 import Button from "@/components/ui/Button";
 import PixelIcon from "@/components/ui/PixelIcon";
+import AmbientPlayer from "@/components/ui/AmbientPlayer";
 import { HERO_DATA } from "@/lib/constants";
 import { GAME_ASSETS } from "@/lib/assets";
-import { createCassetteTapeAmbience, CassetteAmbienceController } from "@/lib/audio";
 
 interface HeroProps {
   onOpenTrailer: () => void;
@@ -16,8 +16,6 @@ interface HeroProps {
 
 export default function Hero({ onOpenTrailer }: HeroProps) {
   const [currentTime, setCurrentTime] = useState("19:45:00 WIB");
-  const [isPlayingAmbiance, setIsPlayingAmbiance] = useState(false);
-  const ambienceControllerRef = useRef<CassetteAmbienceController | null>(null);
 
   // Clock tick
   useEffect(() => {
@@ -55,32 +53,6 @@ export default function Hero({ onOpenTrailer }: HeroProps) {
     mouseY.set(0);
   };
 
-  // Cleanup audio controller on unmount
-  useEffect(() => {
-    return () => {
-      if (ambienceControllerRef.current) {
-        ambienceControllerRef.current.stop();
-      }
-    };
-  }, []);
-
-  // Web Audio API: Gerimis & Lo-Fi Vinyl Ambiance Synthesizer
-  const toggleAmbiance = () => {
-    if (!isPlayingAmbiance) {
-      const controller = createCassetteTapeAmbience();
-      if (controller.isPlaying()) {
-        ambienceControllerRef.current = controller;
-        setIsPlayingAmbiance(true);
-      }
-    } else {
-      if (ambienceControllerRef.current) {
-        ambienceControllerRef.current.stop();
-        ambienceControllerRef.current = null;
-      }
-      setIsPlayingAmbiance(false);
-    }
-  };
-
   return (
     <section
       id="home"
@@ -111,23 +83,10 @@ export default function Hero({ onOpenTrailer }: HeroProps) {
           </div>
 
           <div className="flex items-center gap-4">
-            {/* Audio Walkman Toggle */}
-            <button
-              onClick={toggleAmbiance}
-              data-testid="toggle-ambience"
-              aria-label={isPlayingAmbiance ? "Matikan suara ambiens kota Loka" : "Nyalakan suara ambiens kota Loka"}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] transition-all border ${
-                isPlayingAmbiance
-                  ? "bg-brand-accent/20 border-brand-accent text-brand-accent shadow-[0_0_10px_rgba(127,231,216,0.4)] animate-pulse"
-                  : "bg-white/5 border-white/10 text-text-muted hover:text-text-main"
-              }`}
-              title="Suara Gerimis & Ambiens Kota Loka"
-            >
-              <PixelIcon name={isPlayingAmbiance ? "volume_on" : "volume_off"} size={14} />
-              <span>{isPlayingAmbiance ? "Ambiens: Play" : "Ambiens: Mute"}</span>
-            </button>
+            {/* Diegetic Mini Walkman Sony TPS-L2 Player */}
+            <AmbientPlayer />
 
-            <span className="hidden md:flex items-center gap-1.5 text-[11px] text-dive-accent">
+            <span className="hidden xl:flex items-center gap-1.5 text-[11px] text-dive-accent">
               <PixelIcon name="battery" size={14} color="dive" />
               <span>DIVE PWR: [■■■] 100%</span>
             </span>
@@ -262,6 +221,28 @@ export default function Hero({ onOpenTrailer }: HeroProps) {
             {/* Polaroid Memory 1: Atma & Raya */}
             <div className="relative z-20 polaroid-frame shadow-2xl rounded-sm">
               <div className="washi-tape -top-2 left-6" />
+
+              {/* Stiker Label Kaset Fisik (Maxell/Sony 90-an Style) */}
+              <div
+                data-testid="cassette-label-sticker"
+                className="absolute -top-3.5 right-2 z-30 transform rotate-[2.5deg] shadow-[2px_2px_0_0_rgba(0,0,0,0.2)] bg-[#FAF6EE] border border-[#D5C9B3] px-2.5 py-1 rounded-2xs flex items-center gap-2"
+              >
+                {/* Bekas sobekan selotip kertas di sudut atas stiker */}
+                <div className="absolute -top-1.5 -left-2 w-5 h-3 bg-[#FDE68A]/85 border border-[#D97706]/40 rotate-[-15deg] pointer-events-none" />
+
+                {/* Garis merah/biru tipis khas stiker kaset Maxell/Sony jadul */}
+                <div className="w-1 self-stretch bg-gradient-to-b from-red-500 via-blue-500 to-transparent rounded-full opacity-70" />
+
+                <div className="flex flex-col text-left">
+                  <span className="font-mono text-[7px] text-slate-500 uppercase tracking-widest leading-none">
+                    MAXELL UR-90 • SIDE A
+                  </span>
+                  <p className="font-handwriting text-sm sm:text-base text-slate-800 font-bold leading-tight mt-0.5 whitespace-nowrap">
+                    “Lagu sore di tepi danau - Masdito B.”
+                  </p>
+                </div>
+              </div>
+
               <div className="aspect-[4/3] bg-[#F2E6D8] overflow-hidden rounded-sm mb-3 relative">
                 <RetroImage
                   src={GAME_ASSETS.hero.polaroidFloat}
@@ -304,23 +285,6 @@ export default function Hero({ onOpenTrailer }: HeroProps) {
               </div>
               <p className="font-handwriting text-xs text-slate-700">Tawa di tepi dermaga...</p>
             </div>
-
-            {/* Floating Walkman Cassette Tape Widget */}
-            <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-6 -left-6 z-30 p-3 rounded-xl bg-bg-primary/90 border-2 border-brand-accent/60 shadow-[4px_4px_0_0_#000] backdrop-blur-md flex items-center gap-3"
-            >
-              <PixelIcon name="cassette" size="sm" color="accent" />
-              <div className="text-left">
-                <span className="text-[10px] font-display text-brand-accent uppercase tracking-widest block">
-                  Kaset Walkman Atma
-                </span>
-                <span className="text-xs font-bold text-text-main font-mono">
-                  Ittou Bachtiar — Theme
-                </span>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
       </div>

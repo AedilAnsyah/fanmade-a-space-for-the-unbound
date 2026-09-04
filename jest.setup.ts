@@ -44,3 +44,9 @@ jest.mock('framer-motion', () => {
     AnimatePresence: ({ children }: any) => React.createElement(React.Fragment, null, children),
   };
 });
+
+// Mock HTMLMediaElement play/pause for audio testing in JSDOM
+if (typeof window !== 'undefined' && window.HTMLMediaElement) {
+  window.HTMLMediaElement.prototype.play = jest.fn().mockImplementation(() => Promise.resolve());
+  window.HTMLMediaElement.prototype.pause = jest.fn();
+}
