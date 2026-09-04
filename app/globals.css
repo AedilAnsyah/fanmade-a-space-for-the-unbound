@@ -1,0 +1,241 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-silkscreen: 'Silkscreen', monospace;
+  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+  --font-caveat: 'Caveat', cursive;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #0B1026;
+  color: #F5F3ED;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: var(--font-jakarta), sans-serif;
+}
+
+/* Custom Pixel Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0B1026;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #161B33;
+  border-radius: 2px;
+  border: 1px solid #5B6EE1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7FE7D8;
+}
+
+/* Text selection */
+::selection {
+  background: #5B6EE1;
+  color: #F4C95D;
+}
+
+/* Pixel Art utilities */
+.pixel-corners {
+  clip-path: polygon(
+    0 4px,
+    4px 4px,
+    4px 0,
+    calc(100% - 4px) 0,
+    calc(100% - 4px) 4px,
+    100% 4px,
+    100% calc(100% - 4px),
+    calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 4px) 100%,
+    4px 100%,
+    4px calc(100% - 4px),
+    0 calc(100% - 4px)
+  );
+}
+
+.pixel-border {
+  box-shadow: 
+    0 -3px 0 0 #5B6EE1,
+    0 3px 0 0 #5B6EE1,
+    -3px 0 0 0 #5B6EE1,
+    3px 0 0 0 #5B6EE1;
+}
+
+.pixel-glow-accent {
+  box-shadow: 0 0 25px rgba(127, 231, 216, 0.35);
+}
+
+.pixel-glow-primary {
+  box-shadow: 0 0 25px rgba(244, 201, 93, 0.35);
+}
+
+.pixel-glow-dive {
+  box-shadow: 0 0 35px rgba(0, 229, 199, 0.45);
+}
+
+/* Backdrop Blur for older/safari browsers */
+.glass-panel {
+  background: rgba(22, 27, 51, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(127, 231, 216, 0.15);
+}
+
+/* ===================================================
+   HANDCRAFTED DIEGETIC TEXTURES (ANTI-AI SLOP)
+   =================================================== */
+
+/* 1. Buku Catatan Bergaris Merah Atma */
+.notebook-paper {
+  background-color: #FAF6ED;
+  background-image: linear-gradient(rgba(91, 110, 225, 0.12) 1px, transparent 1px);
+  background-size: 100% 1.75rem;
+  box-shadow: 
+    0 1px 3px rgba(0,0,0,0.12),
+    0 8px 24px -4px rgba(0,0,0,0.25),
+    inset 0 0 40px rgba(180, 140, 90, 0.12);
+  position: relative;
+}
+
+.notebook-paper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2.5rem;
+  width: 2px;
+  background-color: rgba(239, 68, 68, 0.35);
+}
+
+/* 2. Selotip / Washi Tape */
+.washi-tape {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  background: rgba(244, 201, 93, 0.55);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  backdrop-filter: blur(2px);
+  transform: rotate(-3deg);
+  z-index: 10;
+}
+
+/* 3. Polaroid Frame */
+.polaroid-frame {
+  background: #FFFFFF;
+  padding: 8px 8px 26px 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+  transform: rotate(-1.5deg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.polaroid-frame:hover {
+  transform: rotate(0deg) scale(1.03);
+  box-shadow: 0 8px 25px rgba(127, 231, 216, 0.4);
+}
+
+/* 4. CRT 90s TV Scanlines Overlay */
+.crt-active::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%), 
+              linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+  z-index: 999;
+  background-size: 100% 3px, 4px 100%;
+  pointer-events: none;
+}
+
+.crt-active::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: radial-gradient(circle at center, transparent 65%, rgba(0, 0, 0, 0.6) 100%);
+  z-index: 999;
+  pointer-events: none;
+}
+
+/* 5. Holographic Foil Sheen (untuk Box Art Game Fisik) */
+.holo-foil {
+  position: relative;
+  overflow: hidden;
+}
+
+.holo-foil::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(127, 231, 216, 0.25) 36%,
+    rgba(244, 201, 93, 0.3) 48%,
+    rgba(255, 77, 151, 0.25) 54%,
+    rgba(140, 107, 255, 0.3) 65%,
+    transparent 80%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.6s ease;
+  transform: translateY(-20%) rotate(25deg);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.holo-foil:hover::before {
+  opacity: 1;
+  transform: translateY(20%) rotate(25deg);
+}
+
+/* 6. Spacedive Cosmic Rift Transition */
+.spacedive-rift {
+  background: radial-gradient(ellipse at 50% 50%, rgba(0, 229, 199, 0.2) 0%, rgba(140, 107, 255, 0.15) 45%, transparent 75%);
+  border-top: 2px dashed rgba(0, 229, 199, 0.6);
+  border-bottom: 2px dashed rgba(140, 107, 255, 0.6);
+  position: relative;
+}
+
+/* 7. Koran Retro Warta Loka Texture */
+.newspaper-page {
+  background-color: #F7F3E9;
+  background-image: 
+    radial-gradient(#E2D9C8 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px);
+  background-size: 8px 8px, 100% 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4), inset 0 0 50px rgba(180, 150, 110, 0.15);
+}
+
+/* 8. Retro Pixel 16-Bit Twitch / Bobbing & Block Drop Shadow */
+@keyframes pixel-bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1px);
+  }
+}
+
+.pixel-icon-interactive {
+  image-rendering: pixelated;
+  shape-rendering: crispEdges;
+  filter: drop-shadow(2px 2px 0px #000000);
+  transition: transform 0.08s steps(2, jump-none);
+}
+
+.pixel-icon-interactive:hover {
+  animation: pixel-bob 0.35s steps(2, jump-none) infinite;
+}
+
+
