@@ -45,6 +45,7 @@ export default function RetroImage({
   if (imageError || !src) {
     return (
       <div
+        data-testid="image-fallback"
         className={cn(
           "w-full h-full min-h-[140px] flex flex-col items-center justify-center p-4 select-none bg-[#161B33] text-[#F5F3ED] border border-white/15 relative overflow-hidden",
           props.fill ? "absolute inset-0" : "",

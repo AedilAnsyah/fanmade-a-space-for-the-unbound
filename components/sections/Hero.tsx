@@ -8,6 +8,7 @@ import Button from "@/components/ui/Button";
 import PixelIcon from "@/components/ui/PixelIcon";
 import { HERO_DATA } from "@/lib/constants";
 import { GAME_ASSETS } from "@/lib/assets";
+import { createCassetteTapeAmbience, CassetteAmbienceController } from "@/lib/audio";
 
 interface HeroProps {
   onOpenTrailer: () => void;
@@ -16,8 +17,7 @@ interface HeroProps {
 export default function Hero({ onOpenTrailer }: HeroProps) {
   const [currentTime, setCurrentTime] = useState("19:45:00 WIB");
   const [isPlayingAmbiance, setIsPlayingAmbiance] = useState(false);
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const noiseNodeRef = useRef<AudioNode | null>(null);
+  const ambienceControllerRef = useRef<CassetteAmbienceController | null>(null);
 
   // Clock tick
   useEffect(() => {
@@ -55,53 +55,27 @@ export default function Hero({ onOpenTrailer }: HeroProps) {
     mouseY.set(0);
   };
 
+  // Cleanup audio controller on unmount
+  useEffect(() => {
+    return () => {
+      if (ambienceControllerRef.current) {
+        ambienceControllerRef.current.stop();
+      }
+    };
+  }, []);
+
   // Web Audio API: Gerimis & Lo-Fi Vinyl Ambiance Synthesizer
   const toggleAmbiance = () => {
     if (!isPlayingAmbiance) {
-      try {
-        const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
-        const ctx = new AudioCtx();
-        audioContextRef.current = ctx;
-
-        // Create pink/rain noise buffer
-        const bufferSize = ctx.sampleRate * 2;
-        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-        const data = buffer.getChannelData(0);
-        let b0 = 0, b1 = 0, b2 = 0;
-        for (let i = 0; i < bufferSize; i++) {
-          const white = Math.random() * 2 - 1;
-          b0 = 0.99886 * b0 + white * 0.0555179;
-          b1 = 0.99332 * b1 + white * 0.0750759;
-          b2 = 0.96900 * b2 + white * 0.1538520;
-          data[i] = (b0 + b1 + b2) * 0.08;
-        }
-
-        const noise = ctx.createBufferSource();
-        noise.buffer = buffer;
-        noise.loop = true;
-
-        // Bandpass filter for gentle rain
-        const filter = ctx.createBiquadFilter();
-        filter.type = "lowpass";
-        filter.frequency.value = 850;
-
-        const gainNode = ctx.createGain();
-        gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
-
-        noise.connect(filter);
-        filter.connect(gainNode);
-        gainNode.connect(ctx.destination);
-
-        noise.start();
-        noiseNodeRef.current = noise;
+      const controller = createCassetteTapeAmbience();
+      if (controller.isPlaying()) {
+        ambienceControllerRef.current = controller;
         setIsPlayingAmbiance(true);
-      } catch (e) {
-        setIsPlayingAmbiance(false);
       }
     } else {
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
-        audioContextRef.current = null;
+      if (ambienceControllerRef.current) {
+        ambienceControllerRef.current.stop();
+        ambienceControllerRef.current = null;
       }
       setIsPlayingAmbiance(false);
     }
@@ -140,6 +114,8 @@ export default function Hero({ onOpenTrailer }: HeroProps) {
             {/* Audio Walkman Toggle */}
             <button
               onClick={toggleAmbiance}
+              data-testid="toggle-ambience"
+              aria-label={isPlayingAmbiance ? "Matikan suara ambiens kota Loka" : "Nyalakan suara ambiens kota Loka"}
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] transition-all border ${
                 isPlayingAmbiance
                   ? "bg-brand-accent/20 border-brand-accent text-brand-accent shadow-[0_0_10px_rgba(127,231,216,0.4)] animate-pulse"

@@ -165,6 +165,7 @@ export default function Characters() {
             return (
               <motion.div
                 key={char.id}
+                data-testid={`character-card-${char.id}`}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
@@ -196,6 +197,7 @@ export default function Characters() {
                         {/* Foto Cetak: Aspect Ratio Dikunci dengan relative w-full aspect-[3/4] & object-cover object-center */}
                         <div className="relative w-full aspect-[3/4] overflow-hidden rounded-2xs bg-[#161B33] border border-black/15 shadow-inner">
                           <RetroImage
+                            data-testid={`character-image-${char.id}`}
                             src={currentPose.src}
                             alt={currentPose.alt}
                             fill
@@ -225,6 +227,8 @@ export default function Characters() {
                           return (
                             <button
                               key={p.key}
+                              data-testid={`btn-pose-${p.key}`}
+                              aria-label={`Pilih pose ${p.label} untuk ${char.name}`}
                               onClick={() => setPose(char.id, p.key)}
                               className={`px-2.5 py-1 text-[10px] font-mono tracking-wider uppercase rounded-2xs transition-all ${
                                 isActive
@@ -272,6 +276,8 @@ export default function Characters() {
                         <div className="pt-3">
                           <button
                             onClick={() => toggleSecret(char.id)}
+                            data-testid={`btn-secret-${char.id}`}
+                            aria-label={isSecretOpen ? `Lipat catatan batin ${char.name}` : `Buka catatan rahasia batin ${char.name}`}
                             className="inline-flex items-center gap-1.5 text-xs font-mono text-dive-accent hover:underline decoration-dashed transition-all"
                           >
                             <PixelIcon name="eye" size={13} color="dive" />

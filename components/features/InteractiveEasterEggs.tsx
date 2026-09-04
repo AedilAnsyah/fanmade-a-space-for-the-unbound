@@ -5,37 +5,13 @@ import RetroImage from "@/components/ui/RetroImage";
 import { motion } from "framer-motion";
 import PixelIcon from "@/components/ui/PixelIcon";
 import { GAME_ASSETS } from "@/lib/assets";
+import { playKentonganSound } from "@/lib/audio";
 
 export default function InteractiveEasterEggs() {
   const [catPetCount, setCatPetCount] = useState(0);
   const [hearts, setHearts] = useState<{ id: number; x: number; y: number }[]>([]);
   const [isKentonganActive, setIsKentonganActive] = useState(false);
   const [kentonganCount, setKentonganCount] = useState(0);
-
-  // Play synthetic retro wood sound using Web Audio API
-  const playKentonganSound = () => {
-    try {
-      const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc.type = "triangle";
-      // Bamboo knock frequency curve
-      osc.frequency.setValueAtTime(420, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(140, audioCtx.currentTime + 0.15);
-
-      gain.gain.setValueAtTime(0.7, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.2);
-    } catch (e) {
-      // AudioContext fallback if disabled by browser
-    }
-  };
 
   const handlePetCat = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCatPetCount((prev) => prev + 1);
