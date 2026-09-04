@@ -17,12 +17,12 @@ const SECRET_MEMORIES: Record<string, SecretMemory> = {
   atma: {
     title: "Catatan Rahasia Buku Merah — Halaman Terlipat",
     thought:
-      "\"Aku takut jika cerita yang kutulis bersama Raya ini selesai, kami tak lagi punya alasan untuk bersama di halte ini esok sore...\"",
+      "\"Aku takut jika cerita yang kutulis bersama Raya ini selesai, kami tak lagi punya alasan untuk duduk bersama di halte ini esok sore...\"",
   },
   raya: {
     title: "Gema Suara Batin — Dimensi Retakan Spacedive",
     thought:
-      "\"Setiap kali aku memejamkan mata dan membuka alam bawah sadar orang lain, rasa dingin itu merambat ke dadaku. Tapi demi Atma, aku tak boleh mundur.\"",
+      "\"Setiap kali aku membuka alam bawah sadar orang lain, rasa dingin itu merambat ke dadaku. Tapi demi Atma dan kota Loka, aku tak boleh mundur.\"",
   },
 };
 
@@ -41,7 +41,7 @@ const CHARACTER_POSES: Record<string, PoseOption[]> = {
       key: "bubblegum",
       label: "SANTAI",
       src: GAME_ASSETS.characters.atma.default,
-      alt: "Atma sedang santai meniup permen karet di halte depan sekolah",
+      alt: "Atma santai meniup permen karet di halte depan sekolah",
       caption: "Atma — Halte Depan Sekolah (1999)",
     },
     {
@@ -85,9 +85,10 @@ const CHARACTER_POSES: Record<string, PoseOption[]> = {
   ],
 };
 
+// 3 badge stempel mini sesuai arahan prompt
 const CHARACTER_STAMPS: Record<string, string[]> = {
-  atma: ["[ EMPATI: TINGGI ]", "[ IMAJINASI: PEKAT ]", "[ STATUS: SISWA AKTIF ]"],
-  raya: ["[ RESONANSI: MAKSIMAL ]", "[ DAYA MAGIS: PEKAT ]", "[ STATUS: ANOMALI KOSMIK ]"],
+  atma: ["[ EMPATI: TINGGI ]", "[ IMAJINASI: PEKAT ]", "[ STATUS: AKTIF ]"],
+  raya: ["[ RESONANSI: MAKSIMAL ]", "[ DAYA MAGIS: PEKAT ]", "[ STATUS: ANOMALI ]"],
 };
 
 const NIRMALA_POSES: PoseOption[] = [
@@ -147,10 +148,10 @@ export default function Characters() {
         <SectionHeading
           badge="Dossier & Arsip Siswa"
           title="Dua Jiwa di Balik Loka 1999"
-          subtitle="Map arsip siswa SMA Loka: lembaran rahasia, kepribadian, serta ingatan bawah sadar Atma dan Raya yang tertulis di atas meja kayu beralaskan kertas tebal 90-an."
+          subtitle="Map arsip siswa SMA Loka: lembaran rahasia, kepribadian, serta ingatan bawah sadar Atma dan Raya yang tertata rapi di atas kertas tebal era 90-an tanpa sekat yang sesak."
         />
 
-        {/* 1. MAIN CHARACTER DOSSIERS (2-COLUMN BALANCED FOLDER CARDS) */}
+        {/* 1. MAIN CHARACTER DOSSIERS (ANTI-CRAMPED 2-COLUMN FOLDER SHEETS) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-12">
           {CHARACTERS_DATA.map((char: Character, index: number) => {
             const poses = CHARACTER_POSES[char.id] || [];
@@ -174,63 +175,49 @@ export default function Characters() {
                   <PixelIcon name="paperclip" size={24} className="text-[#F4C95D]" />
                 </div>
 
-                {/* Folder Manila Container with Solid Pixel Block Drop-Shadow */}
-                <div className="relative rounded-lg bg-[#13182C] border border-[#2B3558] shadow-[6px_6px_0_0_#050914] overflow-hidden transition-all duration-300">
-                  {/* Folder Tab Header Strip */}
-                  <div className="bg-[#1B2340] border-b border-[#2B3558] px-5 sm:px-6 py-3 flex items-center justify-between text-xs font-mono">
-                    <div className="flex items-center gap-2 text-[#F4C95D]">
-                      <span className="w-2 h-2 bg-[#F4C95D] rounded-2xs inline-block" />
-                      <span className="tracking-widest uppercase font-bold text-[11px]">
-                        ARSIP SISWA // {char.id === "atma" ? "DOKUMEN 01-A" : "DOKUMEN 02-R"}
-                      </span>
-                    </div>
+                {/* Dossier Folder Manila Top Tab */}
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#1C233C] border-t border-l border-r border-white/15 rounded-t-md text-[11px] font-mono text-[#F4C95D] uppercase tracking-wider ml-4 -mb-[1px]">
+                  <span className="w-2 h-2 rounded-2xs bg-[#F4C95D] inline-block" />
+                  <span>BERKAS {char.id.toUpperCase()} // ARSIP 1999</span>
+                </div>
 
-                    <div className="flex items-center gap-2.5">
-                      <span className="px-2 py-0.5 rounded-2xs bg-black/40 border border-white/10 text-[10px] text-text-muted">
-                        KLASIFIKASI: TERTUTUP
-                      </span>
-                      <span className="text-white/30 hidden sm:inline">•</span>
-                      <span className="text-brand-accent/80 font-mono text-[11px] hidden sm:inline">
-                        KOTA LOKA 1999
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Folder Body: 2 Columns with Ample Breathing Room */}
-                  <div className="p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-12 gap-8 items-start">
-                    {/* SISI KIRI: POLAROID NYATA + BINDER TAB SWITCHER */}
+                {/* Main Folder Sheet: Latar Dossier #12172A / #161B33 dengan Bayangan Tegas Pixel */}
+                <div className="relative rounded-lg rounded-tl-none bg-[#14192B] border border-white/10 shadow-[6px_6px_0_0_#050914] p-6 sm:p-8 transition-all duration-300">
+                  {/* Layout 2-Kolom Seimbang (Breathe Room) */}
+                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-8 items-start">
+                    {/* SISI KIRI: POLAROID NYATA (3:4) & TAB BINDER GANTI POSE */}
                     <div className="sm:col-span-5 flex flex-col items-center">
-                      {/* True Polaroid Paper Card Container */}
-                      <div className="relative w-full p-3 sm:p-3.5 pb-7 sm:pb-8 bg-[#FAF8F5] rounded-sm shadow-[4px_4px_0_0_#050914] border border-[#E8E1D5] transition-transform duration-300 group">
+                      {/* Polaroid Frame Putih Tebal Khas Foto Cetak 90-an */}
+                      <div className="relative w-full p-3.5 pb-8 bg-[#FAF7F2] rounded-xs shadow-[4px_4px_0_0_#050914] border border-[#E3DDD1] transition-transform duration-300">
                         {/* Washi Tape Semi-Transparan di Sudut Atas */}
-                        <div className="absolute -top-3 left-6 z-20 w-16 h-5 bg-[#FDE68A]/80 border border-[#D97706]/40 rotate-[-5deg] shadow-sm pointer-events-none backdrop-blur-xs" />
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-5 bg-[#FDE68A]/80 border border-[#D97706]/40 rotate-[-2deg] shadow-xs backdrop-blur-xs pointer-events-none z-20" />
 
-                        {/* Foto Cetak 3:4 (Object-Cover & Zero CLS) */}
-                        <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xs bg-[#EAE2D5] border border-black/15 shadow-inner">
+                        {/* Foto Cetak 3:4 dengan Aspect Ratio Terkunci (CLS: 0) */}
+                        <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xs bg-[#E2DBCF] border border-black/15 shadow-inner">
                           <Image
                             src={currentPose.src}
                             alt={currentPose.alt}
                             fill
                             unoptimized={Boolean(currentPose.isGif)}
-                            sizes="(max-width: 640px) 100vw, 240px"
+                            sizes="(max-width: 640px) 100vw, 260px"
                             className="object-cover transition-transform duration-700 hover:scale-105"
                             priority={index === 0}
                           />
                         </div>
 
-                        {/* Keterangan Tulisan Tangan di Bagian Bawah Polaroid */}
-                        <div className="mt-2.5 pt-1 text-center">
+                        {/* Keterangan Tulisan Tangan di Bawah Polaroid */}
+                        <div className="mt-3 text-center">
                           <p className="font-handwriting text-base sm:text-lg text-slate-800 font-bold leading-tight line-clamp-1">
                             {currentPose.caption}
                           </p>
                           <span className="font-mono text-[9px] text-slate-500 uppercase tracking-widest block mt-0.5">
-                            FOTO DOKUMENTASI RESMI • 1999
+                            KOTA LOKA • 1999
                           </span>
                         </div>
                       </div>
 
-                      {/* TOMBOL GANTI POSE: Tepat di Bawah Bingkai Foto (Tab Binder Sticker) */}
-                      <div className="mt-4 flex items-center justify-center gap-1.5 flex-wrap w-full">
+                      {/* POSISI TOMBOL GANTI POSE: Tepat di Bawah Bingkai Foto (Tab Stiker Binder) */}
+                      <div className="mt-3.5 flex items-center justify-center gap-1.5 flex-wrap w-full">
                         {poses.map((p) => {
                           const isActive = activeKey === p.key;
 
@@ -252,46 +239,44 @@ export default function Characters() {
                       </div>
                     </div>
 
-                    {/* SISI KANAN: LEMBAR BIODATA, CERITA & STEMPEL DATA FISIK */}
+                    {/* SISI KANAN: LEMBAR BIODATA & CERITA (BERNAPAS LEGA, BEBAS DARI KOTAK BERSARANG) */}
                     <div className="sm:col-span-7 flex flex-col justify-between h-full space-y-4">
-                      <div>
+                      <div className="space-y-2.5">
                         {/* Sub-Header Role Badge */}
-                        <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-brand-accent uppercase mb-1.5">
-                          <PixelIcon
-                            name={char.id === "atma" ? "book" : "sparkles"}
-                            size="sm"
-                            color={char.id === "atma" ? "primary" : "accent"}
-                          />
-                          <span>{char.role}</span>
+                        <div className="flex items-center justify-between text-xs font-mono">
+                          <span className="uppercase tracking-widest text-brand-accent">
+                            {char.role}
+                          </span>
+                          <span className="text-[10px] text-slate-500 uppercase tracking-wider">
+                            SMA LOKA • KELAS 3-A
+                          </span>
                         </div>
 
-                        {/* Large Display Name */}
+                        {/* Nama Besar (Silkscreen/Pixel Display Font) */}
                         <h3 className="text-3xl sm:text-4xl font-display font-black text-white tracking-wide">
                           {char.name}
                         </h3>
 
-                        {/* Poetic Quote (Caveat / Warm Gold #F4C95D) */}
-                        <p className="font-handwriting text-2xl sm:text-3xl text-[#F4C95D] leading-snug my-2">
+                        {/* Kutipan Puitis (Caveat/Handwritten dengan Aksen Emas Hangat #F4C95D) */}
+                        <p className="font-handwriting text-2xl sm:text-3xl text-[#F4C95D] leading-snug">
                           “{char.tagline}”
                         </p>
 
-                        {/* Relaxed Narrative Paragraphs */}
-                        <p className="text-sm text-slate-300 font-sans leading-relaxed mt-2 mb-4">
+                        {/* Paragraf Deskripsi yang Nyaman Dibaca Tanpa Terdesak */}
+                        <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed pt-1">
                           {char.description}
                         </p>
 
-                        {/* Secret Spacedive Memory Drawer */}
-                        <div className="pt-2 border-t border-white/10">
+                        {/* Spacedive Secret Revelation: Lipatan Catatan Batin Diegetik */}
+                        <div className="pt-3">
                           <button
                             onClick={() => toggleSecret(char.id)}
-                            className={`px-3 py-1.5 rounded text-xs font-display uppercase tracking-wider flex items-center gap-2 transition-all ${
-                              isSecretOpen
-                                ? "bg-dive-accent text-black font-bold shadow-[2px_2px_0_0_#000]"
-                                : "bg-white/5 border border-dive-accent/40 text-dive-accent hover:bg-dive-accent hover:text-black"
-                            }`}
+                            className="inline-flex items-center gap-1.5 text-xs font-mono text-dive-accent hover:underline decoration-dashed transition-all"
                           >
-                            <PixelIcon name="eye" size={14} />
-                            <span>{isSecretOpen ? "Tutup Catatan Batin" : "Buka Catatan Batin"}</span>
+                            <PixelIcon name="eye" size={13} color="dive" />
+                            <span>
+                              {isSecretOpen ? "[-] Lipat Catatan Batin" : "[+] Buka Catatan Rahasia Batin"}
+                            </span>
                           </button>
 
                           <AnimatePresence>
@@ -300,35 +285,32 @@ export default function Characters() {
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: "auto" }}
                                 exit={{ opacity: 0, height: 0 }}
-                                className="mt-3 p-3.5 rounded bg-black/60 border border-dive-accent/40 text-dive-text text-xs leading-relaxed"
+                                className="overflow-hidden"
                               >
-                                <span className="font-mono text-[10px] text-dive-accent uppercase tracking-wider block mb-1">
-                                  ★ {secret.title}:
-                                </span>
-                                <p className="font-handwriting text-lg text-amber-100 italic">
-                                  {secret.thought}
-                                </p>
+                                <div className="mt-2.5 p-3.5 rounded-2xs border-l-2 border-dive-accent bg-dive-accent/5 text-dive-text">
+                                  <span className="font-mono text-[10px] text-dive-accent uppercase tracking-wider block mb-1">
+                                    ★ {secret.title}:
+                                  </span>
+                                  <p className="font-handwriting text-xl text-amber-100 italic leading-relaxed">
+                                    {secret.thought}
+                                  </p>
+                                </div>
                               </motion.div>
                             )}
                           </AnimatePresence>
                         </div>
                       </div>
 
-                      {/* PHYSICAL RUBBER STAMP BADGES (Replaces Cramped Neon Bars) */}
-                      <div className="pt-4 border-t border-white/10">
-                        <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider block mb-2">
-                          Status & Hasil Evaluasi Batin:
-                        </span>
-                        <div className="flex flex-wrap items-center gap-2">
-                          {stamps.map((stamp, sIdx) => (
-                            <span
-                              key={sIdx}
-                              className="px-2.5 py-1 rounded-2xs border border-dashed border-[#F4C95D]/40 text-[#F4C95D] bg-[#F4C95D]/5 font-mono text-[11px] font-bold tracking-wider uppercase shadow-xs"
-                            >
-                              {stamp}
-                            </span>
-                          ))}
-                        </div>
+                      {/* 3 BADGE STEMPEL FISIK SEDERHANA DI POJOK BAWAH (PENGGANTI STAT BAR NEON) */}
+                      <div className="pt-4 border-t border-white/10 flex flex-wrap items-center gap-2">
+                        {stamps.map((stamp, sIdx) => (
+                          <span
+                            key={sIdx}
+                            className="px-2.5 py-1 border border-dashed border-[#F4C95D]/60 text-[#F4C95D] font-mono text-[11px] font-bold uppercase tracking-wider rounded-2xs bg-[#F4C95D]/5 shadow-xs"
+                          >
+                            {stamp}
+                          </span>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -338,7 +320,7 @@ export default function Characters() {
           })}
         </div>
 
-        {/* 2. WARGA & SAHABAT KOTA LOKA (3 VERTICAL POLAROID CLIPPINGS) */}
+        {/* 3. SECTION "WARGA & SAHABAT KOTA LOKA": GRID 3 POLAROID MINI BERDIRI BERJEJER */}
         <div className="mt-20 pt-12 border-t border-white/10">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-2.5">
@@ -352,147 +334,121 @@ export default function Characters() {
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Card 1: Nirmala Mini Dossier */}
-            <motion.div
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="rotate-[-1deg] hover:rotate-0 hover:scale-105 transition-all duration-300"
-            >
-              <div className="p-4 sm:p-5 pb-6 rounded-lg bg-[#FAF8F5] text-[#1E2022] shadow-[4px_4px_0_0_#050914] border border-[#E8E1D5] flex flex-col justify-between h-full relative">
-                {/* Washi tape on top */}
-                <div className="absolute -top-2.5 left-1/3 w-14 h-4 bg-[#FDE68A]/80 border border-[#D97706]/40 rotate-[-4deg] shadow-xs pointer-events-none" />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+            {/* 1. Nirmala: Foto Mini Berbingkai Usang + Kutipan Rahasia */}
+            <div className="relative p-3.5 pb-6 bg-[#FAF7F2] rounded-xs shadow-[4px_4px_0_0_#050914] border border-[#E3DDD1] rotate-[-1deg] hover:-rotate-1 hover:scale-105 transition-transform duration-300 flex flex-col justify-between h-full">
+              <div className="absolute -top-2.5 left-1/3 w-16 h-4 bg-[#FDE68A]/80 border border-[#D97706]/40 rotate-[-3deg] shadow-xs pointer-events-none" />
 
-                <div>
-                  {/* Photo Frame 3:4 */}
-                  <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xs bg-[#EAE2D5] border border-black/15 shadow-inner">
-                    <Image
-                      src={currentNirmalaPose.src}
-                      alt={currentNirmalaPose.alt}
-                      fill
-                      unoptimized={Boolean(currentNirmalaPose.isGif)}
-                      sizes="(max-width: 768px) 100vw, 320px"
-                      className="object-cover"
-                    />
-                  </div>
-
-                  {/* Pose switch tabs */}
-                  <div className="mt-3 flex items-center justify-center gap-1">
-                    {NIRMALA_POSES.map((np) => (
-                      <button
-                        key={np.key}
-                        onClick={() => setPose("nirmala", np.key)}
-                        className={`px-2 py-0.5 text-[9px] font-mono uppercase rounded-2xs transition-all ${
-                          activePose.nirmala === np.key
-                            ? "bg-[#D97706] text-white font-bold"
-                            : "bg-black/5 hover:bg-black/10 text-slate-600"
-                        }`}
-                      >
-                        {np.label}
-                      </button>
-                    ))}
-                  </div>
-
-                  <h5 className="font-display text-base font-bold text-slate-900 mt-3">
-                    Nirmala
-                  </h5>
-                  <span className="font-mono text-[11px] text-[#B45309] font-bold block mb-1">
-                    Gadis Kecil Penuh Teka-teki
-                  </span>
-                  <p className="font-handwriting text-base text-slate-700 leading-tight italic">
-                    “Jangan lupakan janji kita sebelum senja tenggelam di kali Loka...”
-                  </p>
+              <div>
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#E2DBCF] rounded-2xs mb-3 border border-black/10">
+                  <Image
+                    src={currentNirmalaPose.src}
+                    alt={currentNirmalaPose.alt}
+                    fill
+                    unoptimized={Boolean(currentNirmalaPose.isGif)}
+                    sizes="(max-width: 640px) 100vw, 300px"
+                    className="object-cover"
+                  />
                 </div>
 
-                <div className="mt-4 pt-2 border-t border-black/10 flex items-center justify-between text-[10px] font-mono text-slate-500">
-                  <span>BERKAS: RAHA-01</span>
-                  <span>★ MISTERI</span>
+                {/* Pose switch tabs */}
+                <div className="flex items-center justify-center gap-1 mb-2.5">
+                  {NIRMALA_POSES.map((np) => (
+                    <button
+                      key={np.key}
+                      onClick={() => setPose("nirmala", np.key)}
+                      className={`px-2 py-0.5 text-[9px] font-mono uppercase rounded-2xs transition-all ${
+                        activePose.nirmala === np.key
+                          ? "bg-[#D97706] text-white font-bold"
+                          : "bg-black/5 hover:bg-black/10 text-slate-600"
+                      }`}
+                    >
+                      {np.label}
+                    </button>
+                  ))}
                 </div>
+
+                <h5 className="font-display font-bold text-slate-900 text-sm">
+                  Nirmala
+                </h5>
+                <span className="font-mono text-[11px] text-[#B45309] font-bold block mb-1">
+                  Gadis Kecil Penuh Teka-teki
+                </span>
+                <p className="font-handwriting text-base text-slate-700 italic leading-snug">
+                  “Jangan lupakan janji kita sebelum senja tenggelam di kali Loka...”
+                </p>
               </div>
-            </motion.div>
 
-            {/* Card 2: Kucing Loka (Lulu si Belang) */}
-            <motion.div
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-              className="rotate-[1.2deg] hover:rotate-0 hover:scale-105 transition-all duration-300"
-            >
-              <div className="p-4 sm:p-5 pb-6 rounded-lg bg-[#FAF8F5] text-[#1E2022] shadow-[4px_4px_0_0_#050914] border border-[#E8E1D5] flex flex-col justify-between h-full relative">
-                <div className="absolute -top-2.5 right-1/4 w-14 h-4 bg-[#7FE7D8]/80 border border-[#0D9488]/40 rotate-[3deg] shadow-xs pointer-events-none" />
-
-                <div>
-                  <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xs bg-[#EAE2D5] border border-black/15 shadow-inner">
-                    <Image
-                      src={GAME_ASSETS.gameplayViewfinder[1].gif}
-                      alt="Lulu si kucing belang di rongsokan TV"
-                      fill
-                      unoptimized
-                      sizes="(max-width: 768px) 100vw, 320px"
-                      className="object-cover"
-                    />
-                  </div>
-
-                  <h5 className="font-display text-base font-bold text-slate-900 mt-4">
-                    Lulu si Belang
-                  </h5>
-                  <span className="font-mono text-[11px] text-[#0D9488] font-bold block mb-1">
-                    Sahabat Sejati Atma • Penjaga Gang
-                  </span>
-                  <p className="font-handwriting text-base text-slate-700 leading-tight italic">
-                    “Menghuni atap seng pos ronda & penikmat ikan pindang goreng Mbok Nah.”
-                  </p>
-                </div>
-
-                <div className="mt-4 pt-2 border-t border-black/10 flex items-center justify-between text-[10px] font-mono text-slate-500">
-                  <span>FAVORIT: IKAN PINDANG</span>
-                  <span className="text-[#0D9488] font-bold">🐾 BISA DIELUS</span>
-                </div>
+              <div className="mt-4 pt-2 border-t border-black/10 flex items-center justify-between text-[10px] font-mono text-slate-500">
+                <span>BERKAS: RAHA-01</span>
+                <span>★ MISTERI</span>
               </div>
-            </motion.div>
+            </div>
 
-            {/* Card 3: Warga & Tetangga Kota Loka */}
-            <motion.div
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="rotate-[-0.8deg] hover:rotate-0 hover:scale-105 transition-all duration-300"
-            >
-              <div className="p-4 sm:p-5 pb-6 rounded-lg bg-[#FAF8F5] text-[#1E2022] shadow-[4px_4px_0_0_#050914] border border-[#E8E1D5] flex flex-col justify-between h-full relative">
-                <div className="absolute -top-2.5 left-1/4 w-14 h-4 bg-[#FDE68A]/80 border border-[#D97706]/40 rotate-[-2deg] shadow-xs pointer-events-none" />
+            {/* 2. Kucing Loka: Foto Siluet Kucing Belang + Label Sahabat Sejati Atma */}
+            <div className="relative p-3.5 pb-6 bg-[#FAF7F2] rounded-xs shadow-[4px_4px_0_0_#050914] border border-[#E3DDD1] rotate-[1.5deg] hover:-rotate-1 hover:scale-105 transition-transform duration-300 flex flex-col justify-between h-full">
+              <div className="absolute -top-2.5 right-1/4 w-16 h-4 bg-[#7FE7D8]/80 border border-[#0D9488]/40 rotate-[2deg] shadow-xs pointer-events-none" />
 
-                <div>
-                  <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xs bg-[#EAE2D5] border border-black/15 shadow-inner">
-                    <Image
-                      src={GAME_ASSETS.newsClippings.school}
-                      alt="Warga dan suasana kota Loka 1999"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 320px"
-                      className="object-cover"
-                    />
-                  </div>
-
-                  <h5 className="font-display text-base font-bold text-slate-900 mt-4">
-                    Warga Kota Loka
-                  </h5>
-                  <span className="font-mono text-[11px] text-[#4F46E5] font-bold block mb-1">
-                    Keluarga & Tetangga 90-an
-                  </span>
-                  <p className="font-handwriting text-base text-slate-700 leading-tight italic">
-                    “Dari bapak-bapak pos siskamling hingga celoteh hangat di warung gorengan.”
-                  </p>
+              <div>
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#E2DBCF] rounded-2xs mb-3 border border-black/10">
+                  <Image
+                    src={GAME_ASSETS.gameplayViewfinder[1].gif}
+                    alt="Lulu si kucing belang di rongsokan TV"
+                    fill
+                    unoptimized
+                    sizes="(max-width: 640px) 100vw, 300px"
+                    className="object-cover"
+                  />
                 </div>
 
-                <div className="mt-4 pt-2 border-t border-black/10 flex items-center justify-between text-[10px] font-mono text-slate-500">
-                  <span>KOMUNITAS: RT 03</span>
-                  <span className="text-[#4F46E5] font-bold">★ HANGAT</span>
-                </div>
+                <h5 className="font-display font-bold text-slate-900 text-sm mt-3">
+                  Lulu si Belang
+                </h5>
+                <span className="font-mono text-[11px] text-[#0D9488] font-bold block mb-1">
+                  Sahabat Sejati Atma
+                </span>
+                <p className="font-handwriting text-base text-slate-700 italic leading-snug">
+                  “Menghuni atap seng pos ronda & penikmat ikan pindang goreng Mbok Nah.”
+                </p>
               </div>
-            </motion.div>
+
+              <div className="mt-4 pt-2 border-t border-black/10 flex items-center justify-between text-[10px] font-mono text-slate-500">
+                <span>FAVORIT: IKAN PINDANG</span>
+                <span className="text-[#0D9488] font-bold">🐾 BISA DIELUS</span>
+              </div>
+            </div>
+
+            {/* 3. Warga Loka: Kliping Bapak-bapak Pos Ronda & Ibu Warung */}
+            <div className="relative p-3.5 pb-6 bg-[#FAF7F2] rounded-xs shadow-[4px_4px_0_0_#050914] border border-[#E3DDD1] rotate-[-0.8deg] hover:-rotate-1 hover:scale-105 transition-transform duration-300 flex flex-col justify-between h-full">
+              <div className="absolute -top-2.5 left-1/4 w-16 h-4 bg-[#FDE68A]/80 border border-[#D97706]/40 rotate-[-1deg] shadow-xs pointer-events-none" />
+
+              <div>
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#E2DBCF] rounded-2xs mb-3 border border-black/10">
+                  <Image
+                    src={GAME_ASSETS.newsClippings.school}
+                    alt="Warga dan suasana kota Loka 1999"
+                    fill
+                    sizes="(max-width: 640px) 100vw, 300px"
+                    className="object-cover"
+                  />
+                </div>
+
+                <h5 className="font-display font-bold text-slate-900 text-sm mt-3">
+                  Warga Kota Loka
+                </h5>
+                <span className="font-mono text-[11px] text-[#4F46E5] font-bold block mb-1">
+                  Keluarga & Tetangga 90-an
+                </span>
+                <p className="font-handwriting text-base text-slate-700 italic leading-snug">
+                  “Dari bapak-bapak pos siskamling hingga celoteh hangat di warung gorengan.”
+                </p>
+              </div>
+
+              <div className="mt-4 pt-2 border-t border-black/10 flex items-center justify-between text-[10px] font-mono text-slate-500">
+                <span>KOMUNITAS: RT 03</span>
+                <span className="text-[#4F46E5] font-bold">★ HANGAT</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
