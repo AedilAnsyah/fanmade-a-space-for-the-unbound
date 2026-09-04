@@ -15,18 +15,28 @@ interface HeroProps {
 }
 
 export default function Hero({ onOpenTrailer }: HeroProps) {
-  const [currentTime, setCurrentTime] = useState("19:45:00 WIB");
+  const [timeParts, setTimeParts] = useState({
+    hours: "19",
+    minutes: "45",
+    seconds: "00",
+  });
+  const [isBlink, setIsBlink] = useState(true);
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
-  // Clock tick
+  // Clock tick with blinking colon
   useEffect(() => {
-    const timer = setInterval(() => {
+    const updateTime = () => {
       const now = new Date();
-      setCurrentTime(
-        `${String(now.getHours()).padStart(2, "0")}:${String(
-          now.getMinutes()
-        ).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")} WIB`
-      );
-    }, 1000);
+      setTimeParts({
+        hours: String(now.getHours()).padStart(2, "0"),
+        minutes: String(now.getMinutes()).padStart(2, "0"),
+        seconds: String(now.getSeconds()).padStart(2, "0"),
+      });
+      setIsBlink((prev) => !prev);
+    };
+
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
     return () => clearInterval(timer);
   }, []);
 
@@ -67,29 +77,116 @@ export default function Hero({ onOpenTrailer }: HeroProps) {
       <div className="absolute inset-0 bg-radial-at-c from-brand-secondary/20 via-transparent to-bg-primary pointer-events-none" />
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-bg-primary via-bg-primary/80 to-transparent pointer-events-none" />
 
-      {/* 3. Retro 90s Diegetic Status Bar (HUD) */}
+      {/* 3. Retro 90s Diegetic Status Bar HUD (3-Part Balanced Layout) */}
       <div className="relative z-20 max-w-7xl w-full mx-auto mb-6">
-        <div className="p-2 sm:p-2.5 rounded-xl bg-bg-secondary/70 border border-brand-secondary/30 backdrop-blur-md flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-text-muted">
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 text-brand-accent">
-              <PixelIcon name="clock" size={14} color="accent" />
-              <span className="font-display tracking-wider text-[11px]">{currentTime}</span>
-            </span>
-            <span className="hidden sm:inline text-white/20">|</span>
-            <span className="hidden sm:flex items-center gap-1.5 text-brand-primary">
-              <PixelIcon name="rain" size={14} color="primary" />
-              <span>Loka: Gerimis Sore 90-an</span>
-            </span>
+        <div className="relative p-2 sm:p-2.5 rounded-md bg-[#0B1026]/90 border border-zinc-800 shadow-[4px_4px_0_0_#050914] backdrop-blur-sm flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-text-muted">
+          {/* 4 Corner Screws pada Bilah Status Utama */}
+          <div
+            data-testid="hud-screw-tl"
+            className="absolute -top-1 -left-1 w-2 h-2 rounded-full bg-zinc-700 border border-zinc-500 flex items-center justify-center pointer-events-none"
+          >
+            <div className="w-1 h-[0.5px] bg-zinc-950 rotate-45" />
+          </div>
+          <div
+            data-testid="hud-screw-tr"
+            className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-zinc-700 border border-zinc-500 flex items-center justify-center pointer-events-none"
+          >
+            <div className="w-1 h-[0.5px] bg-zinc-950 -rotate-45" />
+          </div>
+          <div
+            data-testid="hud-screw-bl"
+            className="absolute -bottom-1 -left-1 w-2 h-2 rounded-full bg-zinc-700 border border-zinc-500 flex items-center justify-center pointer-events-none"
+          >
+            <div className="w-1 h-[0.5px] bg-zinc-950 -rotate-30" />
+          </div>
+          <div
+            data-testid="hud-screw-br"
+            className="absolute -bottom-1 -right-1 w-2 h-2 rounded-full bg-zinc-700 border border-zinc-500 flex items-center justify-center pointer-events-none"
+          >
+            <div className="w-1 h-[0.5px] bg-zinc-950 rotate-60" />
           </div>
 
-          <div className="flex items-center gap-4">
-            {/* Diegetic Mini Walkman Sony TPS-L2 Player */}
-            <AmbientPlayer />
+          {/* SISI KIRI: Stasiun Pengamatan Loka */}
+          <div className="flex items-center">
+            {/* Jam Digital dengan Titik Dua Berkedip */}
+            <div className="flex items-center gap-1.5 text-slate-200">
+              <PixelIcon name="clock" size={13} color="accent" />
+              <span className="font-mono text-[11px] sm:text-xs font-bold tracking-wider">
+                {timeParts.hours}
+                <span className={isBlink ? "opacity-100 text-[#F4C95D]" : "opacity-20 text-[#F4C95D]"}>
+                  :
+                </span>
+                {timeParts.minutes}
+                <span className={isBlink ? "opacity-100 text-[#F4C95D]" : "opacity-20 text-[#F4C95D]"}>
+                  :
+                </span>
+                {timeParts.seconds} WIB
+              </span>
+            </div>
 
-            <span className="hidden xl:flex items-center gap-1.5 text-[11px] text-dive-accent">
-              <PixelIcon name="battery" size={14} color="dive" />
-              <span>DIVE PWR: [■■■] 100%</span>
+            {/* Pemisah Garis Putus-Putus Vertikal */}
+            <span className="hidden sm:block h-4 border-r border-dashed border-zinc-700 mx-3" />
+
+            {/* Cuaca Loka 90-an */}
+            <div className="hidden sm:flex items-center gap-1.5 text-xs text-[#F4C95D] font-mono">
+              <PixelIcon name="rain" size={14} color="primary" />
+              <span className="font-medium">Loka: Gerimis Sore 90-an</span>
+            </div>
+          </div>
+
+          {/* SISI TENGAH: Audio Visualizer Bar 5-Batang */}
+          <div
+            data-testid="audio-visualizer"
+            className="hidden md:flex items-center gap-1.5 px-3 py-1 rounded bg-[#070B1A]/80 border border-zinc-800/80 shadow-inner"
+            title={isPlayingAudio ? "Equalizer Audio: Aktif" : "Equalizer Audio: Standby"}
+          >
+            <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest font-bold mr-1">
+              EQ
             </span>
+            {[
+              { hActive: "h-3.5", duration: "0.45s" },
+              { hActive: "h-5", duration: "0.65s" },
+              { hActive: "h-2.5", duration: "0.35s" },
+              { hActive: "h-4.5", duration: "0.55s" },
+              { hActive: "h-3", duration: "0.5s" },
+            ].map((bar, idx) => (
+              <div key={idx} className="w-[3px] h-5 flex items-end justify-center">
+                <div
+                  className={`w-[3px] rounded-xs transition-all ${
+                    isPlayingAudio
+                      ? `bg-[#7FE7D8] ${bar.hActive} animate-pulse shadow-[0_0_4px_rgba(127,231,216,0.5)]`
+                      : "bg-zinc-700 h-[3px]"
+                  }`}
+                  style={
+                    isPlayingAudio
+                      ? { animationDuration: bar.duration, animationTimingFunction: "ease-in-out" }
+                      : undefined
+                  }
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* SISI KANAN: Modul Walkman TPS-L2 & Baterai Spacedive */}
+          <div className="flex items-center gap-3">
+            {/* Diegetic Mini Walkman Sony TPS-L2 Player */}
+            <AmbientPlayer onPlayStateChange={setIsPlayingAudio} />
+
+            {/* Modul Daya (DIVE PWR) Baterai Tabung Retro */}
+            <div
+              data-testid="dive-power-module"
+              className="hidden xl:flex items-center gap-2 px-2.5 py-1.5 rounded bg-[#090D1A] border border-zinc-800 text-[11px] font-mono text-[#7FE7D8]"
+              title="Daya Spacedive: 100%"
+            >
+              <PixelIcon name="battery" size={13} color="dive" />
+              <div className="flex items-center gap-0.5">
+                <span className="w-1 h-2.5 rounded-2xs bg-[#7FE7D8] shadow-[0_0_4px_rgba(127,231,216,0.6)]" />
+                <span className="w-1 h-2.5 rounded-2xs bg-[#7FE7D8] shadow-[0_0_4px_rgba(127,231,216,0.6)]" />
+                <span className="w-1 h-2.5 rounded-2xs bg-[#7FE7D8] shadow-[0_0_4px_rgba(127,231,216,0.6)]" />
+                <span className="w-1 h-2.5 rounded-2xs bg-[#7FE7D8] shadow-[0_0_4px_rgba(127,231,216,0.6)]" />
+              </div>
+              <span className="tracking-wider font-bold">DIVE: 100%</span>
+            </div>
           </div>
         </div>
       </div>

@@ -22,7 +22,7 @@ describe("AmbientPlayer Component (Mini Walkman Sony TPS-L2)", () => {
 
     // Labels
     expect(screen.getByText("WALKMAN AUTO-REVERSE")).toBeInTheDocument();
-    expect(screen.getByText("SIDE A: ITTOU BACHTIAR - THEME")).toBeInTheDocument();
+    expect(screen.getByText("SIDE A: MASDITO BACHTIAR - THEME")).toBeInTheDocument();
 
     // LED initially inactive
     const led = screen.getByTestId("led-indicator");
@@ -68,7 +68,7 @@ describe("AmbientPlayer Component (Mini Walkman Sony TPS-L2)", () => {
     const playBtn = screen.getByTestId("walkman-play-btn");
     expect(playBtn).toHaveAttribute(
       "aria-label",
-      "Putar kaset Walkman: Ittou Bachtiar - Theme"
+      "Putar kaset Walkman: Masdito Bachtiar - Theme"
     );
   });
 });

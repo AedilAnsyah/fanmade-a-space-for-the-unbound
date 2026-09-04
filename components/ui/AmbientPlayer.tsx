@@ -7,6 +7,7 @@ export interface AmbientPlayerProps {
   src?: string;
   defaultVolume?: number;
   className?: string;
+  onPlayStateChange?: (isPlaying: boolean) => void;
 }
 
 /**
@@ -18,6 +19,7 @@ export default function AmbientPlayer({
   src = "/audio/walkman-theme.mp3",
   defaultVolume = 0.25,
   className = "",
+  onPlayStateChange,
 }: AmbientPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -28,21 +30,28 @@ export default function AmbientPlayer({
     }
   }, [defaultVolume]);
 
+  const handlePlayState = (playing: boolean) => {
+    setIsPlaying(playing);
+    if (onPlayStateChange) {
+      onPlayStateChange(playing);
+    }
+  };
+
   const togglePlay = async () => {
     const audio = audioRef.current;
     if (!audio) return;
 
     if (isPlaying) {
       audio.pause();
-      setIsPlaying(false);
+      handlePlayState(false);
     } else {
       try {
         audio.volume = defaultVolume;
         await audio.play();
-        setIsPlaying(true);
+        handlePlayState(true);
       } catch {
         // Handled: browser autoplay restrictions
-        setIsPlaying(false);
+        handlePlayState(false);
       }
     }
   };
@@ -63,9 +72,9 @@ export default function AmbientPlayer({
         preload="metadata"
         loop
         data-testid="walkman-audio-element"
-        onEnded={() => setIsPlaying(false)}
-        onPause={() => setIsPlaying(false)}
-        onPlay={() => setIsPlaying(true)}
+        onEnded={() => handlePlayState(false)}
+        onPause={() => handlePlayState(false)}
+        onPlay={() => handlePlayState(true)}
       />
 
       {/* 4 Corner Screws (Fisik Sekrup 90-an) */}
@@ -98,7 +107,7 @@ export default function AmbientPlayer({
         {/* Cassette Acrylic Window with 2 Mini Spinning Spool Gears */}
         <div
           data-testid="cassette-window"
-          className="relative w-16 h-8 rounded-xs bg-[#090D1A] border border-white/15 px-1.5 flex items-center justify-between overflow-hidden shadow-inner shrink-0"
+          className="relative w-16 h-8 rounded-xs bg-black/60 border border-white/15 px-1.5 flex items-center justify-between overflow-hidden shadow-inner shrink-0"
         >
           {/* Brown magnetic tape stripe in the background */}
           <div className="absolute inset-x-2 top-1/2 -translate-y-1/2 h-2.5 bg-[#452718] border-y border-[#29150B] opacity-80" />
@@ -166,32 +175,32 @@ export default function AmbientPlayer({
           <span
             data-testid="track-title"
             className="font-mono text-[10px] text-slate-200 tracking-wide font-medium truncate mt-0.5"
-            title="SIDE A: ITTOU BACHTIAR - THEME"
+            title="SIDE A: MASDITO BACHTIAR - THEME"
           >
-            SIDE A: ITTOU BACHTIAR - THEME
+            SIDE A: MASDITO BACHTIAR - THEME
           </span>
         </div>
 
-        {/* Tactile Retro Play / Pause Toggle Button */}
+        {/* Tactile Mechanical Bevel Play / Pause Toggle Button */}
         <button
           onClick={togglePlay}
           data-testid="walkman-play-btn"
           aria-label={
             isPlaying
               ? "Jeda pemutar kaset Walkman"
-              : "Putar kaset Walkman: Ittou Bachtiar - Theme"
+              : "Putar kaset Walkman: Masdito Bachtiar - Theme"
           }
-          className={`flex items-center justify-center w-8 h-8 rounded-xs border transition-all shrink-0 active:translate-y-0.5 ${
+          className={`flex items-center justify-center w-8 h-8 rounded-xs text-[11px] font-mono transition-all shrink-0 active:translate-y-0.5 ${
             isPlaying
-              ? "bg-[#F4C95D] border-[#D97706] text-[#78350F] shadow-[1px_1px_0_0_#78350F]"
-              : "bg-white/10 hover:bg-white/20 border-white/20 text-white shadow-[1px_1px_0_0_#000]"
+              ? "bg-amber-500 text-amber-950 border-t-2 border-l-2 border-amber-900 border-b-2 border-r-2 border-amber-300 shadow-inner"
+              : "bg-amber-300 hover:bg-amber-200 text-amber-950 border-t-2 border-l-2 border-amber-100 border-b-2 border-r-2 border-amber-800 shadow-[2px_2px_0_0_#050914]"
           }`}
           title={isPlaying ? "Pause / Jeda" : "Play / Putar"}
         >
           {isPlaying ? (
-            <div className="w-2.5 h-2.5 bg-[#78350F] rounded-2xs" />
+            <div className="w-2.5 h-2.5 bg-amber-950 rounded-2xs" />
           ) : (
-            <PixelIcon name="play" size={12} color="white" />
+            <PixelIcon name="play" size={12} color="current" />
           )}
         </button>
       </div>
