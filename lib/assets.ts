@@ -1,5 +1,5 @@
 /**
- * GAME_ASSETS - Master Asset Registry for "A Space for the Unbound"
+ * GAME_ASSETS & ASSETS - Master Asset Registry for "A Space for the Unbound"
  * Cleanly categorized asset paths, metadata, and aspect ratios to ensure
  * zero Cumulative Layout Shift (CLS: 0) and handcrafted diegetic presentation.
  */
@@ -86,4 +86,18 @@ export const GAME_ASSETS = {
   },
 } as const;
 
+/**
+ * ASSETS - Convenient shorthand alias with direct character mappings:
+ * ASSETS.atma, ASSETS.raya, ASSETS.nirmala
+ */
+export const ASSETS = {
+  ...GAME_ASSETS,
+  atma: GAME_ASSETS.characters.atma,
+  raya: GAME_ASSETS.characters.raya,
+  nirmala: GAME_ASSETS.characters.nirmala,
+} as const;
+
 export type GameAssetsType = typeof GAME_ASSETS;
+export type AssetsType = typeof ASSETS;
+
+export default ASSETS;

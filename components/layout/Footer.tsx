@@ -1,6 +1,8 @@
 import React from "react";
 import PixelIcon from "@/components/ui/PixelIcon";
+import RetroImage from "@/components/ui/RetroImage";
 import { NAV_LINKS } from "@/lib/constants";
+import { GAME_ASSETS } from "@/lib/assets";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -19,13 +21,16 @@ export default function Footer() {
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
               <div className="h-10 w-auto flex items-center justify-center shrink-0">
-                <img
-                  src="/assets/images/logo_trimmed.webp"
+                <RetroImage
+                  src={GAME_ASSETS.hero.logo}
                   alt="A Space for the Unbound Logo"
                   width={140}
                   height={40}
                   className="h-10 w-auto max-h-10 max-w-[140px] object-contain brightness-110 drop-shadow-[0_0_12px_rgba(127,231,216,0.5)]"
                   style={{ maxHeight: "40px", width: "auto" }}
+                  fallbackText="ASFTU"
+                  fallbackSubtext=""
+                  fallbackClassName="min-h-0 h-10 w-24 p-1"
                 />
               </div>
               <span className="font-display text-base font-bold text-text-main tracking-wider">

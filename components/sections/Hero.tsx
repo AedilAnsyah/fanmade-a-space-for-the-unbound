@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import Image from "next/image";
+import RetroImage from "@/components/ui/RetroImage";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Starfield from "@/components/effects/Starfield";
 import Button from "@/components/ui/Button";
@@ -181,13 +181,15 @@ export default function Hero({ onOpenTrailer }: HeroProps) {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="h-16 sm:h-20 w-auto mb-4 drop-shadow-[0_0_25px_rgba(127,231,216,0.4)] relative"
           >
-            <Image
+            <RetroImage
               src={GAME_ASSETS.hero.logo}
               alt="Logo Resmi A Space for the Unbound"
               width={260}
               height={80}
               className="h-full w-auto object-contain brightness-110"
               priority
+              fallbackText="A SPACE FOR THE UNBOUND"
+              fallbackSubtext="LOGO RESMI // 1999"
             />
           </motion.div>
 
@@ -285,13 +287,15 @@ export default function Hero({ onOpenTrailer }: HeroProps) {
             <div className="relative z-20 polaroid-frame shadow-2xl rounded-sm">
               <div className="washi-tape -top-2 left-6" />
               <div className="aspect-[4/3] bg-[#F2E6D8] overflow-hidden rounded-sm mb-3 relative">
-                <Image
+                <RetroImage
                   src={GAME_ASSETS.hero.polaroidFloat}
                   alt="Kenangan persahabatan di kota Loka 1999"
                   fill
                   sizes="(max-width: 768px) 100vw, 420px"
                   className="object-cover hover:scale-105 transition-transform duration-500"
                   priority
+                  fallbackText="MEMORI TIDAK DITEMUKAN"
+                  fallbackSubtext="HALTE KOTA LOKA // 1999"
                 />
               </div>
               <div className="flex items-center justify-between px-1">
@@ -312,12 +316,14 @@ export default function Hero({ onOpenTrailer }: HeroProps) {
             >
               <div className="washi-tape -top-2 right-4 bg-[#7FE7D8]/60" />
               <div className="aspect-video bg-[#F2E6D8] overflow-hidden rounded-sm mb-1.5 relative">
-                <Image
+                <RetroImage
                   src={GAME_ASSETS.cartridgeCovers.cassetteCover}
                   alt="Danau Loka dan dermaga kayu"
                   fill
                   sizes="210px"
                   className="object-cover"
+                  fallbackText="MEMORI TIDAK DITEMUKAN"
+                  fallbackSubtext="DERMAGA LOKA // 1999"
                 />
               </div>
               <p className="font-handwriting text-xs text-slate-700">Tawa di tepi dermaga...</p>

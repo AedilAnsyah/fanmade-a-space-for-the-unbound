@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
 import PixelIcon from "@/components/ui/PixelIcon";
+import RetroImage from "@/components/ui/RetroImage";
 import { GAME_ASSETS } from "@/lib/assets";
 
 interface MemoryTarget {
@@ -204,14 +204,14 @@ export default function Gameplay() {
                     className="relative group rounded-xl overflow-hidden border-2 border-dive-accent/30 hover:border-dive-accent bg-[#070b16] transition-all duration-300 shadow-lg"
                   >
                     {/* Viewfinder 4:3 Aspect Ratio Shell (CLS: 0) */}
-                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0A1020]">
-                      <Image
+                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#161B33]">
+                      <RetroImage
                         src={clip.gif}
                         alt={clip.title}
                         fill
-                        unoptimized
+                        unoptimized={true}
                         sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                        className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
                       />
 
                       {/* Phosphor CRT Scanline Lines */}
@@ -318,14 +318,14 @@ export default function Gameplay() {
                       : "border-white/10 bg-black/40 hover:border-brand-accent/50"
                   }`}
                 >
-                  <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-white/20 relative bg-black/50">
-                    <Image
+                  <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-white/20 relative bg-[#161B33]">
+                    <RetroImage
                       src={target.avatar}
                       alt={target.name}
                       fill
-                      unoptimized
+                      unoptimized={true}
                       sizes="48px"
-                      className="object-cover"
+                      className="object-cover object-center"
                     />
                   </div>
                   <div>
@@ -358,13 +358,14 @@ export default function Gameplay() {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                 {/* Left Visual: Spacedive Rift Screen Asset */}
                 <div className="lg:col-span-5 relative rounded-lg overflow-hidden border border-dive-accent/50 shadow-md">
-                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0A1020]">
-                    <Image
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#161B33]">
+                    <RetroImage
                       src={selectedTarget.riftImg}
                       alt={selectedTarget.name}
                       fill
+                      unoptimized={true}
                       sizes="(max-width: 768px) 100vw, 360px"
-                      className="object-cover filter contrast-110 saturate-125"
+                      className="object-cover object-center filter contrast-110 saturate-125"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dive-bg/90 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/80 border border-dive-accent/50 text-[10px] font-mono text-dive-accent">
@@ -492,15 +493,15 @@ export default function Gameplay() {
                 } items-center gap-8 lg:gap-12 p-6 sm:p-8 rounded-2xl bg-[#080d1d] border border-white/10 hover:border-dive-accent/50 transition-all duration-300 shadow-xl`}
               >
                 {/* Widescreen Cinematic Image Container (Zero CLS) */}
-                <div className="w-full lg:w-7/12 relative group overflow-hidden rounded-xl border border-white/20 bg-[#0E1528] shadow-2xl">
+                <div className="w-full lg:w-7/12 relative group overflow-hidden rounded-xl border border-white/20 bg-[#161B33] shadow-2xl">
                   <div className="relative aspect-[16/9] w-full overflow-hidden">
-                    <Image
+                    <RetroImage
                       src={frag.image}
                       alt={frag.title}
                       fill
-                      unoptimized={Boolean(frag.isGif)}
+                      unoptimized={true}
                       sizes="(max-width: 1024px) 100vw, 55vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-mono text-white/80 pointer-events-none">

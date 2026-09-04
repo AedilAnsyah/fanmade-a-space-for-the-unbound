@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
 import PixelIcon from "@/components/ui/PixelIcon";
+import RetroImage from "@/components/ui/RetroImage";
 import { CHARACTERS_DATA, Character } from "@/lib/constants";
-import { GAME_ASSETS } from "@/lib/assets";
+import { ASSETS } from "@/lib/assets";
 
 interface SecretMemory {
   title: string;
@@ -35,26 +35,27 @@ interface PoseOption {
   isGif?: boolean;
 }
 
+// Membaca URL yang valid secara langsung dari ASSETS.atma dan ASSETS.raya
 const CHARACTER_POSES: Record<string, PoseOption[]> = {
   atma: [
     {
       key: "bubblegum",
       label: "SANTAI",
-      src: GAME_ASSETS.characters.atma.default,
+      src: ASSETS.atma.default,
       alt: "Atma santai meniup permen karet di halte depan sekolah",
       caption: "Atma — Halte Depan Sekolah (1999)",
     },
     {
       key: "smiling",
       label: "SENYUM",
-      src: GAME_ASSETS.characters.atma.smiling,
+      src: ASSETS.atma.smiling,
       alt: "Atma tersenyum ramah di bangku kelas SMA Loka",
       caption: "Atma — Ruang Kelas 3-A SMA Loka",
     },
     {
       key: "action",
       label: "TERJATUH",
-      src: GAME_ASSETS.characters.atma.action,
+      src: ASSETS.atma.action,
       alt: "Atma terjatuh di dalam ruang dimensi retakan mimpi",
       caption: "Atma — Dimensi Retakan Kosmik",
     },
@@ -63,21 +64,21 @@ const CHARACTER_POSES: Record<string, PoseOption[]> = {
     {
       key: "chill",
       label: "SANTAI",
-      src: GAME_ASSETS.characters.raya.default,
+      src: ASSETS.raya.default,
       alt: "Raya bersantai di pinggir rel kereta menatap senja",
       caption: "Raya — Tepi Rel Menatap Senja (1999)",
     },
     {
       key: "power",
       label: "SPACEDIVE",
-      src: GAME_ASSETS.characters.raya.power,
+      src: ASSETS.raya.power,
       alt: "Raya mengaktifkan kekuatan magis Spacedive berpendar",
       caption: "Raya — Pendar Magis Spacedive",
     },
     {
       key: "bridge",
       label: "JEMBATAN",
-      src: GAME_ASSETS.characters.raya.bridgeGif,
+      src: ASSETS.raya.bridgeGif,
       alt: "Raya berdiri di atas jembatan kali Loka (animasi)",
       caption: "Raya — Semilir Angin Jembatan Kali Loka",
       isGif: true,
@@ -95,21 +96,21 @@ const NIRMALA_POSES: PoseOption[] = [
   {
     key: "dusk",
     label: "SENJA",
-    src: GAME_ASSETS.characters.nirmala.dusk,
+    src: ASSETS.nirmala.dusk,
     alt: "Nirmala berdiri di bawah langit senja keemasan kota Loka",
     caption: "Nirmala — Langit Senja Loka",
   },
   {
     key: "bridge",
     label: "JEMBATAN",
-    src: GAME_ASSETS.characters.nirmala.bridge,
+    src: ASSETS.nirmala.bridge,
     alt: "Nirmala di jembatan kayu kali Loka",
     caption: "Nirmala — Jembatan Kayu",
   },
   {
     key: "laugh",
     label: "TAWA",
-    src: GAME_ASSETS.characters.nirmala.laughGif,
+    src: ASSETS.nirmala.laughGif,
     alt: "Nirmala tertawa riang (animasi)",
     caption: "Nirmala — Senyum Riang 16-Bit",
     isGif: true,
@@ -192,15 +193,15 @@ export default function Characters() {
                         {/* Washi Tape Semi-Transparan di Sudut Atas */}
                         <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-5 bg-[#FDE68A]/80 border border-[#D97706]/40 rotate-[-2deg] shadow-xs backdrop-blur-xs pointer-events-none z-20" />
 
-                        {/* Foto Cetak 3:4 dengan Aspect Ratio Terkunci (CLS: 0) */}
-                        <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xs bg-[#E2DBCF] border border-black/15 shadow-inner">
-                          <Image
+                        {/* Foto Cetak: Aspect Ratio Dikunci dengan relative w-full aspect-[3/4] & object-cover object-center */}
+                        <div className="relative w-full aspect-[3/4] overflow-hidden rounded-2xs bg-[#161B33] border border-black/15 shadow-inner">
+                          <RetroImage
                             src={currentPose.src}
                             alt={currentPose.alt}
                             fill
-                            unoptimized={Boolean(currentPose.isGif)}
-                            sizes="(max-width: 640px) 100vw, 260px"
-                            className="object-cover transition-transform duration-700 hover:scale-105"
+                            unoptimized={true}
+                            sizes="(max-width: 640px) 100vw, 280px"
+                            className="object-cover object-center transition-transform duration-700 hover:scale-105"
                             priority={index === 0}
                           />
                         </div>
@@ -340,14 +341,14 @@ export default function Characters() {
               <div className="absolute -top-2.5 left-1/3 w-16 h-4 bg-[#FDE68A]/80 border border-[#D97706]/40 rotate-[-3deg] shadow-xs pointer-events-none" />
 
               <div>
-                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#E2DBCF] rounded-2xs mb-3 border border-black/10">
-                  <Image
+                <div className="relative w-full aspect-[3/4] overflow-hidden bg-[#161B33] rounded-2xs mb-3 border border-black/10">
+                  <RetroImage
                     src={currentNirmalaPose.src}
                     alt={currentNirmalaPose.alt}
                     fill
-                    unoptimized={Boolean(currentNirmalaPose.isGif)}
+                    unoptimized={true}
                     sizes="(max-width: 640px) 100vw, 300px"
-                    className="object-cover"
+                    className="object-cover object-center"
                   />
                 </div>
 
@@ -390,14 +391,14 @@ export default function Characters() {
               <div className="absolute -top-2.5 right-1/4 w-16 h-4 bg-[#7FE7D8]/80 border border-[#0D9488]/40 rotate-[2deg] shadow-xs pointer-events-none" />
 
               <div>
-                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#E2DBCF] rounded-2xs mb-3 border border-black/10">
-                  <Image
-                    src={GAME_ASSETS.gameplayViewfinder[1].gif}
+                <div className="relative w-full aspect-[3/4] overflow-hidden bg-[#161B33] rounded-2xs mb-3 border border-black/10">
+                  <RetroImage
+                    src={ASSETS.gameplayViewfinder[1].gif}
                     alt="Lulu si kucing belang di rongsokan TV"
                     fill
-                    unoptimized
+                    unoptimized={true}
                     sizes="(max-width: 640px) 100vw, 300px"
-                    className="object-cover"
+                    className="object-cover object-center"
                   />
                 </div>
 
@@ -423,13 +424,14 @@ export default function Characters() {
               <div className="absolute -top-2.5 left-1/4 w-16 h-4 bg-[#FDE68A]/80 border border-[#D97706]/40 rotate-[-1deg] shadow-xs pointer-events-none" />
 
               <div>
-                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#E2DBCF] rounded-2xs mb-3 border border-black/10">
-                  <Image
-                    src={GAME_ASSETS.newsClippings.school}
+                <div className="relative w-full aspect-[3/4] overflow-hidden bg-[#161B33] rounded-2xs mb-3 border border-black/10">
+                  <RetroImage
+                    src={ASSETS.newsClippings.school}
                     alt="Warga dan suasana kota Loka 1999"
                     fill
+                    unoptimized={true}
                     sizes="(max-width: 640px) 100vw, 300px"
-                    className="object-cover"
+                    className="object-cover object-center"
                   />
                 </div>
 

@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import PixelIcon from "@/components/ui/PixelIcon";
+import RetroImage from "@/components/ui/RetroImage";
 import { TIMELINE_DATA, Milestone } from "@/lib/constants";
-import { GAME_ASSETS } from "@/lib/assets";
+import { ASSETS } from "@/lib/assets";
 
 export default function News() {
   const [selectedFilter, setSelectedFilter] = useState<string>("Semua");
@@ -31,25 +31,25 @@ export default function News() {
     switch (idx % 4) {
       case 0:
         return {
-          src: GAME_ASSETS.newsClippings.school,
+          src: ASSETS.newsClippings.school,
           alt: "Arsip foto sekolah dan kehidupan siswa Loka 1999",
           caption: "Kliping 01: Kehidupan Siswa SMA Loka 1999",
         };
       case 1:
         return {
-          src: GAME_ASSETS.newsClippings.bridge,
+          src: ASSETS.newsClippings.bridge,
           alt: "Pemandangan jembatan kali Loka di sore hari",
           caption: "Kliping 02: Suasana Jembatan Kali Loka",
         };
       case 2:
         return {
-          src: GAME_ASSETS.hero.polaroidFloat,
+          src: ASSETS.hero.polaroidFloat,
           alt: "Foto bertiga Atma, Raya, dan Nirmala",
           caption: "Kliping 03: Trio Kenangan Manis Kota Loka",
         };
       default:
         return {
-          src: GAME_ASSETS.cartridgeCovers.cassetteCover,
+          src: ASSETS.cartridgeCovers.cassetteCover,
           alt: "Danau Loka dan dermaga kayu",
           caption: "Kliping 04: Dermaga Kayu Danau Loka",
         };
@@ -117,13 +117,14 @@ export default function News() {
             <div className="lg:col-span-5 relative">
               <div className="p-3 bg-white border border-black/30 shadow-md rotate-[1deg]">
                 {/* Fixed aspect ratio with warm cream skeleton background for zero CLS */}
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F2E6D8] border border-black/10">
-                  <Image
-                    src={GAME_ASSETS.hero.banner}
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#161B33] border border-black/10">
+                  <RetroImage
+                    src={ASSETS.hero.banner}
                     alt="Arsip Utama Redaksi Warta Loka 1999: Atma dan Raya berlari menatap langit"
                     fill
+                    unoptimized={true}
                     sizes="(max-width: 1024px) 100vw, 400px"
-                    className="object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-300"
+                    className="object-cover object-center grayscale contrast-125 hover:grayscale-0 transition-all duration-300"
                     priority
                   />
                 </div>
@@ -216,13 +217,14 @@ export default function News() {
 
                     {/* Inset Newspaper Halftone Photo (Zero CLS with aspect-[16/9]) */}
                     <div className="my-3 p-2 bg-white border border-black/20 shadow-xs">
-                      <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#F2E6D8]">
-                        <Image
+                      <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#161B33]">
+                        <RetroImage
                           src={photo.src}
                           alt={photo.alt}
                           fill
+                          unoptimized={true}
                           sizes="(max-width: 768px) 100vw, 450px"
-                          className="object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-300"
+                          className="object-cover object-center grayscale contrast-125 hover:grayscale-0 transition-all duration-300"
                         />
                       </div>
                       <span className="text-[10px] font-mono text-black/60 block mt-1 text-center">

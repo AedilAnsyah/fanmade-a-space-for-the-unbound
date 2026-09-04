@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
+import RetroImage from "@/components/ui/RetroImage";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
 import PixelIcon from "@/components/ui/PixelIcon";
@@ -79,12 +79,14 @@ export default function PlayNow() {
           className="mb-14 p-4 sm:p-6 rounded-2xl bg-[#0e1526] border-2 border-brand-primary/40 shadow-xl max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-6"
         >
           <div className="relative w-48 sm:w-56 aspect-[4/3] rounded-lg overflow-hidden shrink-0 border border-white/20 bg-[#F2E6D8] shadow-md">
-            <Image
+            <RetroImage
               src={GAME_ASSETS.cartridgeCovers.cassetteCover}
               alt="Sampul Kaset Resmi Edisi Spesial A Space for the Unbound"
               fill
               sizes="224px"
               className="object-cover"
+              fallbackText="SAMPUL KASET RUSAK"
+              fallbackSubtext="EDISI KOLEKTOR // 1999"
             />
             <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/80 text-[9px] font-mono text-brand-primary uppercase">
               J-CARD 1999

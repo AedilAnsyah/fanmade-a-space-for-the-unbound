@@ -3,7 +3,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import PixelIcon from "@/components/ui/PixelIcon";
+import RetroImage from "@/components/ui/RetroImage";
 import { NAV_LINKS } from "@/lib/constants";
+import { GAME_ASSETS } from "@/lib/assets";
 import Button from "@/components/ui/Button";
 
 interface NavbarProps {
@@ -55,13 +57,16 @@ export default function Navbar({ onOpenTrailer }: NavbarProps) {
           className="flex items-center gap-3 group cursor-pointer focus:outline-none"
         >
           <div className="h-10 sm:h-12 flex items-center justify-center group-hover:scale-105 transition-transform drop-shadow-[0_0_15px_rgba(127,231,216,0.5)] shrink-0">
-            <img
-              src="/assets/images/logo_trimmed.webp"
+            <RetroImage
+              src={GAME_ASSETS.hero.logo}
               alt="A Space for the Unbound Logo"
               width={160}
               height={48}
               className="h-10 sm:h-12 w-auto max-h-12 max-w-[160px] object-contain brightness-110"
               style={{ maxHeight: "48px", width: "auto" }}
+              fallbackText="ASFTU"
+              fallbackSubtext=""
+              fallbackClassName="min-h-0 h-10 w-24 p-1"
             />
           </div>
           <div className="flex flex-col">

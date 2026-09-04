@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
+import RetroImage from "@/components/ui/RetroImage";
 import { motion, AnimatePresence } from "framer-motion";
 import PixelIcon from "@/components/ui/PixelIcon";
 import { GAME_ASSETS } from "@/lib/assets";
@@ -158,13 +158,15 @@ export default function AtmaJournal() {
 
                   <div className="polaroid-frame w-48 sm:w-56 text-center">
                     <div className="relative aspect-[4/3] bg-[#F2E6D8] overflow-hidden rounded-sm mb-2">
-                      <Image
+                      <RetroImage
                         src={entry.photo}
                         alt={entry.photoCaption}
                         fill
-                        unoptimized={Boolean(entry.isGif)}
+                        unoptimized={true}
                         sizes="224px"
                         className="object-cover"
+                        fallbackText="MEMORI TIDAK DITEMUKAN"
+                        fallbackSubtext={entry.stickerText}
                       />
                     </div>
                     <p className="font-handwriting text-base text-slate-700 font-medium">

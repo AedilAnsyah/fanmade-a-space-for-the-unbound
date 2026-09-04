@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import PixelIcon from "@/components/ui/PixelIcon";
+import RetroImage from "@/components/ui/RetroImage";
 import { TRAILERS_PLAYLIST, TrailerItem } from "@/lib/constants";
 
 interface VideoModalProps {
@@ -138,12 +139,16 @@ export default function VideoModal({
                   }`}
                 >
                   <div className="relative w-12 h-8 rounded overflow-hidden bg-black shrink-0">
-                    <img
+                    <RetroImage
                       src={trailer.thumbnail}
                       alt={trailer.title}
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="48px"
+                      className="object-cover"
+                      fallbackText="TRAILER"
+                      fallbackSubtext=""
                     />
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center pointer-events-none">
                       <PixelIcon name="play" size={12} color="white" />
                     </div>
                   </div>

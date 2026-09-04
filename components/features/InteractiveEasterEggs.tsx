@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
+import RetroImage from "@/components/ui/RetroImage";
 import { motion } from "framer-motion";
 import PixelIcon from "@/components/ui/PixelIcon";
 import { GAME_ASSETS } from "@/lib/assets";
@@ -83,13 +83,15 @@ export default function InteractiveEasterEggs() {
           <div className="p-5 rounded-xl bg-bg-primary/80 border border-brand-accent/30 flex flex-col justify-between group hover:border-brand-accent transition-all relative overflow-hidden">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-16 h-16 rounded-xl overflow-hidden bg-black/40 border border-white/10 shrink-0 relative">
-                <Image
+                <RetroImage
                   src={GAME_ASSETS.gameplayViewfinder[1].gif}
                   alt="Lulu si Belang"
                   fill
-                  unoptimized
+                  unoptimized={true}
                   sizes="64px"
                   className="object-cover"
+                  fallbackText="LULU"
+                  fallbackSubtext="KUCING"
                 />
               </div>
               <div>
@@ -137,15 +139,17 @@ export default function InteractiveEasterEggs() {
           <div className="p-5 rounded-xl bg-bg-primary/80 border border-brand-primary/30 flex flex-col justify-between group hover:border-brand-primary transition-all">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-16 h-16 rounded-xl overflow-hidden bg-black/40 border border-white/10 shrink-0 relative">
-                <Image
+                <RetroImage
                   src={GAME_ASSETS.gameplayViewfinder[3].gif}
                   alt="Kentongan Ronda"
                   fill
-                  unoptimized
+                  unoptimized={true}
                   sizes="64px"
                   className={`object-cover transition-transform ${
                     isKentonganActive ? "scale-110" : ""
                   }`}
+                  fallbackText="RONDA"
+                  fallbackSubtext="KENTONGAN"
                 />
               </div>
               <div>
