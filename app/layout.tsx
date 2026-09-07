@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Special_Elite, Lora, Pixelify_Sans, Plus_Jakarta_Sans } from "next/font/google";
+import { Special_Elite, Lora, Pixelify_Sans, Plus_Jakarta_Sans, Caveat } from "next/font/google";
 
 import "./globals.css";
 import { Providers } from "./providers";
@@ -33,6 +33,12 @@ const pixelifySans = Pixelify_Sans({
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-plus-jakarta-sans",
+  display: "swap",
+});
+
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-caveat",
   display: "swap",
 });
 
@@ -107,7 +113,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${specialElite.variable} ${lora.variable} ${pixelifySans.variable} ${plusJakartaSans.variable}`}
+      className={`${specialElite.variable} ${lora.variable} ${pixelifySans.variable} ${plusJakartaSans.variable} ${caveat.variable}`}
     >
       <body className="font-reality-body antialiased">
         <Providers>{children}</Providers>

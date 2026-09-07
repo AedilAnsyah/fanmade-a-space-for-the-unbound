@@ -267,56 +267,59 @@ export function Hero({ onOpenBook, isTransitioning, isBookClosing = false, onBoo
               animate={{
                 opacity: bookIsOpen ? 0.15 : 1,
                 x: bookIsOpen ? -80 : 0,
-                rotate: -4,
               }}
               transition={{ duration: isClosingAnim ? 1.1 : 0.8, delay: bookIsOpen ? 0.3 : 0 }}
-              onClick={() => setInspectedProp("binder")}
-              className="group relative w-60 sm:w-64 p-3.5 rounded-sm bg-[#FFFDF5] text-[#2B2018] shadow-[0_12px_24px_rgba(0,0,0,0.55)] hidden md:block select-none cursor-pointer transition-all hover:scale-105 hover:-rotate-2 hover:shadow-[0_16px_32px_rgba(0,0,0,0.7)]"
-              style={{
-                backgroundImage: `
-                  repeating-linear-gradient(transparent, transparent 21px, rgba(59, 130, 246, 0.2) 21px, rgba(59, 130, 246, 0.2) 22px)
-                `,
-                lineHeight: "22px",
-              }}
-              title="Klik untuk mengangkat & membaca catatan binder"
+              className="hidden md:block select-none"
             >
-              {/* Masking Tape on Top */}
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-5 bg-amber-200/75 border border-amber-300/40 shadow-sm rotate-1" />
+              <div
+                onClick={() => setInspectedProp("binder")}
+                className="group relative w-60 sm:w-64 p-3.5 rounded-sm bg-[#FFFDF5] text-[#2B2018] shadow-[0_14px_28px_rgba(0,0,0,0.6)] -rotate-6 transition-all hover:-rotate-2 hover:scale-105 duration-300 cursor-pointer select-none hover:shadow-[0_20px_35px_rgba(0,0,0,0.75)]"
+                style={{
+                  backgroundImage: `
+                    repeating-linear-gradient(transparent, transparent 21px, rgba(59, 130, 246, 0.2) 21px, rgba(59, 130, 246, 0.2) 22px)
+                  `,
+                  lineHeight: "22px",
+                }}
+                title="Klik untuk mengangkat & membaca catatan binder"
+              >
+                {/* Masking Tape on Top */}
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-5 bg-amber-200/75 border border-amber-300/40 shadow-sm rotate-1" />
 
-              <div className="text-[10px] font-mono uppercase tracking-wider text-red-700 font-bold border-b border-red-200 pb-1 mb-1.5 flex items-center justify-between">
-                <span>CATATAN BINDER</span>
-                <span className="text-[9px] text-gray-500">Hal. 12</span>
-              </div>
+                <div className="text-[10px] font-mono uppercase tracking-wider text-red-700 font-bold border-b border-red-200 pb-1 mb-1.5 flex items-center justify-between">
+                  <span>CATATAN BINDER</span>
+                  <span className="text-[9px] text-gray-500">Hal. 12</span>
+                </div>
 
-              <h4 className="font-reality-heading text-xs font-bold text-[#1C1917] mb-1">
-                Daftar Impian Sebelum Lulus:
-              </h4>
+                <h4 className="font-reality-heading text-xs font-bold text-[#1C1917] mb-1">
+                  Daftar Impian Sebelum Lulus:
+                </h4>
 
-              <ul className="font-reality-body text-[11px] text-[#44403C] space-y-1">
-                <li className="flex items-center gap-1.5">
-                  <span className="text-emerald-600 font-bold">☑</span>
-                  <span>Beli es potong di depan gerbang</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <span className="text-emerald-600 font-bold">☑</span>
-                  <span>Temani Raya cari kucing belang 3</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <span className="text-emerald-600 font-bold">☑</span>
-                  <span>Nonton film di Bioskop Surya</span>
-                </li>
-                <li className="flex items-center gap-1.5 text-red-800 font-semibold">
-                  <span className="text-red-700 font-bold">☐</span>
-                  <span>Ungkapkan rahasia tentang masa depan...</span>
-                </li>
-              </ul>
+                <ul className="font-reality-body text-[11px] text-[#44403C] space-y-1">
+                  <li className="flex items-center gap-1.5">
+                    <span className="text-emerald-600 font-bold">☑</span>
+                    <span>Beli es potong di depan gerbang</span>
+                  </li>
+                  <li className="flex items-center gap-1.5">
+                    <span className="text-emerald-600 font-bold">☑</span>
+                    <span>Temani Raya cari kucing belang 3</span>
+                  </li>
+                  <li className="flex items-center gap-1.5">
+                    <span className="text-emerald-600 font-bold">☑</span>
+                    <span>Nonton film di Bioskop Surya</span>
+                  </li>
+                  <li className="flex items-center gap-1.5 text-red-800 font-semibold">
+                    <span className="text-red-700 font-bold">☐</span>
+                    <span>Ungkapkan rahasia tentang masa depan...</span>
+                  </li>
+                </ul>
 
-              <div className="mt-2 pt-1 border-t border-dashed border-gray-300 flex items-center justify-between text-[9px] font-mono text-gray-500 italic">
-                <span>— Tulisan Atma &amp; Raya</span>
-                <span className="text-amber-800 font-bold not-italic transition-colors group-hover:text-red-800 flex items-center gap-0.5">
-                  <span>🔍</span>
-                  <span>Angkat</span>
-                </span>
+                <div className="mt-2 pt-1 border-t border-dashed border-gray-300 flex items-center justify-between text-[9px] font-mono text-gray-500 italic">
+                  <span>— Tulisan Atma &amp; Raya</span>
+                  <span className="text-amber-800 font-bold not-italic transition-colors group-hover:text-red-800 flex items-center gap-0.5">
+                    <span>🔍</span>
+                    <span>Angkat</span>
+                  </span>
+                </div>
               </div>
             </motion.div>
 

@@ -54,6 +54,7 @@ const config: Config = {
         /* REALITY */
         "reality-heading": ["var(--font-special-elite)", "cursive"],
         "reality-body": ["var(--font-lora)", "serif"],
+        handwriting: ["var(--font-caveat)", "'Segoe Print'", "'Bradley Hand'", "cursive"],
         /* DIVE */
         "dive-heading": ["var(--font-pixelify-sans)", "monospace"],
         "dive-body": ["var(--font-plus-jakarta-sans)", "sans-serif"],
