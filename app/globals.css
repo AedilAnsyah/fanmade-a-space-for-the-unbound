@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════
+ * CSS CUSTOM PROPERTIES
+ * Dive-accent is the single runtime-swappable variable
+ * that changes color per active character.
+ * ═══════════════════════════════════════════════════ */
+
+:root {
+  /* Default dive accent — Raya / psychic violet */
+  --dive-accent: #6C63FF;
+  --dive-secondary: #0284C7;
+  --dive-bg-top: #1E3A8A;
+  --dive-bg-bottom: #3B82F6;
+
+  /* Book red constants */
+  --book-red: #B33A3A;
+  --book-red-glow: #D8534F;
+}
+
+/* ═══════════════════════════════════════════════════
+ * GLOBAL RESETS
+ * ═══════════════════════════════════════════════════ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smooth scrolling */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════════════════
+ * LAYER-BASED BODY STYLES
+ * Applied dynamically via data attribute on <main>
+ * ═══════════════════════════════════════════════════ */
+
+/* REALITY defaults */
+[data-layer="reality"] {
+  background-color: #F4E9D8;
+  color: #2B2018;
+}
+
+/* DIVE defaults */
+[data-layer="dive"] {
+  background-color: #0A0E27;
+  color: #EDEBFA;
+}
+
+/* ═══════════════════════════════════════════════════
+ * LENIS OVERRIDES
+ * ═══════════════════════════════════════════════════ */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling {
+  overflow: auto;
+}
+
+/* ═══════════════════════════════════════════════════
+ * SELECTION COLORS
+ * ═══════════════════════════════════════════════════ */
+
+[data-layer="reality"] ::selection {
+  background-color: #C9633E;
+  color: #F4E9D8;
+}
+
+[data-layer="dive"] ::selection {
+  background-color: var(--dive-accent);
+  color: #0A0E27;
+}
+
+/* ═══════════════════════════════════════════════════
+ * CUSTOM RETRO NOSTALGIC SCROLLBAR
+ * ═══════════════════════════════════════════════════ */
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #04060d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+  border: 2px solid #04060d;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dive-accent, #6c63ff);
+}
+
+/* REALITY LAYER SCROLLBAR: Warm Paper & Vintage Wood */
+[data-layer="reality"]::-webkit-scrollbar-track,
+body:has([data-layer="reality"])::-webkit-scrollbar-track {
+  background: #E8DAC2;
+}
+
+[data-layer="reality"]::-webkit-scrollbar-thumb,
+body:has([data-layer="reality"])::-webkit-scrollbar-thumb {
+  background: #B39F82;
+  border: 2px solid #E8DAC2;
+}
+
+[data-layer="reality"]::-webkit-scrollbar-thumb:hover,
+body:has([data-layer="reality"])::-webkit-scrollbar-thumb:hover {
+  background: #991B1B;
+}
+
+/* Firefox / Modern Standard */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 #04060d;
+}
+
+html[data-layer="reality"],
+body:has([data-layer="reality"]) {
+  scrollbar-color: #B39F82 #E8DAC2;
+}
+
+/* ═══════════════════════════════════════════════════
+ * DIVE CUSTOM CURSOR
+ * Class added/removed by DiveCursor.tsx on non-touch devices.
+ * ═══════════════════════════════════════════════════ */
+
+body.dive-cursor-active,
+body.dive-cursor-active * {
+  cursor: none !important;
+}
+
+/* ═══════════════════════════════════════════════════
+ * SCROLLBAR HIDE (for horizontal timeline)
+ * ═══════════════════════════════════════════════════ */
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
