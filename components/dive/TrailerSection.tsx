@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Power, Eye, Radio, Tv, Sparkles, Film } from "lucide-react";
+import { Power, Eye, Radio, Tv, Sparkles } from "lucide-react";
 import { useLayer } from "@/components/layer/useLayer";
 
 /* ═══════════════════════════════════════════════════
@@ -262,12 +262,6 @@ export function TrailerSection() {
                       {/* Heavy CRT Vignette */}
                       <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_45px_rgba(0,0,0,0.95)] z-10" />
 
-                      {/* Retro 90s OSD Badge */}
-                      <div className="pointer-events-none absolute top-3 left-3 z-20 flex items-center gap-1.5 font-mono text-[9px] sm:text-[10px] text-green-400 bg-black/80 px-2 py-0.5 rounded border border-green-500/40">
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
-                        <span>{currentTrailer.label} &bull; PLAY ▶</span>
-                      </div>
-
                       <div className="pointer-events-none absolute bottom-3 right-3 z-20 font-mono text-[9px] text-amber-300/90 bg-black/80 px-2 py-0.5 rounded border border-amber-500/40">
                         <span>HI-FI STEREO &bull; 50Hz</span>
                       </div>
@@ -415,17 +409,8 @@ export function TrailerSection() {
               backgroundImage: "repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0,0,0,0.4) 40px, rgba(0,0,0,0.4) 42px)"
             }} />
 
-            {/* Left Desk Prop: VHS Cassette resting on the table (clean without text) */}
-            <div className="relative flex items-center gap-2 bg-[#18191f] px-3 py-2 rounded border border-stone-800 shadow-md">
-              <Film className="h-4 w-4 text-red-500" />
-              <div className="h-2 w-12 rounded bg-stone-700/60" />
-            </div>
-
-            {/* Center: Clean table surface */}
-            <div className="hidden sm:block" />
-
             {/* Right Desk Prop: TV Remote Control on the table (clean without text) */}
-            <div className="relative flex items-center gap-2 bg-stone-900 px-3 py-2 rounded border border-stone-700 shadow-md">
+            <div className="relative flex items-center gap-2 bg-stone-900 px-3 py-2 rounded border border-stone-700 shadow-md ml-auto">
               <div className="flex gap-1.5">
                 <span className="h-2.5 w-2.5 rounded-full bg-red-600" />
                 <span className="h-2.5 w-2.5 rounded-full bg-blue-600" />

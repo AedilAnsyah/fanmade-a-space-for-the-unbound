@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { TrailerModal } from "@/components/shared/TrailerModal";
+import { DeskPropModal } from "./DeskPropModal";
 
 /* ═══════════════════════════════════════════════════
  * HERO — REALITY LAYER: MEJA KELAS SMA INDONESIA
@@ -54,6 +55,7 @@ interface HeroProps {
 
 export function Hero({ onOpenBook, isTransitioning, isBookClosing = false, onBookClosed }: HeroProps) {
   const [trailerOpen, setTrailerOpen] = useState(false);
+  const [inspectedProp, setInspectedProp] = useState<"binder" | "polaroid" | null>(null);
   const [isBookHovered, setIsBookHovered] = useState(false);
   const [isBookOpening, setIsBookOpening] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -268,13 +270,15 @@ export function Hero({ onOpenBook, isTransitioning, isBookClosing = false, onBoo
                 rotate: -4,
               }}
               transition={{ duration: isClosingAnim ? 1.1 : 0.8, delay: bookIsOpen ? 0.3 : 0 }}
-              className="relative w-60 sm:w-64 p-3.5 rounded-sm bg-[#FFFDF5] text-[#2B2018] shadow-[0_12px_24px_rgba(0,0,0,0.55)] hidden md:block select-none pointer-events-none sm:pointer-events-auto"
+              onClick={() => setInspectedProp("binder")}
+              className="group relative w-60 sm:w-64 p-3.5 rounded-sm bg-[#FFFDF5] text-[#2B2018] shadow-[0_12px_24px_rgba(0,0,0,0.55)] hidden md:block select-none cursor-pointer transition-all hover:scale-105 hover:-rotate-2 hover:shadow-[0_16px_32px_rgba(0,0,0,0.7)]"
               style={{
                 backgroundImage: `
                   repeating-linear-gradient(transparent, transparent 21px, rgba(59, 130, 246, 0.2) 21px, rgba(59, 130, 246, 0.2) 22px)
                 `,
                 lineHeight: "22px",
               }}
+              title="Klik untuk mengangkat & membaca catatan binder"
             >
               {/* Masking Tape on Top */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-5 bg-amber-200/75 border border-amber-300/40 shadow-sm rotate-1" />
@@ -307,8 +311,12 @@ export function Hero({ onOpenBook, isTransitioning, isBookClosing = false, onBoo
                 </li>
               </ul>
 
-              <div className="mt-2 pt-1 border-t border-dashed border-gray-300 text-[9px] font-mono text-gray-500 italic text-right">
-                — Tulisan tangan Atma &amp; Raya
+              <div className="mt-2 pt-1 border-t border-dashed border-gray-300 flex items-center justify-between text-[9px] font-mono text-gray-500 italic">
+                <span>— Tulisan Atma &amp; Raya</span>
+                <span className="text-amber-800 font-bold not-italic transition-colors group-hover:text-red-800 flex items-center gap-0.5">
+                  <span>🔍</span>
+                  <span>Angkat</span>
+                </span>
               </div>
             </motion.div>
 
@@ -726,7 +734,11 @@ export function Hero({ onOpenBook, isTransitioning, isBookClosing = false, onBoo
             >
               
               {/* Polaroid Pasfoto of Atma & Raya */}
-              <div className="relative w-52 bg-white p-2.5 pb-4 shadow-[0_14px_28px_rgba(0,0,0,0.6)] rotate-6 transition-transform hover:rotate-2 duration-300">
+              <div
+                onClick={() => setInspectedProp("polaroid")}
+                className="group relative w-52 bg-white p-2.5 pb-4 shadow-[0_14px_28px_rgba(0,0,0,0.6)] rotate-6 transition-all hover:rotate-2 hover:scale-105 duration-300 cursor-pointer select-none hover:shadow-[0_20px_35px_rgba(0,0,0,0.75)]"
+                title="Klik untuk mengangkat & melihat foto dari dekat"
+              >
                 {/* Yellowish Masking Tape at Top Corner */}
                 <div className="absolute -top-3 right-4 w-14 h-5 bg-amber-200/75 border border-amber-300/40 shadow-sm -rotate-6" />
 
@@ -752,6 +764,10 @@ export function Hero({ onOpenBook, isTransitioning, isBookClosing = false, onBoo
                   <span className="font-mono text-[9px] text-stone-500 not-italic uppercase tracking-wider">
                     Loka &bull; Juli 1998
                   </span>
+                  <div className="mt-1.5 flex items-center justify-center gap-1 font-mono text-[9px] text-amber-900 font-bold not-italic transition-colors group-hover:text-red-800">
+                    <span>🔍</span>
+                    <span>Angkat Foto</span>
+                  </div>
                 </div>
               </div>
 
@@ -835,25 +851,44 @@ export function Hero({ onOpenBook, isTransitioning, isBookClosing = false, onBoo
           </div>
         </div>
 
-        {/* ── 6. VINTAGE PENCIL & RULER SCATTERED AT BOTTOM ── */}
-        <div className="relative z-20 mx-auto flex flex-wrap items-center justify-center gap-3 pt-2">
+        {/* ── 6. DESK ACCESSORIES & MOBILE PROMPT ACTIONS ── */}
+        <div className="relative z-20 mx-auto flex flex-wrap items-center justify-center gap-2.5 pt-2">
+          {/* Mobile Prop Inspection Buttons */}
+          <button
+            type="button"
+            onClick={() => setInspectedProp("binder")}
+            className="md:hidden inline-flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-950/60 px-3 py-1.5 font-mono text-xs text-amber-200 shadow backdrop-blur-sm transition-all hover:bg-amber-900 cursor-pointer"
+          >
+            <span>📝</span>
+            <span>Lihat Catatan</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setInspectedProp("polaroid")}
+            className="lg:hidden inline-flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-950/60 px-3 py-1.5 font-mono text-xs text-amber-200 shadow backdrop-blur-sm transition-all hover:bg-amber-900 cursor-pointer"
+          >
+            <span>📷</span>
+            <span>Lihat Foto</span>
+          </button>
+
           {/* Mobile Trailer Button (shows if on small screens) */}
           <button
             type="button"
             onClick={() => setTrailerOpen(true)}
-            className="lg:hidden inline-flex items-center gap-2 rounded-lg border border-amber-600/30 bg-amber-950/60 px-4 py-2 font-mono text-xs text-amber-200 shadow-md backdrop-blur-sm transition-all hover:bg-amber-900"
+            className="lg:hidden inline-flex items-center gap-2 rounded-lg border border-amber-600/30 bg-amber-950/60 px-4 py-2 font-mono text-xs text-amber-200 shadow-md backdrop-blur-sm transition-all hover:bg-amber-900 cursor-pointer"
           >
             <Play className="h-3.5 w-3.5 fill-amber-300 text-amber-300" />
             <span>Tonton Trailer Resmi</span>
           </button>
-
-          {/* SEA Game Awards Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-black/40 px-4 py-1.5 font-mono text-[10px] sm:text-xs text-amber-200/80 backdrop-blur-sm">
-            <span>🏆</span>
-            <span>Best Storytelling &bull; SEA Game Awards</span>
-          </div>
         </div>
       </section>
+
+      {/* ── Desk Prop Inspection Modal (3D Flip & Easter Eggs) ── */}
+      <DeskPropModal
+        propType={inspectedProp}
+        onClose={() => setInspectedProp(null)}
+      />
 
       {/* ── Trailer Modal ────────────────────────────── */}
       <TrailerModal
