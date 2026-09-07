@@ -32,6 +32,7 @@ export function Navbar() {
   const [isMinimized, setIsMinimized] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [hoveredNav, setHoveredNav] = useState<string | null>(null);
   const lastScrollY = useRef(0);
 
   // Auto-hide on scroll down, show on scroll up, and track active section
@@ -195,10 +196,14 @@ export function Navbar() {
               <div className="hidden sm:flex items-center gap-1 md:gap-1.5">
                 {NAV_LINKS.map((link) => {
                   const isActive = activeSection === link.id;
+                  const isHovered = hoveredNav === link.id;
+
                   return (
                     <button
                       key={link.id}
                       type="button"
+                      onMouseEnter={() => setHoveredNav(link.id)}
+                      onMouseLeave={() => setHoveredNav(null)}
                       onClick={(e) => {
                         const rect = e.currentTarget.getBoundingClientRect();
                         scrollToSection(link.id, {
@@ -206,28 +211,69 @@ export function Navbar() {
                           y: Math.round(rect.top + rect.height / 2),
                         });
                       }}
-                      className="relative rounded-lg px-2.5 md:px-3 py-1 font-dive-heading text-xs transition-all duration-200 hover:scale-105 cursor-pointer flex items-center gap-1.5"
+                      className="group relative rounded-lg px-2.5 md:px-3 py-1.5 font-dive-heading text-xs transition-all duration-200 cursor-pointer flex items-center gap-1.5 select-none"
                       style={{
+                        transform: isHovered && !isActive ? "translateY(-1px) scale(1.05)" : isActive ? "scale(1.02)" : "none",
                         color: isActive
                           ? "#FFFFFF"
+                          : isHovered
+                          ? isReality
+                            ? "#8A1C1C"
+                            : "#35D4C7"
                           : isReality
-                          ? "#2B2018"
+                          ? "#382D24"
                           : "#EDEBFA",
                         backgroundColor: isActive
                           ? isReality
                             ? "#B33A3A"
                             : "var(--dive-accent)"
+                          : isHovered
+                          ? isReality
+                            ? "rgba(179, 58, 58, 0.12)"
+                            : "rgba(108, 99, 255, 0.22)"
                           : "transparent",
+                        border: isActive
+                          ? isReality
+                            ? "1px solid rgba(179, 58, 58, 0.8)"
+                            : "1px solid var(--dive-accent)"
+                          : isHovered
+                          ? isReality
+                            ? "1px solid rgba(179, 58, 58, 0.35)"
+                            : "1px solid rgba(53, 212, 199, 0.45)"
+                          : "1px solid transparent",
                         boxShadow: isActive
                           ? isReality
-                            ? "0 2px 10px rgba(179,58,58,0.4)"
-                            : "0 0 14px color-mix(in srgb, var(--dive-accent) 50%, transparent)"
+                            ? "0 3px 12px rgba(179,58,58,0.4)"
+                            : "0 0 16px color-mix(in srgb, var(--dive-accent) 60%, transparent)"
+                          : isHovered
+                          ? isReality
+                            ? "0 3px 10px rgba(179,58,58,0.18)"
+                            : "0 0 14px rgba(53, 212, 199, 0.3)"
                           : "none",
                       }}
                     >
-                      <span>{link.label}</span>
+                      <span className="relative z-10 font-medium tracking-wide">{link.label}</span>
                       {isActive && (
-                        <span className="h-1.5 w-1.5 rounded-full bg-amber-300 animate-pulse" />
+                        <span className="relative z-10 h-1.5 w-1.5 rounded-full bg-amber-300 animate-pulse" />
+                      )}
+                      {/* Active or Hover bottom glowing indicator line */}
+                      {(isActive || isHovered) && (
+                        <motion.span
+                          layoutId="navbar-hover-glow"
+                          className="absolute bottom-0.5 left-2 right-2 h-0.5 rounded-full pointer-events-none"
+                          style={{
+                            background: isReality
+                              ? isActive
+                                ? "rgba(255, 255, 255, 0.7)"
+                                : "rgba(179, 58, 58, 0.7)"
+                              : isActive
+                              ? "rgba(255, 255, 255, 0.8)"
+                              : "rgba(53, 212, 199, 0.9)",
+                            boxShadow: isReality
+                              ? "0 0 4px rgba(179, 58, 58, 0.4)"
+                              : "0 0 6px rgba(53, 212, 199, 0.8)",
+                          }}
+                        />
                       )}
                     </button>
                   );
@@ -314,7 +360,7 @@ export function Navbar() {
                           key={`mobile-${link.id}`}
                           type="button"
                           onClick={() => scrollToSection(link.id)}
-                          className="flex items-center gap-2 rounded-lg px-3 py-2 text-left font-dive-heading text-xs transition-colors cursor-pointer"
+                          className="flex items-center gap-2 rounded-lg px-3 py-2 text-left font-dive-heading text-xs transition-all hover:scale-[1.03] hover:shadow-md active:scale-95 cursor-pointer"
                           style={{
                             color: isActive
                               ? "#FFFFFF"
@@ -326,8 +372,15 @@ export function Navbar() {
                                 ? "#B33A3A"
                                 : "var(--dive-accent)"
                               : isReality
-                              ? "rgba(140,123,101,0.1)"
-                              : "rgba(255,255,255,0.05)",
+                              ? "rgba(140,123,101,0.12)"
+                              : "rgba(255,255,255,0.06)",
+                            border: isActive
+                              ? isReality
+                                ? "1px solid rgba(179, 58, 58, 0.8)"
+                                : "1px solid var(--dive-accent)"
+                              : isReality
+                              ? "1px solid rgba(140,123,101,0.2)"
+                              : "1px solid rgba(255,255,255,0.1)",
                           }}
                         >
                           <span>{link.icon}</span>
