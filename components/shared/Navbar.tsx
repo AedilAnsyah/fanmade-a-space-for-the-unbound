@@ -256,25 +256,6 @@ export function Navbar() {
                       {isActive && (
                         <span className="relative z-10 h-1.5 w-1.5 rounded-full bg-amber-300 animate-pulse" />
                       )}
-                      {/* Active or Hover bottom glowing indicator line */}
-                      {(isActive || isHovered) && (
-                        <motion.span
-                          layoutId="navbar-hover-glow"
-                          className="absolute bottom-0.5 left-2 right-2 h-0.5 rounded-full pointer-events-none"
-                          style={{
-                            background: isReality
-                              ? isActive
-                                ? "rgba(255, 255, 255, 0.7)"
-                                : "rgba(179, 58, 58, 0.7)"
-                              : isActive
-                              ? "rgba(255, 255, 255, 0.8)"
-                              : "rgba(53, 212, 199, 0.9)",
-                            boxShadow: isReality
-                              ? "0 0 4px rgba(179, 58, 58, 0.4)"
-                              : "0 0 6px rgba(53, 212, 199, 0.8)",
-                          }}
-                        />
-                      )}
                     </button>
                   );
                 })}

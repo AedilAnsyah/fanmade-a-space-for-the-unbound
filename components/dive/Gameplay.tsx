@@ -22,9 +22,15 @@ import { useLayer } from "@/components/layer/useLayer";
  * ═══════════════════════════════════════════════════ */
 
 // ── Render the Left Page (Personal Diary, Notes, Lore & Controls) ────
-function LeftPageContent({ step }: { step: GameplayStep }) {
+function LeftPageContent({
+  step,
+  onSwitchToPhoto,
+}: {
+  step: GameplayStep;
+  onSwitchToPhoto?: () => void;
+}) {
   return (
-    <div className="h-full w-full p-4 sm:p-5 md:p-6 flex flex-col justify-between relative bg-[#FAF6EE] text-[#2B2018] select-none">
+    <div className="h-full w-full p-3 sm:p-4 md:p-6 flex flex-col justify-between relative bg-[#FAF6EE] text-[#2B2018] select-none overflow-y-auto">
       {/* Subtle notebook ruling lines */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.06]"
@@ -33,12 +39,12 @@ function LeftPageContent({ step }: { step: GameplayStep }) {
         }}
       />
 
-      {/* Realistic Inner Spine Shadow Curvature on the right edge */}
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-black/25 via-black/10 to-transparent" />
+      {/* Realistic Inner Spine Shadow Curvature on the right edge - hidden on mobile */}
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-black/25 via-black/10 to-transparent hidden md:block" />
 
       <div>
         {/* Page Top Header with Stamped Tag */}
-        <div className="flex items-center justify-between pb-1.5 border-b-2 border-[#2B2018]/25 mb-3 font-mono text-xs">
+        <div className="flex items-center justify-between pb-1.5 border-b-2 border-[#2B2018]/25 mb-2.5 sm:mb-3 font-mono text-xs">
           <div className="flex items-center gap-2">
             <span className="bg-[#991B1B] text-[#FEF08A] px-2 py-0.5 rounded font-bold text-[10px] uppercase shadow-sm">
               {step.tag}
@@ -53,21 +59,21 @@ function LeftPageContent({ step }: { step: GameplayStep }) {
         </div>
 
         {/* Diary Heading */}
-        <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-black text-[#1C1917] leading-tight mb-1">
+        <h3 className="font-serif text-base sm:text-xl md:text-3xl font-black text-[#1C1917] leading-tight mb-1">
           {step.order}. {step.title}
         </h3>
 
-        <p className="font-serif italic text-xs sm:text-sm text-red-900 font-semibold mb-2.5">
+        <p className="font-serif italic text-xs sm:text-sm text-red-900 font-semibold mb-2">
           &ldquo;{step.subtitle}&rdquo;
         </p>
 
         {/* Story Narrative */}
-        <p className="font-serif text-xs sm:text-sm leading-relaxed text-[#2B2018]/90 mb-3">
+        <p className="font-serif text-xs sm:text-sm leading-relaxed text-[#2B2018]/90 mb-2.5 sm:mb-3">
           {step.description}
         </p>
 
         {/* Yellow Sticky Note (Personal Observation) */}
-        <div className="p-2.5 rounded-lg border border-amber-300/80 bg-[#FEF9C3] shadow-[2px_2px_0px_#CA8A04] relative mb-3 transform rotate-[-0.5deg]">
+        <div className="p-2 sm:p-2.5 rounded-lg border border-amber-300/80 bg-[#FEF9C3] shadow-[2px_2px_0px_#CA8A04] relative mb-2 sm:mb-3 transform rotate-[-0.5deg]">
           {/* Masking Tape strip on top */}
           <div className="absolute -top-2 left-6 w-12 h-3 bg-amber-200/90 border border-amber-300/60 transform -rotate-2 opacity-90" />
           <p className="font-serif text-[11px] sm:text-xs text-[#713F12] leading-relaxed">
@@ -76,19 +82,30 @@ function LeftPageContent({ step }: { step: GameplayStep }) {
         </div>
 
         {/* 90s Arcade Controls Guide */}
-        <div className="flex items-center gap-2 text-[11px] font-mono bg-[#EFE6D1] px-2.5 py-1.5 rounded border border-[#2B2018]/25 shadow-inner">
+        <div className="flex items-center gap-2 text-[10px] sm:text-[11px] font-mono bg-[#EFE6D1] px-2 sm:px-2.5 py-1.5 rounded border border-[#2B2018]/25 shadow-inner">
           <span className="text-red-800 font-bold">KONTROL:</span>
-          <span className="text-[#1C1917]">{step.controlsHint}</span>
+          <span className="text-[#1C1917] truncate">{step.controlsHint}</span>
         </div>
       </div>
 
       {/* Left Page Footer: Official Seal of Kota Loka & Personal Stamp */}
-      <div className="mt-3 pt-2 border-t border-[#2B2018]/20 flex items-center justify-between font-mono text-[10px] text-[#78716C]">
+      <div className="mt-2.5 pt-2 border-t border-[#2B2018]/20 flex items-center justify-between font-mono text-[10px] text-[#78716C]">
         <span className="flex items-center gap-1 font-bold text-red-800">
           <span>🐾</span>
-          <span>CAP DISETUJUI ATMA &bull; KOTA LOKA</span>
+          <span className="hidden xs:inline">CAP DISETUJUI ATMA &bull; KOTA LOKA</span>
+          <span className="xs:inline sm:hidden">CAP RESMI ATMA</span>
         </span>
-        <span className="italic">Koleksi Memori #0{step.order}</span>
+        {onSwitchToPhoto ? (
+          <button
+            type="button"
+            onClick={onSwitchToPhoto}
+            className="md:hidden inline-flex items-center gap-1 text-[10px] font-bold text-red-900 bg-amber-200/90 px-2 py-0.5 rounded border border-amber-400/60 shadow-xs active:scale-95 cursor-pointer"
+          >
+            <span>Buka Foto 📸</span>
+          </button>
+        ) : (
+          <span className="italic">Koleksi Memori #0{step.order}</span>
+        )}
       </div>
     </div>
   );
@@ -109,25 +126,25 @@ function RightPageContent({
   onEasterEgg?: () => void;
 }) {
   return (
-    <div className="h-full w-full p-4 sm:p-5 md:p-6 flex flex-col justify-between relative bg-[#F5EEDC] text-[#2B2018] select-none">
-      {/* Realistic Inner Spine Shadow Curvature on the left edge */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black/25 via-black/10 to-transparent" />
+    <div className="h-full w-full p-3 sm:p-4 md:p-6 flex flex-col justify-between relative bg-[#F5EEDC] text-[#2B2018] select-none overflow-y-auto">
+      {/* Realistic Inner Spine Shadow Curvature on the left edge - hidden on mobile */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black/25 via-black/10 to-transparent hidden md:block" />
 
-      <div className="flex flex-col flex-1 justify-center py-2">
+      <div className="flex flex-col flex-1 justify-center py-1 sm:py-2">
         {/* Header Label */}
-        <div className="flex items-center justify-between pb-1.5 border-b border-[#2B2018]/20 mb-3 font-mono text-[11px] text-[#57534E]">
+        <div className="flex items-center justify-between pb-1.5 border-b border-[#2B2018]/20 mb-2 sm:mb-3 font-mono text-[10px] sm:text-[11px] text-[#57534E]">
           <span className="font-bold uppercase text-[#1C1917]">JENDELA MEMORI BERGERAK</span>
-          <span className="font-serif italic text-[11px] text-[#78716C]">Foto Dokumentasi Loka</span>
+          <span className="font-serif italic text-[11px] text-[#78716C] hidden xs:inline">Foto Dokumentasi Loka</span>
         </div>
 
         {/* SCRAPBOOK PHOTO PRINT (Tempelan Foto) */}
-        <div className="relative mx-auto my-2 w-full max-w-[350px] sm:max-w-[410px] bg-[#FFFDF9] p-2.5 pb-4 sm:p-3 sm:pb-5 rounded-xs shadow-[3px_5px_16px_rgba(40,30,20,0.22)] border border-[#E7DECD] transform rotate-[0.6deg] transition-transform hover:rotate-0">
+        <div className="relative mx-auto my-1.5 sm:my-2 w-full max-w-[350px] sm:max-w-[410px] bg-[#FFFDF9] p-2 pb-3.5 sm:p-3 sm:pb-5 rounded-xs shadow-[3px_5px_16px_rgba(40,30,20,0.22)] border border-[#E7DECD] transform rotate-[0.6deg] transition-transform hover:rotate-0">
           {/* Translucent Masking Tape / Selotip Bening Tempelan di sudut atas */}
           <div className="pointer-events-none absolute -top-2.5 left-6 w-14 h-4 bg-amber-100/85 border border-amber-300/50 shadow-xs transform -rotate-3 backdrop-blur-xs opacity-90 z-20" />
           <div className="pointer-events-none absolute -top-2.5 right-6 w-14 h-4 bg-amber-100/85 border border-amber-300/50 shadow-xs transform rotate-2 backdrop-blur-xs opacity-90 z-20" />
 
           {/* Photo Print Image */}
-          <div className="relative aspect-video max-h-[200px] sm:max-h-[230px] md:max-h-[250px] w-full overflow-hidden bg-[#1E1B18] shadow-inner border border-stone-300/60 rounded-2xs">
+          <div className="relative aspect-video max-h-[150px] sm:max-h-[200px] md:max-h-[250px] w-full overflow-hidden bg-[#1E1B18] shadow-inner border border-stone-300/60 rounded-2xs">
             <img
               src={step.image}
               alt={step.title}
@@ -145,31 +162,32 @@ function RightPageContent({
           </div>
 
           {/* Handwritten Photo Caption */}
-          <div className="mt-2.5 px-1 text-center font-serif italic text-xs text-[#57534E]">
+          <div className="mt-2 px-1 text-center font-serif italic text-[11px] sm:text-xs text-[#57534E]">
             Rekaman Memori Lembar 0{step.order}: &ldquo;{step.tag}&rdquo;
           </div>
         </div>
 
         {/* Scrapbook Field Note / Archive Label to balance vertical space */}
-        <div className="mt-3 p-2 bg-[#EFE5CE]/80 rounded-xs border border-[#D4C4A8] flex items-center justify-between text-[11px] font-mono text-[#78716C] w-full max-w-[350px] sm:max-w-[410px] mx-auto shadow-inner">
-          <span className="flex items-center gap-1.5 font-bold text-red-900">
+        <div className="mt-2 sm:mt-3 p-1.5 sm:p-2 bg-[#EFE5CE]/80 rounded-xs border border-[#D4C4A8] flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-[#78716C] w-full max-w-[350px] sm:max-w-[410px] mx-auto shadow-inner">
+          <span className="flex items-center gap-1 font-bold text-red-900">
             <span className="text-amber-600">★</span>
-            <span>ARSIP VISUAL KOTA LOKA</span>
+            <span className="truncate">ARSIP VISUAL KOTA LOKA</span>
           </span>
-          <span className="italic text-[10px] text-[#57534E]">Terekam di Memori Batin</span>
+          <span className="italic text-[9px] sm:text-[10px] text-[#57534E] hidden xs:inline">Terekam di Memori Batin</span>
         </div>
       </div>
 
       {/* Navigation Buttons inside page */}
-      <div className="mt-3 pt-2 border-t border-[#2B2018]/20 flex items-center justify-between gap-2">
+      <div className="mt-2.5 pt-2 border-t border-[#2B2018]/20 flex items-center justify-between gap-1.5 sm:gap-2">
         <button
           type="button"
           onClick={onPrev}
           disabled={step.order === 1}
-          className="inline-flex items-center gap-1 rounded-sm border border-[#2B2018]/30 bg-[#EFE6D1] px-2.5 py-1 font-mono text-xs text-[#2B2018] transition-all hover:bg-[#E4DAC2] active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer shadow-sm font-bold"
+          className="inline-flex items-center gap-1 rounded-sm border border-[#2B2018]/30 bg-[#EFE6D1] px-2 sm:px-2.5 py-1 font-mono text-[10px] sm:text-xs text-[#2B2018] transition-all hover:bg-[#E4DAC2] active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer shadow-sm font-bold"
         >
-          <ChevronLeft className="h-3.5 w-3.5" />
-          <span>Lembar Sebelumnya</span>
+          <ChevronLeft className="h-3 sm:h-3.5 w-3 sm:w-3.5" />
+          <span className="hidden xs:inline">Lembar Sebelumnya</span>
+          <span className="xs:hidden">Sebelumnya</span>
         </button>
 
         <button
@@ -181,16 +199,16 @@ function RightPageContent({
               onNext?.();
             }
           }}
-          className="inline-flex items-center gap-1.5 rounded-sm px-3 py-1 font-mono text-xs text-white transition-all hover:scale-[1.03] active:scale-95 cursor-pointer shadow-md font-bold"
+          className="inline-flex items-center gap-1 sm:gap-1.5 rounded-sm px-2.5 sm:px-3 py-1 font-mono text-[10px] sm:text-xs text-white transition-all hover:scale-[1.03] active:scale-95 cursor-pointer shadow-md font-bold"
           style={{
             backgroundColor: "#991B1B",
             boxShadow: "0 0 14px rgba(153, 27, 27, 0.45)",
           }}
         >
           <span>
-            {isLast ? "Buka Lembar RiftDive" : "Balik Lembar Berikutnya"}
+            {isLast ? "Buka RiftDive" : "Lembar Berikutnya"}
           </span>
-          <ChevronRight className="h-3.5 w-3.5" />
+          <ChevronRight className="h-3 sm:h-3.5 w-3 sm:w-3.5" />
         </button>
       </div>
     </div>
@@ -363,7 +381,7 @@ export function Gameplay() {
       id="gameplay"
       className="relative w-full transition-colors duration-700 overflow-hidden"
       style={{
-        minHeight: "120vh",
+        minHeight: "100vh",
         background:
           timeOfDay === "siang"
             ? "linear-gradient(180deg, #102A72 0%, #1D4ED8 35%, #1E3A8A 70%, #0B1736 100%)"
@@ -411,8 +429,8 @@ export function Gameplay() {
         ))}
       </div>
 
-      {/* ── 2. STICKY VIEWPORT WITH DIEGETIC BOOK INTERFACE ── */}
-      <div className="sticky top-0 flex min-h-screen w-full flex-col items-center justify-center px-3 sm:px-6 py-4 md:py-6 overflow-visible">
+      {/* ── 2. VIEWPORT WITH DIEGETIC BOOK INTERFACE ── */}
+      <div className="relative flex min-h-screen w-full flex-col items-center justify-center px-2 sm:px-6 py-8 sm:py-12 md:py-8 overflow-visible">
         {/* Soft atmospheric center vignette */}
         <div
           className="pointer-events-none absolute inset-0"
@@ -490,7 +508,7 @@ export function Gameplay() {
                 <div
                   onTouchStart={handleTouchStart}
                   onTouchEnd={handleTouchEnd}
-                  className="book-surface relative h-[520px] sm:h-[550px] md:h-[580px] lg:h-[600px] flex items-stretch rounded-xs overflow-hidden shadow-md bg-[#F6EFE0] select-none touch-pan-y"
+                  className="book-surface relative h-[420px] sm:h-[520px] md:h-[580px] lg:h-[600px] flex items-stretch rounded-xs overflow-hidden shadow-md bg-[#F6EFE0] select-none touch-pan-y"
                   style={{
                     perspective: "1600px",
                     transformStyle: "preserve-3d",
@@ -552,13 +570,14 @@ export function Gameplay() {
                           ? targetStepData
                           : currentStepData
                       }
+                      onSwitchToPhoto={() => setMobileSubPage("photo")}
                     />
 
-                    {/* Interactive Manual Drag Zone on Left Page (Menyeret dari ujung kiri buku ke kanan) */}
+                    {/* Interactive Manual Drag Zone on Left Page (Desktop only - touch swipe handles mobile) */}
                     {activeStep > 0 && flipState === "idle" && (
                       <div
                         onPointerDown={(e) => handleEdgeDragStart(e, "prev")}
-                        className="group absolute top-0 bottom-12 left-0 w-16 sm:w-24 z-30 cursor-grab active:cursor-grabbing select-none flex items-center justify-start pl-1 sm:pl-2 touch-none"
+                        className="group absolute top-0 bottom-12 left-0 w-16 sm:w-24 z-30 cursor-grab active:cursor-grabbing select-none hidden sm:flex items-center justify-start pl-1 sm:pl-2 touch-none"
                         title="Klik dan geser dari tepi buku ke kanan untuk membuka lembar sebelumnya"
                       >
                         {/* Visual Dog-ear Paper Curl on Top Left Corner */}
@@ -602,11 +621,11 @@ export function Gameplay() {
                       onEasterEgg={() => setShowEasterEgg(true)}
                     />
 
-                    {/* Interactive Manual Drag Zone on Right Page (Menyeret dari ujung kanan buku ke kiri) */}
+                    {/* Interactive Manual Drag Zone on Right Page (Desktop only - touch swipe handles mobile) */}
                     {activeStep < gameplaySteps.length - 1 && flipState === "idle" && (
                       <div
                         onPointerDown={(e) => handleEdgeDragStart(e, "next")}
-                        className="group absolute top-0 bottom-12 right-0 w-16 sm:w-24 z-30 cursor-grab active:cursor-grabbing select-none flex items-center justify-end pr-1 sm:pr-2 touch-none"
+                        className="group absolute top-0 bottom-12 right-0 w-16 sm:w-24 z-30 cursor-grab active:cursor-grabbing select-none hidden sm:flex items-center justify-end pr-1 sm:pr-2 touch-none"
                         title="Klik dan geser dari tepi buku ke kiri untuk membalik halaman"
                       >
                         {/* Visual Dog-ear Paper Curl on Top Right Corner */}
@@ -849,6 +868,51 @@ export function Gameplay() {
               <div className="w-0 h-0 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-red-700" />
             </div>
           </div>
+        </div>
+
+        {/* Mobile Step Pagination Controls (< md screens) */}
+        <div className="flex md:hidden items-center justify-between w-full max-w-xs sm:max-w-sm px-2 mt-4 z-30 gap-2">
+          <button
+            type="button"
+            onClick={() => triggerPageTurn(activeStep - 1)}
+            disabled={activeStep === 0}
+            className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-black/60 text-stone-200 border border-white/20 font-mono text-xs font-bold disabled:opacity-30 disabled:pointer-events-none transition-all active:scale-95 cursor-pointer shadow-md"
+          >
+            <ChevronLeft className="h-3.5 w-3.5" />
+            <span>Sebelumnya</span>
+          </button>
+
+          {/* Dots Indicator */}
+          <div className="flex items-center gap-1.5">
+            {gameplaySteps.map((_, idx) => (
+              <button
+                key={`page-dot-${idx}`}
+                type="button"
+                onClick={() => triggerPageTurn(idx)}
+                className={`h-2 rounded-full transition-all cursor-pointer ${
+                  idx === activeStep
+                    ? "w-5 bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]"
+                    : "w-2 bg-white/30 hover:bg-white/50"
+                }`}
+                aria-label={`Buka Bab ${idx + 1}`}
+              />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => {
+              if (activeStep === gameplaySteps.length - 1) {
+                setShowEasterEgg(true);
+              } else {
+                triggerPageTurn(activeStep + 1);
+              }
+            }}
+            className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-red-800 text-white border border-red-600/50 font-mono text-xs font-bold shadow-md transition-all active:scale-95 cursor-pointer"
+          >
+            <span>{activeStep === gameplaySteps.length - 1 ? "RiftDive" : "Berikutnya"}</span>
+            <ChevronRight className="h-3.5 w-3.5" />
+          </button>
         </div>
       </div>
 

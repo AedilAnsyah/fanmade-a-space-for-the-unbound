@@ -50,7 +50,7 @@ export function TrailerSection() {
   return (
     <section
       id="trailer"
-      className="relative w-full py-20 px-4 sm:px-6 md:py-28 overflow-hidden select-none transition-colors duration-700"
+      className="relative w-full py-12 sm:py-20 px-3 sm:px-6 md:py-28 overflow-hidden select-none transition-colors duration-700"
       style={{
         // Aged vintage plaster / room wall
         backgroundColor: "#16181f",
@@ -65,9 +65,9 @@ export function TrailerSection() {
         {/* Background wall lighting vignette */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 z-10" />
 
-        {/* Newspaper 1: Top Left */}
+        {/* Newspaper 1: Top Left - hidden on mobile to avoid overlapping the header */}
         <div
-          className="absolute top-8 -left-4 sm:left-6 w-56 sm:w-64 p-3 bg-[#E8DAC2] text-[#2B2018] rounded-sm shadow-xl -rotate-6 border border-stone-800/40 opacity-40 hover:opacity-75 transition-opacity"
+          className="absolute top-8 -left-4 sm:left-6 w-56 sm:w-64 p-3 bg-[#E8DAC2] text-[#2B2018] rounded-sm shadow-xl -rotate-6 border border-stone-800/40 opacity-40 hover:opacity-75 transition-opacity hidden sm:block"
           style={{ filter: "sepia(0.2) contrast(1.05)" }}
         >
           <div className="border-b-2 border-black pb-1 mb-1.5 flex justify-between items-center font-mono text-[8px] font-bold">
@@ -83,9 +83,9 @@ export function TrailerSection() {
           <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 w-14 h-4 bg-amber-200/80 border border-amber-300/60 rotate-2" />
         </div>
 
-        {/* Poster 1: Top Right (Game Art Scene) */}
+        {/* Poster 1: Top Right (Game Art Scene) - hidden on mobile to avoid clutter */}
         <div
-          className="absolute top-10 right-4 sm:right-12 w-48 sm:w-56 p-2 bg-[#FAF5E6] rounded-sm shadow-2xl rotate-4 border border-stone-800/40 opacity-45"
+          className="absolute top-10 right-4 sm:right-12 w-48 sm:w-56 p-2 bg-[#FAF5E6] rounded-sm shadow-2xl rotate-4 border border-stone-800/40 opacity-45 hidden sm:block"
         >
           <div className="relative aspect-[4/3] w-full overflow-hidden bg-black mb-1.5">
             <img
@@ -167,8 +167,8 @@ export function TrailerSection() {
       {/* ── 3. RETRO 90s CRT TV SITTING ON A PHYSICAL WOODEN DESK ── */}
       <div className="relative z-20 mx-auto max-w-4xl flex flex-col items-center">
         
-        {/* TV ANTENNA (KUMIS / RABBIT EARS) */}
-        <div className="relative mb-[-12px] z-0 flex items-center justify-center gap-14 pointer-events-none select-none">
+        {/* TV ANTENNA (KUMIS / RABBIT EARS) — hidden on very small screens */}
+        <div className="relative mb-[-12px] z-0 hidden sm:flex items-center justify-center gap-14 pointer-events-none select-none">
           <div className="h-20 w-1.5 origin-bottom -rotate-[38deg] bg-gradient-to-t from-stone-600 via-stone-400 to-stone-200 rounded-full shadow-lg" />
           <div className="h-4 w-12 rounded-t-lg bg-stone-800 border-t border-stone-600 shadow-md flex items-center justify-center">
             <div className="h-2 w-2 rounded-full bg-stone-950" />
@@ -178,7 +178,7 @@ export function TrailerSection() {
 
         {/* ── CRT TUBE TELEVISION CABINET CASING ── */}
         <div
-          className="relative z-10 w-full rounded-[2.5rem] p-4 sm:p-6 md:p-8 border-4 border-[#4a4f5c] shadow-[0_20px_50px_rgba(0,0,0,0.9)]"
+          className="relative z-10 w-full rounded-2xl sm:rounded-[2rem] md:rounded-[2.5rem] p-3 sm:p-5 md:p-8 border-2 sm:border-4 border-[#4a4f5c] shadow-[0_20px_50px_rgba(0,0,0,0.9)]"
           style={{
             background: "linear-gradient(180deg, #32353f 0%, #20222a 50%, #15161c 100%)",
             boxShadow:
@@ -186,18 +186,18 @@ export function TrailerSection() {
           }}
         >
           {/* Upper TV Brand Header */}
-          <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10 font-mono text-[11px] text-stone-400">
-            <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between pb-2 sm:pb-3 mb-2 sm:mb-3 border-b border-white/10 font-mono text-[10px] sm:text-[11px] text-stone-400">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
-              <span className="font-bold tracking-wider text-stone-200">
-                INDOTRON &bull; COLOR CRT 21&quot;
+              <span className="font-bold tracking-wider text-stone-200 truncate">
+                INDOTRON &bull; CRT 21&quot;
               </span>
-              <span className="text-[10px] text-stone-500 hidden sm:inline">STEREO HYPER-BAND</span>
+              <span className="text-[10px] text-stone-500 hidden md:inline">STEREO HYPER-BAND</span>
             </div>
 
             {/* Active Channel Display Badge */}
             <div className="flex items-center gap-2">
-              <span className="text-emerald-400 text-[10px] sm:text-xs font-bold bg-black/70 px-2.5 py-0.5 rounded border border-emerald-500/40">
+              <span className="text-emerald-400 text-[9px] sm:text-xs font-bold bg-black/70 px-1.5 sm:px-2.5 py-0.5 rounded border border-emerald-500/40 truncate max-w-[120px] sm:max-w-none">
                 {tvPower ? currentTrailer.label : "STANDBY"}
               </span>
             </div>
@@ -209,7 +209,7 @@ export function TrailerSection() {
             {/* ── CURVED CRT GLASS SCREEN (COL 1-9) ── */}
             <div className="lg:col-span-9 relative">
               <div
-                className="relative overflow-hidden rounded-[2rem] bg-black border-4 border-[#121316] p-1.5 sm:p-2.5"
+                className="relative overflow-hidden rounded-xl sm:rounded-2xl md:rounded-[2rem] bg-black border-2 sm:border-4 border-[#121316] p-1 sm:p-2.5"
                 style={{
                   boxShadow: "inset 0 4px 14px rgba(255,255,255,0.12), inset 0 -6px 16px rgba(0,0,0,0.9)",
                 }}
@@ -262,7 +262,7 @@ export function TrailerSection() {
                       {/* Heavy CRT Vignette */}
                       <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_45px_rgba(0,0,0,0.95)] z-10" />
 
-                      <div className="pointer-events-none absolute bottom-3 right-3 z-20 font-mono text-[9px] text-amber-300/90 bg-black/80 px-2 py-0.5 rounded border border-amber-500/40">
+                      <div className="pointer-events-none absolute bottom-3 right-3 z-20 font-mono text-[9px] text-amber-300/90 bg-black/80 px-2 py-0.5 rounded border border-amber-500/40 hidden sm:block">
                         <span>HI-FI STEREO &bull; 50Hz</span>
                       </div>
                     </>
@@ -282,8 +282,9 @@ export function TrailerSection() {
               </div>
             </div>
 
-            {/* ── HARDWARE CONTROL PANEL & CHANNEL KNOBS (COL 10-12) ── */}
-            <div className="lg:col-span-3 flex flex-col justify-between h-full bg-[#1b1c23] p-3.5 rounded-2xl border-2 border-stone-800 shadow-inner gap-4">
+            {/* ── HARDWARE CONTROL PANEL & CHANNEL KNOBS ── */}
+            {/* Desktop: full vertical side panel (COL 10-12) */}
+            <div className="hidden lg:flex lg:col-span-3 flex-col justify-between h-full bg-[#1b1c23] p-3.5 rounded-2xl border-2 border-stone-800 shadow-inner gap-4">
               {/* Channel Selector Buttons (Trailer 1 & Trailer 2) */}
               <div className="flex flex-col gap-2 pb-3 border-b border-stone-800">
                 <span className="font-mono text-[9px] font-bold text-stone-400 uppercase tracking-widest text-center">
@@ -366,13 +367,59 @@ export function TrailerSection() {
                 </button>
               </div>
             </div>
+
+            {/* Mobile: compact horizontal control strip below the screen */}
+            <div className="flex lg:hidden items-center gap-2 bg-[#1b1c23] p-2.5 rounded-xl border border-stone-800 shadow-inner">
+              {/* Channel buttons */}
+              <div className="flex gap-1.5 flex-1">
+                {TRAILERS.map((t, idx) => {
+                  const isSelected = activeChannelIdx === idx;
+                  return (
+                    <button
+                      key={`mobile-${t.id}`}
+                      type="button"
+                      onClick={() => handleSwitchChannel(idx)}
+                      className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg border font-mono text-[10px] transition-all cursor-pointer ${
+                        isSelected
+                          ? "bg-amber-500/20 border-amber-400 text-amber-300 shadow-[0_0_8px_rgba(251,191,36,0.25)] font-bold"
+                          : "bg-stone-900 border-stone-700 text-stone-400 hover:bg-stone-800"
+                      }`}
+                    >
+                      <span>CH-0{t.channel}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Scanlines toggle */}
+              <button
+                type="button"
+                onClick={() => setShowScanlines(!showScanlines)}
+                className="flex items-center gap-1.5 rounded-lg bg-stone-900/90 px-2.5 py-2 border border-stone-700 text-[10px] font-mono transition-colors hover:bg-stone-800 cursor-pointer"
+              >
+                <Eye className="h-3 w-3 text-blue-400" />
+                <span className={showScanlines ? "text-green-400 font-bold" : "text-stone-500"}>
+                  {showScanlines ? "ON" : "OFF"}
+                </span>
+              </button>
+
+              {/* Power toggle */}
+              <button
+                type="button"
+                onClick={() => setTvPower(!tvPower)}
+                className="flex items-center gap-1.5 rounded-lg border border-red-800 bg-red-950/90 px-2.5 py-2 text-[10px] font-mono font-bold text-red-200 transition-all hover:bg-red-800 hover:text-white cursor-pointer shadow"
+              >
+                <Power className="h-3 w-3" />
+                <span className="hidden sm:inline">{tvPower ? "MATIKAN" : "NYALAKAN"}</span>
+              </button>
+            </div>
           </div>
 
           {/* Bottom Speaker Grille & Power LED */}
-          <div className="mt-4 pt-3 border-t border-stone-800 flex items-center justify-between">
-            <div className="flex gap-1.5 opacity-60">
-              {Array.from({ length: 18 }).map((_, i) => (
-                <div key={`spk-${i}`} className="h-1.5 w-3 rounded-full bg-black" />
+          <div className="mt-2 sm:mt-4 pt-2 sm:pt-3 border-t border-stone-800 flex items-center justify-between">
+            <div className="flex gap-1 sm:gap-1.5 opacity-60 overflow-hidden">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div key={`spk-${i}`} className="h-1 sm:h-1.5 w-2 sm:w-3 rounded-full bg-black flex-shrink-0" />
               ))}
             </div>
 
@@ -392,13 +439,13 @@ export function TrailerSection() {
         </div>
 
         {/* ── 4. REALISTIC WOODEN TABLETOP (TV DILETAKKAN DI ATAS MEJA) ── */}
-        <div className="w-full mt-[-8px] relative z-20">
+        <div className="w-full mt-[-6px] sm:mt-[-8px] relative z-20">
           {/* Deep Shadow cast by TV on the tabletop */}
-          <div className="mx-auto w-[92%] h-4 bg-black/90 blur-md rounded-full" />
+          <div className="mx-auto w-[92%] h-2 sm:h-4 bg-black/90 blur-md rounded-full" />
 
           {/* Solid Teak Wooden Desk Top Surface */}
           <div
-            className="w-full rounded-t-lg p-3 sm:p-4 border-t-2 border-[#5a361e] shadow-2xl relative flex items-center justify-between"
+            className="w-full rounded-t-lg p-2 sm:p-4 border-t-2 border-[#5a361e] shadow-2xl relative flex items-center justify-between"
             style={{
               background: "linear-gradient(180deg, #422615 0%, #2e1a0e 100%)",
               boxShadow: "0 -2px 10px rgba(0,0,0,0.6), inset 0 2px 3px rgba(255,255,255,0.12)",
@@ -410,27 +457,27 @@ export function TrailerSection() {
             }} />
 
             {/* Right Desk Prop: TV Remote Control on the table (clean without text) */}
-            <div className="relative flex items-center gap-2 bg-stone-900 px-3 py-2 rounded border border-stone-700 shadow-md ml-auto">
-              <div className="flex gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-red-600" />
-                <span className="h-2.5 w-2.5 rounded-full bg-blue-600" />
-                <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
+            <div className="relative flex items-center gap-1.5 sm:gap-2 bg-stone-900 px-2 sm:px-3 py-1.5 sm:py-2 rounded border border-stone-700 shadow-md ml-auto">
+              <div className="flex gap-1 sm:gap-1.5">
+                <span className="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-red-600" />
+                <span className="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-blue-600" />
+                <span className="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-amber-500" />
               </div>
             </div>
           </div>
 
           {/* Front Wooden Table Edge Lip (Ketebalan Pinggir Meja) */}
           <div
-            className="w-full h-5 rounded-b-md border-t border-[#1e1008] shadow-2xl"
+            className="w-full h-3 sm:h-5 rounded-b-md border-t border-[#1e1008] shadow-2xl"
             style={{
               background: "linear-gradient(180deg, #24140a 0%, #150b05 100%)",
             }}
           />
 
           {/* Table Legs Silhouette at Bottom */}
-          <div className="flex justify-between px-10">
-            <div className="w-10 h-10 bg-gradient-to-b from-[#1a0e07] to-black/80 shadow-2xl" />
-            <div className="w-10 h-10 bg-gradient-to-b from-[#1a0e07] to-black/80 shadow-2xl" />
+          <div className="flex justify-between px-6 sm:px-10">
+            <div className="w-6 h-6 sm:w-10 sm:h-10 bg-gradient-to-b from-[#1a0e07] to-black/80 shadow-2xl" />
+            <div className="w-6 h-6 sm:w-10 sm:h-10 bg-gradient-to-b from-[#1a0e07] to-black/80 shadow-2xl" />
           </div>
         </div>
       </div>
