@@ -183,20 +183,12 @@ export function Navbar() {
                   loading="eager"
                   className="h-8 md:h-9 w-auto object-contain filter drop-shadow transition-transform group-hover:scale-105"
                 />
-                <div className="flex flex-col">
-                  <span
-                    className="font-dive-heading text-xs md:text-sm font-bold tracking-wider leading-none"
-                    style={{ color: isReality ? "#2B2018" : "#ffffff" }}
-                  >
-                    MENYELAM
-                  </span>
-                  <span
-                    className="font-dive-body text-[9px] uppercase tracking-widest leading-none mt-0.5"
-                    style={{ color: isReality ? "#6B5D4A" : "var(--dive-accent)" }}
-                  >
-                    A Space for the Unbound
-                  </span>
-                </div>
+                <span
+                  className="font-dive-heading text-xs sm:text-sm font-bold tracking-wide leading-tight"
+                  style={{ color: isReality ? "#2B2018" : "#ffffff" }}
+                >
+                  A Space for the Unbound
+                </span>
               </button>
 
               {/* Center: Desktop Navigation Links */}
