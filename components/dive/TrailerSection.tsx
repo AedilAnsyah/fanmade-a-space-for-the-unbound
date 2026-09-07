@@ -91,6 +91,8 @@ export function TrailerSection() {
             <img
               src="/assets/Gambar/Screens/gambar 1.jpg"
               alt="Poster Kota Loka"
+              loading="lazy"
+              decoding="async"
               className="h-full w-full object-cover filter contrast-110"
             />
           </div>
@@ -124,6 +126,8 @@ export function TrailerSection() {
             <img
               src="/assets/Gambar/Atma n Nirmala n Raya/gambar 2 atma n raya.jpg"
               alt="Atma dan Raya Poster"
+              loading="lazy"
+              decoding="async"
               className="h-full w-full object-cover filter contrast-105"
             />
           </div>
@@ -140,6 +144,8 @@ export function TrailerSection() {
           <img
             src="/assets/Gambar/Screens/gambar13header.jpg"
             alt="Pixel Art Retro"
+            loading="lazy"
+            decoding="async"
             className="w-full h-24 object-cover"
           />
         </div>
@@ -233,6 +239,7 @@ export function TrailerSection() {
                           className="absolute inset-0 h-full w-full"
                           src={`https://www.youtube-nocookie.com/embed/${currentTrailer.id}?rel=0&modestbranding=1&autoplay=0`}
                           title={currentTrailer.title}
+                          loading="lazy"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                         />

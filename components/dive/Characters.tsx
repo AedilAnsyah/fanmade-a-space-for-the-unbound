@@ -443,6 +443,10 @@ export function Characters() {
                   <img
                     src={char.imagePlaceholder}
                     alt={char.name}
+                    loading="lazy"
+                    decoding="async"
+                    width={40}
+                    height={40}
                     className="h-full w-full object-cover object-center"
                   />
                 </div>
@@ -512,6 +516,8 @@ export function Characters() {
                     <img
                       src={currentChar.gifPlaceholder || currentChar.imagePlaceholder}
                       alt={`Animasi piksel ${currentChar.name}`}
+                      loading="lazy"
+                      decoding="async"
                       className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                     />
 

@@ -4,18 +4,19 @@ import { BookOpen, ArrowUp, ExternalLink, Heart, Gamepad2 } from "lucide-react";
 import { useLayer } from "@/components/layer/useLayer";
 
 export function Footer() {
-  const { layer, exitDive } = useLayer();
+  const { layer, startRealityTransition } = useLayer();
   const isReality = layer === "reality";
 
   const scrollToSection = (id: string) => {
     if (id === "home") {
       if (layer === "dive") {
-        exitDive();
-      }
-      if (window.__lenis) {
-        window.__lenis.scrollTo(0, { duration: 1.2 });
+        startRealityTransition();
       } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (window.__lenis) {
+          window.__lenis.scrollTo(0, { duration: 1.2 });
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
       }
       return;
     }
@@ -83,6 +84,10 @@ export function Footer() {
                 <img
                   src="/assets/logo_trimmed.webp"
                   alt="Logo A Space for the Unbound"
+                  loading="lazy"
+                  decoding="async"
+                  width={40}
+                  height={40}
                   className="h-full w-full object-contain filter drop-shadow"
                 />
               </div>

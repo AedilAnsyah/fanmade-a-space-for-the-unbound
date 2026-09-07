@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
 import Lenis from "lenis";
@@ -8,7 +8,8 @@ import Lenis from "lenis";
  *
  * Wraps children with a Lenis instance for smooth
  * scrolling. Also exposes the instance on window
- * so GSAP ScrollTrigger can sync later (see lib/scrollTrigger.ts).
+ * so components & animations can control scroll.
+ * Includes proper RAF cleanup to prevent memory leaks.
  * ═══════════════════════════════════════════════════ */
 
 // Extend window for cross-module access
@@ -26,24 +27,30 @@ export function LenisProvider({ children }: LenisProviderProps) {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
+    const isTouch =
+      typeof window !== "undefined" &&
+      ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      touchMultiplier: 1.5,
+      // On touch devices, keep touchMultiplier 1.0 for natural responsiveness
+      touchMultiplier: isTouch ? 1.0 : 1.5,
     });
 
     lenisRef.current = lenis;
-    // Expose globally for GSAP sync
     window.__lenis = lenis;
 
+    let rafId: number;
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
       lenisRef.current = null;
       delete window.__lenis;

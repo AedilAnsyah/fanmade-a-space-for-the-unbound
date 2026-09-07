@@ -132,6 +132,8 @@ function RightPageContent({
               src={step.image}
               alt={step.title}
               draggable={false}
+              loading="lazy"
+              decoding="async"
               className="h-full w-full object-cover object-center filter contrast-[1.04] saturate-[1.08] pointer-events-none select-none"
             />
             {/* Subtle photo gloss */}
@@ -202,6 +204,7 @@ export function Gameplay() {
 
   const [activeStep, setActiveStep] = useState(0); // 0..3
   const [showEasterEgg, setShowEasterEgg] = useState(false);
+  const [mobileSubPage, setMobileSubPage] = useState<"diary" | "photo">("diary");
 
   // 4-state lifecycle: "idle" | "dragging" | "flipping" | "canceling"
   const [flipState, setFlipState] = useState<"idle" | "dragging" | "flipping" | "canceling">("idle");
@@ -433,6 +436,32 @@ export function Gameplay() {
           </p>
         </div>
 
+        {/* Mobile Sub-page Toggle Bar (< md screens only) */}
+        <div className="flex md:hidden items-center justify-center gap-2 mb-3 z-20">
+          <button
+            type="button"
+            onClick={() => setMobileSubPage("diary")}
+            className={`px-3.5 py-1.5 rounded-full font-mono text-xs font-bold transition-all cursor-pointer ${
+              mobileSubPage === "diary"
+                ? "bg-[#991B1B] text-[#FEF08A] shadow-md scale-105 border border-amber-300/50"
+                : "bg-black/60 text-stone-300 border border-white/20 hover:bg-black/80"
+            }`}
+          >
+            📝 Catatan (Hal. 0{activeStep + 1}A)
+          </button>
+          <button
+            type="button"
+            onClick={() => setMobileSubPage("photo")}
+            className={`px-3.5 py-1.5 rounded-full font-mono text-xs font-bold transition-all cursor-pointer ${
+              mobileSubPage === "photo"
+                ? "bg-[#991B1B] text-[#FEF08A] shadow-md scale-105 border border-amber-300/50"
+                : "bg-black/60 text-stone-300 border border-white/20 hover:bg-black/80"
+            }`}
+          >
+            📸 Foto (Hal. 0{activeStep + 1}B)
+          </button>
+        </div>
+
         {/* ── 3. THE MAGIC RED HARDCOVER JOURNAL ── */}
         <div
           className="relative z-10 mx-auto flex w-full max-w-4xl lg:max-w-5xl flex-1 flex-col items-center justify-center my-1"
@@ -516,7 +545,7 @@ export function Gameplay() {
                 /* ── TWO-PAGE SPREAD WITH GENUINE 3D FLIPPING LEAF ── */
                 <div className="relative w-full h-full grid grid-cols-1 md:grid-cols-2 items-stretch select-none">
                   {/* ════ BASE LEFT PAGE ════ */}
-                  <div className="h-full relative overflow-hidden">
+                  <div className={`h-full relative overflow-hidden ${mobileSubPage === "photo" ? "hidden md:block" : "block"}`}>
                     <LeftPageContent
                       step={
                         flipState !== "idle" && flipDirection === "prev"
@@ -555,7 +584,7 @@ export function Gameplay() {
                   </div>
 
                   {/* ════ BASE RIGHT PAGE ════ */}
-                  <div className="h-full relative overflow-hidden">
+                  <div className={`h-full relative overflow-hidden ${mobileSubPage === "diary" ? "hidden md:block" : "block"}`}>
                     <RightPageContent
                       step={
                         flipState !== "idle" && flipDirection === "next"

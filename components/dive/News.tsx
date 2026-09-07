@@ -157,6 +157,10 @@ export function News() {
                 <img
                   src="/assets/GIF/ibu2 baca koran.webp"
                   alt="Ibu-ibu membaca koran Harian Loka"
+                  loading="lazy"
+                  decoding="async"
+                  width={80}
+                  height={80}
                   className="h-full w-full object-cover object-center"
                 />
                 <span className="absolute bottom-0 inset-x-0 bg-[#1C1917]/85 text-[8px] font-mono text-[#F5EEDC] text-center py-0.5">
@@ -280,6 +284,8 @@ export function News() {
                     <img
                       src={activeArticle.image}
                       alt={activeArticle.headline}
+                      loading="lazy"
+                      decoding="async"
                       className="h-full w-full object-cover object-center filter contrast-[1.05] brightness-[0.98]"
                     />
                     {/* Retro photo corner stamp */}
@@ -367,6 +373,8 @@ export function News() {
                         <img
                           src={news.image}
                           alt={news.headline}
+                          loading="lazy"
+                          decoding="async"
                           className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                         />
                         <span className="absolute bottom-0 inset-x-0 bg-black/75 text-[8px] font-mono text-white text-center py-0.5">

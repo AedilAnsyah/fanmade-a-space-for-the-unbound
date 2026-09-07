@@ -30,6 +30,9 @@ export interface LayerContextValue {
   transitionDirection: TransitionDirection;
   transitionOrigin: { x: number; y: number } | null;
   pendingSection: string | null;
+  /** Whether Hero should show book in closing animation state */
+  isBookClosing: boolean;
+  setBookClosing: (v: boolean) => void;
   startDiveTransition: (origin?: { x: number; y: number } | null, targetSection?: string) => void;
   startRealityTransition: (origin?: { x: number; y: number } | null) => void;
   completeTransition: () => void;
@@ -100,6 +103,11 @@ export function LayerProvider({ children }: { children: ReactNode }) {
     y: number;
   } | null>(null);
   const [pendingSection, setPendingSection] = useState<string | null>(null);
+  const [isBookClosing, setIsBookClosing] = useState(false);
+
+  const setBookClosing = useCallback((v: boolean) => {
+    setIsBookClosing(v);
+  }, []);
 
   const theme = activeCharacter
     ? THEME_MAP[activeCharacter] ?? DEFAULT_THEME
@@ -132,6 +140,15 @@ export function LayerProvider({ children }: { children: ReactNode }) {
       setTransitionOrigin(origin ?? null);
       setPendingSection(null);
       setIsTransitioning(true);
+      setIsBookClosing(true);
+      setLayer("reality");
+      setActiveCharacterState("atma");
+      if (typeof window !== "undefined") {
+        if (window.__lenis) {
+          window.__lenis.scrollTo(0, { immediate: true });
+        }
+        window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+      }
     },
     []
   );
@@ -168,6 +185,8 @@ export function LayerProvider({ children }: { children: ReactNode }) {
         transitionDirection,
         transitionOrigin,
         pendingSection,
+        isBookClosing,
+        setBookClosing,
         startDiveTransition,
         startRealityTransition,
         completeTransition,

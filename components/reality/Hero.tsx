@@ -17,12 +17,42 @@ import { TrailerModal } from "@/components/shared/TrailerModal";
  * - Pulpen jadul, kaset pita walkman (interaktif untuk trailer)
  * ═══════════════════════════════════════════════════ */
 
+const MOBILE_DUST = [
+  { top: "18%", left: "22%", size: 1.6, dur: 7.5, delay: 0, dx: 12, dy: -22 },
+  { top: "32%", left: "35%", size: 2.0, dur: 8.5, delay: 1.0, dx: -10, dy: -28 },
+  { top: "48%", left: "26%", size: 1.4, dur: 7.0, delay: 2.2, dx: 14, dy: -20 },
+  { top: "25%", left: "55%", size: 1.8, dur: 9.0, delay: 0.5, dx: -12, dy: -30 },
+  { top: "58%", left: "42%", size: 1.5, dur: 8.0, delay: 1.8, dx: 10, dy: -24 },
+];
+
+const DESKTOP_DUST = [
+  { top: "14%", left: "18%", size: 1.5, dur: 7.2, delay: 0, dx: 14, dy: -24 },
+  { top: "22%", left: "26%", size: 2.2, dur: 8.5, delay: 1.2, dx: -12, dy: -30 },
+  { top: "34%", left: "20%", size: 1.2, dur: 6.8, delay: 2.1, dx: 18, dy: -20 },
+  { top: "26%", left: "40%", size: 1.8, dur: 9.1, delay: 0.5, dx: -8, dy: -35 },
+  { top: "44%", left: "32%", size: 1.4, dur: 7.6, delay: 3.0, dx: 15, dy: -25 },
+  { top: "36%", left: "50%", size: 2.0, dur: 8.0, delay: 1.8, dx: -14, dy: -28 },
+  { top: "50%", left: "24%", size: 1.0, dur: 6.5, delay: 2.5, dx: 10, dy: -18 },
+  { top: "20%", left: "60%", size: 1.6, dur: 8.8, delay: 3.5, dx: -16, dy: -32 },
+  { top: "46%", left: "56%", size: 1.3, dur: 7.0, delay: 0.9, dx: 12, dy: -22 },
+  { top: "60%", left: "38%", size: 1.9, dur: 9.5, delay: 2.8, dx: -10, dy: -30 },
+  { top: "28%", left: "14%", size: 1.1, dur: 6.2, delay: 1.5, dx: 8, dy: -16 },
+  { top: "56%", left: "66%", size: 1.5, dur: 8.2, delay: 4.0, dx: -12, dy: -26 },
+  { top: "16%", left: "46%", size: 2.4, dur: 9.8, delay: 0.3, dx: 16, dy: -36 },
+  { top: "64%", left: "20%", size: 1.2, dur: 7.4, delay: 3.2, dx: 14, dy: -20 },
+  { top: "38%", left: "68%", size: 1.7, dur: 8.4, delay: 1.1, dx: -10, dy: -24 },
+];
+
 interface HeroProps {
   onOpenBook: (origin: { x: number; y: number }) => void;
   isTransitioning: boolean;
+  /** When true, Hero shows book in open state and animates it closing */
+  isBookClosing?: boolean;
+  /** Callback when book closing animation finishes */
+  onBookClosed?: () => void;
 }
 
-export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
+export function Hero({ onOpenBook, isTransitioning, isBookClosing = false, onBookClosed }: HeroProps) {
   const [trailerOpen, setTrailerOpen] = useState(false);
   const [isBookHovered, setIsBookHovered] = useState(false);
   const [isBookOpening, setIsBookOpening] = useState(false);
@@ -37,6 +67,48 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
     window.addEventListener("resize", checkViewport);
     return () => window.removeEventListener("resize", checkViewport);
   }, []);
+
+  // ── BOOK CLOSING ANIMATION SEQUENCE ──
+  // When isBookClosing is true (returning from dive):
+  // 1. While isTransitioning is true: hold book open ("open_holding") so it's visible behind contracting overlay
+  // 2. When isTransitioning becomes false: pause 350ms to let user see open book on the desk
+  // 3. Switch to "closing": cover rotates back 180° -> 0° over 1.1s with natural weighted easing
+  // 4. When closing completes: switch to "idle" and call onBookClosed()
+  const [closingPhase, setClosingPhase] = useState<"idle" | "open_holding" | "closing">("idle");
+
+  useEffect(() => {
+    if (isBookClosing) {
+      if (isTransitioning) {
+        setClosingPhase("open_holding");
+      } else {
+        // Overlay finished! Ensure open_holding is active first if idle
+        setClosingPhase("open_holding");
+
+        const closeTimer = setTimeout(() => {
+          setClosingPhase("closing");
+        }, 350);
+
+        const doneTimer = setTimeout(() => {
+          setClosingPhase("idle");
+          onBookClosed?.();
+        }, 350 + 1150);
+
+        return () => {
+          clearTimeout(closeTimer);
+          clearTimeout(doneTimer);
+        };
+      }
+    } else {
+      setClosingPhase("idle");
+    }
+  }, [isBookClosing, isTransitioning, onBookClosed]);
+
+  // Derived state: whether the book should visually appear OPEN
+  // True during opening animation OR when held open during/after transition
+  const bookIsOpen = isBookOpening || closingPhase === "open_holding";
+  const isClosingAnim = closingPhase === "closing";
+  const bookAnimDuration = isBookOpening || isClosingAnim ? 1.1 : 0.3;
+  const bookAnimEase = isClosingAnim ? [0.35, 0, 0.25, 1] : [0.28, 1.05, 0.4, 1];
 
   // Trigger full book-opening animation, then fire the dive transition after the book is completely open
   const handleBookClick = useCallback(
@@ -147,27 +219,10 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
             }}
           />
 
-          {/* Realistic micro dust motes drifting in the sunbeam with organic glints */}
-          {[
-            { top: "14%", left: "18%", size: 1.5, dur: 7.2, delay: 0, dx: 14, dy: -24 },
-            { top: "22%", left: "26%", size: 2.2, dur: 8.5, delay: 1.2, dx: -12, dy: -30 },
-            { top: "34%", left: "20%", size: 1.2, dur: 6.8, delay: 2.1, dx: 18, dy: -20 },
-            { top: "26%", left: "40%", size: 1.8, dur: 9.1, delay: 0.5, dx: -8, dy: -35 },
-            { top: "44%", left: "32%", size: 1.4, dur: 7.6, delay: 3.0, dx: 15, dy: -25 },
-            { top: "36%", left: "50%", size: 2.0, dur: 8.0, delay: 1.8, dx: -14, dy: -28 },
-            { top: "50%", left: "24%", size: 1.0, dur: 6.5, delay: 2.5, dx: 10, dy: -18 },
-            { top: "20%", left: "60%", size: 1.6, dur: 8.8, delay: 3.5, dx: -16, dy: -32 },
-            { top: "46%", left: "56%", size: 1.3, dur: 7.0, delay: 0.9, dx: 12, dy: -22 },
-            { top: "60%", left: "38%", size: 1.9, dur: 9.5, delay: 2.8, dx: -10, dy: -30 },
-            { top: "28%", left: "14%", size: 1.1, dur: 6.2, delay: 1.5, dx: 8, dy: -16 },
-            { top: "56%", left: "66%", size: 1.5, dur: 8.2, delay: 4.0, dx: -12, dy: -26 },
-            { top: "16%", left: "46%", size: 2.4, dur: 9.8, delay: 0.3, dx: 16, dy: -36 },
-            { top: "64%", left: "20%", size: 1.2, dur: 7.4, delay: 3.2, dx: 14, dy: -20 },
-            { top: "38%", left: "68%", size: 1.7, dur: 8.4, delay: 1.1, dx: -10, dy: -24 },
-          ].map((dust, idx) => (
-            <motion.div
+          {(isMobile ? MOBILE_DUST : DESKTOP_DUST).map((dust, idx) => (
+            <div
               key={`dust-mote-${idx}`}
-              className="absolute rounded-full pointer-events-none"
+              className="absolute rounded-full pointer-events-none dust-mote-gpu"
               style={{
                 top: dust.top,
                 left: dust.left,
@@ -178,44 +233,25 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
                   dust.size > 1.5
                     ? "0 0 3px 1px rgba(255, 235, 160, 0.75)"
                     : "0 0 2px rgba(255, 240, 180, 0.5)",
-              }}
-              animate={{
-                y: [0, dust.dy * 0.5, dust.dy, 0],
-                x: [0, dust.dx * 0.7, dust.dx * 0.3, 0],
-                opacity: [0.1, 0.9, 0.35, 0.95, 0.1],
-                scale: [0.9, 1.3, 0.95, 1.2, 0.9],
-              }}
-              transition={{
-                duration: dust.dur,
-                repeat: Infinity,
-                delay: dust.delay,
-                ease: "easeInOut",
+                // Pass CSS animation variables to compositor
+                ["--dx" as string]: `${dust.dx}px`,
+                ["--dy" as string]: `${dust.dy}px`,
+                ["--dur" as string]: `${dust.dur}s`,
+                ["--delay" as string]: `${dust.delay}s`,
               }}
             />
           ))}
         </div>
 
-
-
-        {/* ── 4. HEADER: STORY HEADLINE ─────── */}
+        {/* ── 4. HEADER: STORY HEADLINE (Static for zero CLS & instant load) ─────── */}
         <div className="relative z-20 mx-auto max-w-3xl text-center pt-8 sm:pt-10">
-          <motion.h1
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="mt-1 font-reality-heading text-2xl sm:text-4xl md:text-5xl text-[#F5EEDC] leading-snug drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]"
-          >
+          <h1 className="mt-1 font-reality-heading text-2xl sm:text-4xl md:text-5xl text-[#F5EEDC] leading-snug drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
             Ada dunia lain yang tersembunyi di atas meja ini.
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.25 }}
-            className="mt-2 font-reality-body text-xs sm:text-sm text-amber-100/70 max-w-xl mx-auto leading-relaxed"
-          >
+          <p className="mt-2 font-reality-body text-xs sm:text-sm text-amber-100/70 max-w-xl mx-auto leading-relaxed">
             Sebuah musim panas terakhir sebelum kelulusan SMA. Sentuh dan buka buku catatan merah Atma untuk menyelami ingatan, rahasia, dan keajaiban yang ada di Kota Loka.
-          </motion.p>
+          </p>
         </div>
 
         {/* ── 5. THE REALISTIC DESK SURFACE ENSEMBLE ──────── */}
@@ -225,13 +261,13 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
             
             {/* ── PROP A: BINDER PAPER / BUCKET LIST (LEFT) ── */}
             <motion.div
-              initial={{ opacity: 0, x: -30, rotate: -8 }}
+              initial={false}
               animate={{
-                opacity: isBookOpening ? 0.15 : 1,
-                x: isBookOpening ? -80 : 0,
+                opacity: bookIsOpen ? 0.15 : 1,
+                x: bookIsOpen ? -80 : 0,
                 rotate: -4,
               }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: isClosingAnim ? 1.1 : 0.8, delay: bookIsOpen ? 0.3 : 0 }}
               className="relative w-60 sm:w-64 p-3.5 rounded-sm bg-[#FFFDF5] text-[#2B2018] shadow-[0_12px_24px_rgba(0,0,0,0.55)] hidden md:block select-none pointer-events-none sm:pointer-events-auto"
               style={{
                 backgroundImage: `
@@ -277,18 +313,14 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
             </motion.div>
 
             {/* ── PROP B: THE PROMINENT RED NOTEBOOK (CENTER) ── */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative flex flex-col items-center"
-            >
+            <div className="relative flex flex-col items-center">
               {/* Natural Ambient Warmth Behind the Red Book */}
               <motion.div
+                initial={false}
                 className="absolute inset-0 -m-6 rounded-3xl blur-2xl pointer-events-none"
                 animate={{
-                  scale: isBookOpening ? (isMobile ? 1.5 : 2.0) : isBookHovered ? 1.1 : 1,
-                  background: isBookOpening
+                  scale: bookIsOpen ? (isMobile ? 1.5 : 2.0) : isBookHovered ? 1.1 : 1,
+                  background: bookIsOpen
                     ? "radial-gradient(circle, rgba(53, 212, 199, 0.45) 0%, rgba(139, 92, 246, 0.4) 40%, rgba(220, 38, 38, 0.25) 70%, transparent 90%)"
                     : isBookHovered
                     ? "radial-gradient(circle, rgba(220, 38, 38, 0.22) 0%, rgba(245, 158, 11, 0.08) 50%, transparent 70%)"
@@ -301,7 +333,7 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
               <button
                 type="button"
                 onClick={handleBookClick}
-                disabled={isTransitioning || isBookOpening}
+                disabled={isTransitioning || bookIsOpen || isBookClosing}
                 onMouseEnter={() => setIsBookHovered(true)}
                 onMouseLeave={() => setIsBookHovered(false)}
                 className="relative cursor-pointer outline-none select-none"
@@ -310,15 +342,16 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
               >
                 {/* Outer wrapper: centers the spine when opening by shifting X by 50% */}
                 <motion.div
+                  initial={false}
                   animate={{
-                    x: isBookOpening ? (isMobile ? "35%" : "50%") : "0%",
-                    y: isBookOpening ? -14 : isBookHovered ? -8 : 0,
-                    rotateX: isBookOpening ? 14 : isBookHovered ? 10 : 4,
-                    scale: isBookOpening ? (isMobile ? 0.65 : 1) : isBookHovered ? 1.03 : 1,
+                    x: bookIsOpen ? (isMobile ? "35%" : "50%") : "0%",
+                    y: bookIsOpen ? -14 : isBookHovered ? -8 : 0,
+                    rotateX: bookIsOpen ? 14 : isBookHovered ? 10 : 4,
+                    scale: bookIsOpen ? (isMobile ? 0.65 : 1) : isBookHovered ? 1.03 : 1,
                   }}
                   transition={{
-                    duration: isBookOpening ? 1.1 : 0.3,
-                    ease: isBookOpening ? [0.25, 1, 0.35, 1] : "easeOut",
+                    duration: bookAnimDuration,
+                    ease: bookAnimEase,
                   }}
                   style={{ transformStyle: "preserve-3d" }}
                   className="relative w-[270px] sm:w-[310px] md:w-[340px] aspect-[1/1.38]"
@@ -337,7 +370,7 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
                       `,
                       border: "3px solid #6E1212",
                       borderLeft: "none",
-                      boxShadow: isBookOpening
+                      boxShadow: bookIsOpen
                         ? "0 28px 60px rgba(0,0,0,0.85), inset -2px 0 6px rgba(0,0,0,0.1), inset 4px 0 10px rgba(0,0,0,0.25)"
                         : "none",
                     }}
@@ -373,8 +406,8 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
                         <motion.div
                           className="relative w-20 h-20 rounded-full flex items-center justify-center overflow-hidden"
                           animate={{
-                            scale: isBookOpening ? [0.8, 1.15, 1] : 0.8,
-                            opacity: isBookOpening ? 1 : 0.3,
+                            scale: bookIsOpen ? [0.8, 1.15, 1] : 0.8,
+                            opacity: bookIsOpen ? 1 : 0.3,
                           }}
                           transition={{ duration: 0.8, delay: 0.5 }}
                         >
@@ -385,8 +418,8 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
                                 "radial-gradient(circle, rgba(53,212,199,0.9) 0%, rgba(139,92,246,0.85) 45%, rgba(245,158,11,0.6) 75%, transparent 100%)",
                             }}
                             animate={{
-                              rotate: isBookOpening ? [0, 360] : 0,
-                              scale: isBookOpening ? [1, 1.2, 1] : 1,
+                              rotate: bookIsOpen ? [0, 360] : 0,
+                              scale: bookIsOpen ? [1, 1.2, 1] : 1,
                             }}
                             transition={{
                               rotate: { duration: 8, repeat: Infinity, ease: "linear" },
@@ -399,7 +432,7 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
                         </motion.div>
 
                         {/* Pulsing Energy Rings radiating from center */}
-                        {isBookOpening && (
+                        {bookIsOpen && (
                           <>
                             <motion.div
                               className="absolute inset-0 rounded-full border border-cyan-400 pointer-events-none"
@@ -416,7 +449,7 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
                       </div>
 
                       {/* Floating Light Sparkles */}
-                      {isBookOpening && (
+                      {bookIsOpen && (
                         <div className="absolute inset-0 pointer-events-none">
                           {[
                             { x: "35%", y: "25%", delay: 0.7 },
@@ -469,6 +502,7 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
                       Rotates 180° around the left spine edge
                      ──────────────────────────────────────────────── */}
                   <motion.div
+                    initial={false}
                     className="absolute inset-0 w-full h-full"
                     style={{
                       transformOrigin: "left center",
@@ -476,11 +510,11 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
                       zIndex: 25,
                     }}
                     animate={{
-                      rotateY: isBookOpening ? -180 : 0,
+                      rotateY: bookIsOpen ? -180 : 0,
                     }}
                     transition={{
-                      duration: isBookOpening ? 1.1 : 0.3,
-                      ease: isBookOpening ? [0.28, 1.05, 0.4, 1] : "easeOut",
+                      duration: bookAnimDuration,
+                      ease: bookAnimEase,
                     }}
                   >
                     {/* ── SIDE A: FRONT HARDCOVER (Visible when closed) ── */}
@@ -629,9 +663,10 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
                       Visible down the middle fold between Left & Right page
                      ──────────────────────────────────────────────── */}
                   <motion.div
+                    initial={false}
                     className="absolute top-0 bottom-0 left-0 -ml-2 w-4 z-30 pointer-events-none"
-                    animate={{ opacity: isBookOpening ? 1 : 0 }}
-                    transition={{ duration: 0.4, delay: 0.3 }}
+                    animate={{ opacity: bookIsOpen ? 1 : 0 }}
+                    transition={{ duration: 0.4, delay: bookIsOpen ? 0.3 : 0 }}
                     style={{
                       background:
                         "linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 45%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.7) 55%, rgba(0,0,0,0.3) 100%)",
@@ -650,13 +685,14 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
                       Drapes from the spine down to the desk
                      ──────────────────────────────────────────────── */}
                   <motion.div
+                    initial={false}
                     className="pointer-events-none absolute z-40 flex flex-col items-center"
                     animate={{
-                      left: isBookOpening ? -8 : 48,
-                      bottom: isBookOpening ? -34 : -28,
-                      rotate: isBookOpening ? -4 : 0,
+                      left: bookIsOpen ? -8 : 48,
+                      bottom: bookIsOpen ? -34 : -28,
+                      rotate: bookIsOpen ? -4 : 0,
                     }}
-                    transition={{ duration: 0.9, ease: "easeOut" }}
+                    transition={{ duration: isClosingAnim ? 1.1 : 0.9, ease: "easeOut" }}
                   >
                     <div className="w-3.5 sm:w-4 h-9 sm:h-10 bg-red-800 shadow-lg border-x border-red-950" />
                     <div className="w-0 h-0 border-l-[7px] border-r-[7px] border-t-[8px] border-l-transparent border-r-transparent border-t-red-800" />
@@ -666,34 +702,31 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
 
               {/* Realistic Shadow Cast on Wood — dynamically expands when the book opens */}
               <motion.div
+                initial={false}
                 className="pointer-events-none -mt-3 rounded-full bg-black/75 blur-md"
                 animate={{
-                  width: isBookOpening ? (isMobile ? 380 : 580) : 310,
-                  height: isBookOpening ? 28 : 20,
-                  opacity: isBookOpening ? 0.95 : 0.7,
-                  x: isBookOpening ? (isMobile ? "18%" : "25%") : "0%",
+                  width: bookIsOpen ? (isMobile ? 380 : 580) : 310,
+                  height: bookIsOpen ? 28 : 20,
+                  opacity: bookIsOpen ? 0.95 : 0.7,
+                  x: bookIsOpen ? (isMobile ? "18%" : "25%") : "0%",
                 }}
-                transition={{ duration: 0.9 }}
+                transition={{ duration: isClosingAnim ? 1.1 : 0.9 }}
               />
-            </motion.div>
+            </div>
 
             {/* ── PROP C: POLAROID PHOTO & VINTAGE CASSETTE (RIGHT) ── */}
             <motion.div
+              initial={false}
               animate={{
-                opacity: isBookOpening ? 0.15 : 1,
-                x: isBookOpening ? 80 : 0,
+                opacity: bookIsOpen ? 0.15 : 1,
+                x: bookIsOpen ? 80 : 0,
               }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: isClosingAnim ? 1.1 : 0.8 }}
               className="flex flex-col items-center gap-4 hidden lg:flex select-none"
             >
               
               {/* Polaroid Pasfoto of Atma & Raya */}
-              <motion.div
-                initial={{ opacity: 0, x: 30, rotate: 10 }}
-                animate={{ opacity: 1, x: 0, rotate: 6 }}
-                transition={{ duration: 0.8, delay: 0.35 }}
-                className="relative w-52 bg-white p-2.5 pb-4 shadow-[0_14px_28px_rgba(0,0,0,0.6)] transition-transform hover:rotate-2 duration-300"
-              >
+              <div className="relative w-52 bg-white p-2.5 pb-4 shadow-[0_14px_28px_rgba(0,0,0,0.6)] rotate-6 transition-transform hover:rotate-2 duration-300">
                 {/* Yellowish Masking Tape at Top Corner */}
                 <div className="absolute -top-3 right-4 w-14 h-5 bg-amber-200/75 border border-amber-300/40 shadow-sm -rotate-6" />
 
@@ -702,6 +735,10 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
                   <img
                     src="/assets/Gambar/Atma n Nirmala n Raya/gambar 1 atma n raya.webp"
                     alt="Atma dan Raya di Kota Loka"
+                    loading="lazy"
+                    decoding="async"
+                    width={208}
+                    height={208}
                     className="h-full w-full object-cover object-center filter sepia-[0.15] contrast-105"
                   />
                   {/* Photo Vignette */}
@@ -716,16 +753,13 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
                     Loka &bull; Juli 1998
                   </span>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Authentic 90s VHS Video Cassette Tape (Interactive: opens trailer!) */}
-              <motion.button
+              <button
                 type="button"
                 onClick={() => setTrailerOpen(true)}
-                initial={{ opacity: 0, y: 20, rotate: -4 }}
-                animate={{ opacity: 1, y: 0, rotate: -2 }}
-                transition={{ duration: 0.8, delay: 0.45 }}
-                className="group relative flex w-60 flex-col rounded-lg border-2 border-stone-900 bg-[#16171b] p-2.5 text-left shadow-[0_14px_28px_rgba(0,0,0,0.65)] transition-all hover:scale-105 hover:border-amber-400/60 cursor-pointer select-none"
+                className="group relative flex w-60 flex-col rounded-lg border-2 border-stone-900 bg-[#16171b] p-2.5 text-left shadow-[0_14px_28px_rgba(0,0,0,0.65)] -rotate-2 transition-all hover:scale-105 hover:border-amber-400/60 cursor-pointer select-none"
                 style={{
                   backgroundImage: "radial-gradient(circle at 50% 20%, #252830 0%, #121316 100%)",
                 }}
@@ -796,7 +830,7 @@ export function Hero({ onOpenBook, isTransitioning }: HeroProps) {
                     <div key={`grip-${i}`} className="h-1 w-3 rounded bg-black" />
                   ))}
                 </div>
-              </motion.button>
+              </button>
             </motion.div>
           </div>
         </div>

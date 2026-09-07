@@ -24,6 +24,8 @@ export default function Home() {
     transitionOrigin,
     startDiveTransition,
     completeTransition,
+    isBookClosing,
+    setBookClosing,
   } = useLayer();
 
   const handleOpenBook = useCallback(
@@ -32,6 +34,17 @@ export default function Home() {
     },
     [startDiveTransition]
   );
+
+  const handleBookClosed = useCallback(() => {
+    setBookClosing(false);
+  }, [setBookClosing]);
+
+  // Show Hero in reality layer, OR when reverse transition is happening
+  // (so it's visible behind the shrinking circle overlay), OR when book is closing
+  const showHero =
+    layer === "reality" ||
+    (isTransitioning && transitionDirection === "reality") ||
+    isBookClosing;
 
   return (
     <main
@@ -47,8 +60,13 @@ export default function Home() {
       />
 
       {/* ── REALITY LAYER ─────────────────────────── */}
-      {layer === "reality" && (
-        <Hero onOpenBook={handleOpenBook} isTransitioning={isTransitioning} />
+      {showHero && (
+        <Hero
+          onOpenBook={handleOpenBook}
+          isTransitioning={isTransitioning}
+          isBookClosing={isBookClosing}
+          onBookClosed={handleBookClosed}
+        />
       )}
 
       {/* ── DIVE LAYER ────────────────────────────── */}

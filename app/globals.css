@@ -172,3 +172,26 @@ body.dive-cursor-active * {
   scrollbar-width: none;
 }
 
+/* ═══════════════════════════════════════════════════
+ * HARDWARE-ACCELERATED DUST PARTICLES
+ * Offloads floating particle animation to GPU compositor
+ * ═══════════════════════════════════════════════════ */
+
+@keyframes floatDustGPU {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translate3d(var(--dx, 12px), var(--dy, -25px), 0) scale(1.25);
+    opacity: 0.9;
+  }
+}
+
+.dust-mote-gpu {
+  will-change: transform, opacity;
+  animation: floatDustGPU var(--dur, 8s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+

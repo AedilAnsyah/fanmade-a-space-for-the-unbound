@@ -32,7 +32,7 @@ export function DiveTransition({
   onComplete,
   crossfadeText = "Ada dunia lain di balik pikiran orang-orang yang kita kenal.",
 }: DiveTransitionProps) {
-  const { enterDive, exitDive, pendingSection } = useLayer();
+  const { enterDive, exitDive, setBookClosing, pendingSection } = useLayer();
   const [isMobile, setIsMobile] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [screenAnnouncement, setScreenAnnouncement] = useState("");
@@ -88,15 +88,18 @@ export function DiveTransition({
     completedRef.current = true;
 
     if (direction === "reality") {
+      // Switch layer to reality FIRST so Hero renders
       exitDive();
       if (window.__lenis) {
         window.__lenis.scrollTo(0, { duration: 0.1 });
       } else {
         window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
       }
+      // Signal Hero to start the book-closing animation
+      setBookClosing(true);
     } else {
       enterDive();
-      // Smooth scroll to requested section (e.g. synopsis, trailer, gameplay, news) after dive completes
+      // Smooth scroll to requested section after dive completes
       const targetId = pendingSection || "prologue";
       setTimeout(() => {
         const target = document.getElementById(targetId) || document.getElementById("prologue");
@@ -116,7 +119,7 @@ export function DiveTransition({
   };
 
   const originX = origin?.x ?? (typeof window !== "undefined" ? window.innerWidth / 2 : 500);
-  const originY = origin?.y ?? (typeof window !== "undefined" ? window.innerHeight / 2 : 500);
+  const originY = origin?.y ?? (typeof window !== "undefined" ? window.innerHeight * 0.52 : 500);
 
   // Simplified mode for mobile or reduced motion
   const useSimplifiedTransition = isMobile || prefersReducedMotion;
@@ -140,7 +143,12 @@ export function DiveTransition({
             style={{ willChange: useSimplifiedTransition ? "opacity, transform" : "clip-path" }}
             initial={
               direction === "reality"
-                ? { opacity: 1, scale: 1, filter: "blur(0px)" }
+                ? useSimplifiedTransition
+                  ? { opacity: 1, scale: 1 }
+                  : {
+                      clipPath: `circle(150% at ${originX}px ${originY}px)`,
+                      opacity: 1,
+                    }
                 : useSimplifiedTransition
                 ? { opacity: 0, scale: 0.98 }
                 : {
@@ -150,15 +158,23 @@ export function DiveTransition({
             }
             animate={
               direction === "reality"
-                ? {
-                    opacity: [1, 1, 0],
-                    scale: [1, 0.7, 0.5],
-                    filter: ["blur(0px)", "blur(4px)", "blur(12px)"],
-                    transition: {
-                      duration: 0.9,
-                      ease: [0.32, 0, 0.67, 0], // Smooth accelerated zoom-out camera pull
-                    },
-                  }
+                ? useSimplifiedTransition
+                  ? {
+                      opacity: 0,
+                      scale: 0.95,
+                      transition: {
+                        duration: 0.8,
+                        ease: [0.32, 0, 0.67, 0],
+                      },
+                    }
+                  : {
+                      clipPath: `circle(0% at ${originX}px ${originY}px)`,
+                      opacity: 1,
+                      transition: {
+                        duration: 1.0,
+                        ease: [0.76, 0, 0.24, 1],
+                      },
+                    }
                 : useSimplifiedTransition
                 ? {
                     opacity: 1,
@@ -174,7 +190,7 @@ export function DiveTransition({
                     opacity: 1,
                     transition: {
                       duration: 1.2,
-                      ease: [0.76, 0, 0.24, 1], // Cinematic smooth expand curve
+                      ease: [0.76, 0, 0.24, 1],
                     },
                   }
             }
@@ -217,21 +233,83 @@ export function DiveTransition({
               />
             )}
 
-            {/* Reality Transition: Pure Cinematic Optical Vignette (Zero Text) */}
+            {/* Contracting Energy Wave for REALITY (reverse pulse inward) */}
+            {direction === "reality" && !useSimplifiedTransition && (
+              <motion.div
+                className="absolute rounded-full pointer-events-none border border-cyan-400/40"
+                style={{
+                  left: originX,
+                  top: originY,
+                  transform: "translate(-50%, -50%)",
+                  boxShadow: "0 0 40px 15px rgba(53, 212, 199, 0.4), inset 0 0 30px rgba(139, 92, 246, 0.3)",
+                }}
+                initial={{
+                  width: "180vmax",
+                  height: "180vmax",
+                  opacity: 0.6,
+                }}
+                animate={{
+                  width: ["180vmax", "0vmax"],
+                  height: ["180vmax", "0vmax"],
+                  opacity: [0.6, 0.9, 0],
+                }}
+                transition={{
+                  duration: 1.0,
+                  ease: [0.76, 0, 0.24, 1],
+                }}
+              />
+            )}
+
+            {/* Reality Transition: Reverse Typography Cross-Fade (Dive → Reality) */}
             {direction === "reality" ? (
-              <div className="relative z-10 flex flex-col items-center justify-center pointer-events-none select-none">
-                {/* Radial focal iris pulling inward */}
-                <motion.div
-                  className="h-48 w-48 rounded-full border border-white/20"
-                  animate={{
-                    scale: [1, 0.3],
-                    opacity: [0.6, 0],
-                  }}
-                  transition={{ duration: 0.8, ease: "easeIn" }}
-                  style={{
-                    boxShadow: "0 0 40px 10px rgba(255, 255, 255, 0.15)",
-                  }}
-                />
+              <div className="relative z-10 max-w-3xl px-8 text-center select-none pointer-events-none">
+                <div className="relative h-28 md:h-36 flex items-center justify-center">
+                  {/* DIVE Heading fades out */}
+                  <motion.h2
+                    className="absolute inset-0 flex items-center justify-center font-dive-heading text-2xl md:text-4xl text-dive-text tracking-wider"
+                    style={{
+                      textShadow:
+                        "0 0 20px rgba(108, 99, 255, 0.8), 0 0 40px rgba(53, 212, 199, 0.6)",
+                    }}
+                    initial={{ opacity: 1, filter: "blur(0px)" }}
+                    animate={{
+                      opacity: [1, 0.6, 0],
+                      filter: ["blur(0px)", "blur(2px)", "blur(8px)"],
+                      scale: [1, 0.98, 0.95],
+                    }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                  >
+                    &ldquo;{crossfadeText}&rdquo;
+                  </motion.h2>
+
+                  {/* REALITY Heading fades in */}
+                  <motion.h2
+                    className="absolute inset-0 flex items-center justify-center font-reality-heading text-2xl md:text-4xl text-reality-bg tracking-wide"
+                    initial={{ opacity: 0, filter: "blur(8px)", scale: 1.05 }}
+                    animate={{
+                      opacity: [0, 0.3, 1],
+                      filter: ["blur(8px)", "blur(2px)", "blur(0px)"],
+                      scale: [1.05, 1.02, 1],
+                    }}
+                    transition={{
+                      duration: 0.7,
+                      delay: 0.2,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                  >
+                    &ldquo;{crossfadeText}&rdquo;
+                  </motion.h2>
+                </div>
+
+                {/* Sub-label */}
+                <motion.p
+                  className="mt-4 font-reality-body text-xs md:text-sm uppercase tracking-[0.35em] text-amber-200/80"
+                  initial={{ opacity: 0, y: -12 }}
+                  animate={{ opacity: [0, 1, 0], y: [-12, 0, 12] }}
+                  transition={{ duration: 0.8, delay: 0.1 }}
+                >
+                  — Kembali ke Realita —
+                </motion.p>
               </div>
             ) : (
               /* Dive Transition Typography Cross-Fade */

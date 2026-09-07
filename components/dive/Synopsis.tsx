@@ -250,6 +250,8 @@ export function Synopsis() {
                     <img
                       src={entry.mediaSrc}
                       alt={entry.polaroidCaption}
+                      loading="lazy"
+                      decoding="async"
                       className="h-full w-full object-cover object-center transition-transform duration-700 hover:scale-105"
                     />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
