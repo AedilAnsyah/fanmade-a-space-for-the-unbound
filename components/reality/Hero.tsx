@@ -313,12 +313,8 @@ export function Hero({ onOpenBook, isTransitioning, isBookClosing = false, onBoo
                   </li>
                 </ul>
 
-                <div className="mt-2 pt-1 border-t border-dashed border-gray-300 flex items-center justify-between text-[9px] font-mono text-gray-500 italic">
-                  <span>— Tulisan Atma &amp; Raya</span>
-                  <span className="text-amber-800 font-bold not-italic transition-colors group-hover:text-red-800 flex items-center gap-0.5">
-                    <span>🔍</span>
-                    <span>Angkat</span>
-                  </span>
+                <div className="mt-2 pt-1 border-t border-dashed border-gray-300 text-[9px] font-mono text-gray-500 italic text-right">
+                  — Tulisan tangan Atma &amp; Raya
                 </div>
               </div>
             </motion.div>
@@ -767,10 +763,6 @@ export function Hero({ onOpenBook, isTransitioning, isBookClosing = false, onBoo
                   <span className="font-mono text-[9px] text-stone-500 not-italic uppercase tracking-wider">
                     Loka &bull; Juli 1998
                   </span>
-                  <div className="mt-1.5 flex items-center justify-center gap-1 font-mono text-[9px] text-amber-900 font-bold not-italic transition-colors group-hover:text-red-800">
-                    <span>🔍</span>
-                    <span>Angkat Foto</span>
-                  </div>
                 </div>
               </div>
 

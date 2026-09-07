@@ -45,8 +45,8 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
       const rect = e.currentTarget.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
-      // Gentle tilt between -6deg and +6deg
-      setTilt({ x: -y * 6, y: x * 6 });
+      // Gentle tilt between -5deg and +5deg
+      setTilt({ x: -y * 5, y: x * 5 });
     },
     []
   );
@@ -78,7 +78,7 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
       if (!isFlipped) {
         // Front side: dragging left rotates from 0deg towards 180deg
         if (deltaX < 0) {
-          const deg = Math.min(180, Math.max(0, (-deltaX / 160) * 180));
+          const deg = Math.min(180, Math.max(0, (-deltaX / 140) * 180));
           setDragRotation(deg);
         } else {
           setDragRotation(0);
@@ -86,7 +86,7 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
       } else {
         // Back side: dragging right rotates from 180deg towards 0deg
         if (deltaX > 0) {
-          const deg = Math.max(0, Math.min(180, 180 - (deltaX / 160) * 180));
+          const deg = Math.max(0, Math.min(180, 180 - (deltaX / 140) * 180));
           setDragRotation(deg);
         } else {
           setDragRotation(180);
@@ -107,13 +107,13 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
         (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
       } catch {}
 
-      // If dragged more than 35px, flip; otherwise snap back
+      // If dragged more than 30px, flip; otherwise snap back
       if (!isFlipped) {
-        if (deltaX < -35) {
+        if (deltaX < -30) {
           setIsFlipped(true);
         }
       } else {
-        if (deltaX > 35) {
+        if (deltaX > 30) {
           setIsFlipped(false);
         }
       }
@@ -125,9 +125,9 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
   const computeRotationY = () => {
     if (dragRotation !== null) return dragRotation;
     if (!isFlipped) {
-      return edgeHover === "right" ? -14 : tilt.y;
+      return edgeHover === "right" ? -12 : tilt.y;
     } else {
-      return edgeHover === "left" ? 194 : 180 - tilt.y;
+      return edgeHover === "left" ? 192 : 180 - tilt.y;
     }
   };
 
@@ -148,12 +148,12 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
 
           {/* Modal Container: Floating prop in focus */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.82, y: 35 }}
+            initial={{ opacity: 0, scale: 0.88, y: 25 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.82, y: 35 }}
-            transition={{ type: "spring", damping: 24, stiffness: 280 }}
+            exit={{ opacity: 0, scale: 0.88, y: 25 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className="relative z-10 flex flex-col items-center"
-            style={{ perspective: "1800px" }}
+            style={{ perspective: "1600px" }}
           >
             {/* 3D FLIPPABLE CARD WRAPPER */}
             <motion.div
@@ -164,7 +164,7 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
               transition={{
                 type: "spring",
                 damping: isDraggingRef.current ? 40 : 22,
-                stiffness: isDraggingRef.current ? 420 : 190,
+                stiffness: isDraggingRef.current ? 420 : 200,
               }}
               style={{
                 transformStyle: "preserve-3d",
@@ -177,44 +177,42 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
               className="relative cursor-grab active:cursor-grabbing touch-none"
             >
               {/* ══════════════════════════════════════════════════════
-                  A. POLAROID PHOTO (FRONT & MATCHING BACK)
+                  A. POLAROID PHOTO (EXACT SIZE & FONT MATCHING DESK)
                  ══════════════════════════════════════════════════════ */}
               {propType === "polaroid" && (
                 <>
-                  {/* ── POLAROID FRONT ── */}
+                  {/* ── POLAROID FRONT (EXACT MATCH: w-52, p-2.5 pb-4, bg-white) ── */}
                   <div
-                    className="relative w-[290px] sm:w-[330px] aspect-[1/1.22] bg-[#FAF7F0] p-3.5 pb-6 rounded-[2px] shadow-[0_25px_60px_rgba(0,0,0,0.85)] border border-stone-300/40 flex flex-col justify-between overflow-hidden"
+                    className="relative w-52 bg-white p-2.5 pb-4 shadow-[0_22px_45px_rgba(0,0,0,0.85)] border border-stone-200 flex flex-col justify-between overflow-hidden"
                     style={{
                       backfaceVisibility: "hidden",
                       WebkitBackfaceVisibility: "hidden",
-                      backgroundImage:
-                        "radial-gradient(circle at 50% 50%, #FAF8F2 0%, #F5EFE3 100%)",
                     }}
                   >
-                    {/* Top Masking Tape Folded Over (Slightly to the Right) */}
-                    <div className="absolute -top-3.5 right-6 w-20 h-6 bg-amber-200/80 border border-amber-300/60 shadow-sm rotate-2 pointer-events-none z-10" />
+                    {/* Exact Yellowish Masking Tape at Top Corner as Desk */}
+                    <div className="absolute -top-3 right-4 w-14 h-5 bg-amber-200/75 border border-amber-300/40 shadow-sm -rotate-6 pointer-events-none z-10" />
 
-                    {/* Square Photo of Atma & Raya */}
-                    <div className="relative aspect-square w-full overflow-hidden bg-stone-900 border border-black/25 shadow-inner">
+                    {/* Exact Photo Image as Desk */}
+                    <div className="relative aspect-square w-full overflow-hidden bg-stone-900 border border-black/15 shadow-inner">
                       <img
                         src="/assets/Gambar/Atma n Nirmala n Raya/gambar 1 atma n raya.webp"
-                        alt="Atma dan Raya"
+                        alt="Atma dan Raya di Kota Loka"
                         loading="eager"
-                        className="h-full w-full object-cover filter sepia-[0.12] contrast-105"
+                        width={208}
+                        height={208}
+                        className="h-full w-full object-cover object-center filter sepia-[0.15] contrast-105"
                       />
-                      {/* Authentic Photographic Glare & Vignette */}
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/8 to-transparent" />
-                      <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_22px_rgba(0,0,0,0.35)]" />
+                      {/* Photo Vignette as Desk */}
+                      <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_15px_rgba(0,0,0,0.3)]" />
                     </div>
 
-                    {/* Handwritten Caption Front */}
-                    <div className="mt-3 text-center">
-                      <div className="font-serif text-sm sm:text-base italic text-stone-800 font-semibold leading-tight tracking-wide">
-                        &ldquo;Musim Panas Terakhir&rdquo;
-                      </div>
-                      <div className="font-mono text-[10px] text-stone-500 uppercase tracking-widest mt-1">
-                        Kota Loka &bull; Juli 1998
-                      </div>
+                    {/* Exact Polaroid Handwritten Caption & Font as Desk */}
+                    <div className="mt-2 text-center font-serif text-xs italic text-stone-700 leading-tight">
+                      &ldquo;Musim Panas Terakhir&rdquo;
+                      <br />
+                      <span className="font-mono text-[9px] text-stone-500 not-italic uppercase tracking-wider">
+                        Loka &bull; Juli 1998
+                      </span>
                     </div>
 
                     {/* ── PEEL FLIP ZONE (RIGHT EDGE OF FRONT) ── */}
@@ -225,40 +223,29 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
                         e.stopPropagation();
                         setIsFlipped(true);
                       }}
-                      className="absolute top-0 bottom-0 right-0 w-24 sm:w-28 z-30 cursor-pointer flex items-center justify-end pr-2 group"
-                      title="Balik foto untuk melihat bagian belakang"
+                      className="absolute top-0 bottom-0 right-0 w-16 z-30 cursor-pointer flex items-center justify-end pr-1.5 group"
+                      title="Balik foto untuk membaca pesan di baliknya"
                     >
-                      {/* Tactile Page Curl Indicator on Right Corner */}
+                      {/* Dog-ear corner fold indicator */}
                       <div
-                        className={`absolute top-0 right-0 w-8 h-8 transition-all duration-300 pointer-events-none ${
-                          edgeHover === "right" ? "opacity-100 scale-110" : "opacity-40"
+                        className={`absolute top-0 right-0 w-7 h-7 transition-all duration-300 pointer-events-none ${
+                          edgeHover === "right" ? "opacity-100 scale-110" : "opacity-35"
                         }`}
                       >
                         <div
-                          className="w-0 h-0 border-t-[32px] border-t-transparent border-r-[32px] border-r-amber-900/20 drop-shadow-md"
+                          className="w-0 h-0 border-t-[28px] border-t-transparent border-r-[28px] border-r-amber-900/25 drop-shadow"
                           style={{
-                            filter: "drop-shadow(-2px 2px 3px rgba(0,0,0,0.3))",
+                            filter: "drop-shadow(-2px 2px 2px rgba(0,0,0,0.3))",
                           }}
                         />
-                        <div className="absolute top-0 right-0 w-0 h-0 border-t-[30px] border-t-white/80 border-r-[30px] border-r-transparent" />
-                      </div>
-
-                      {/* Subtle Edge Peel Hint Arrow */}
-                      <div
-                        className={`font-mono text-[9px] text-amber-900/80 bg-amber-200/90 px-2 py-0.5 rounded shadow border border-amber-300 transition-all duration-300 ${
-                          edgeHover === "right"
-                            ? "opacity-90 translate-x-0"
-                            : "opacity-0 translate-x-2"
-                        }`}
-                      >
-                        ⮌ Balik
+                        <div className="absolute top-0 right-0 w-0 h-0 border-t-[26px] border-t-white/90 border-r-[26px] border-r-transparent" />
                       </div>
                     </div>
                   </div>
 
-                  {/* ── POLAROID BACK (MATCHING VINTAGE PAPER & TRUE HANDWRITING) ── */}
+                  {/* ── POLAROID BACK (EXACT MATCH: w-52, p-2.5 pb-4, bg-[#FAF8F2]) ── */}
                   <div
-                    className="absolute inset-0 w-[290px] sm:w-[330px] aspect-[1/1.22] bg-[#FAF7F0] p-5 rounded-[2px] shadow-[0_25px_60px_rgba(0,0,0,0.85)] border border-stone-300/50 flex flex-col justify-between overflow-hidden"
+                    className="absolute inset-0 w-52 h-full bg-[#FAF8F2] p-2.5 pb-3.5 shadow-[0_22px_45px_rgba(0,0,0,0.85)] border border-stone-200 flex flex-col justify-between overflow-hidden"
                     style={{
                       backfaceVisibility: "hidden",
                       WebkitBackfaceVisibility: "hidden",
@@ -269,64 +256,40 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
                       `,
                     }}
                   >
-                    {/* Top Masking Tape Folded Over — Mirrored to Left-6 on Back! */}
-                    <div className="absolute -top-3.5 left-6 w-20 h-6 bg-amber-200/80 border border-amber-300/60 shadow-sm -rotate-2 pointer-events-none z-10" />
-
-                    {/* Subtle Photographic Paper Watermark across the back */}
-                    <div className="absolute inset-0 flex flex-col justify-around py-4 pointer-events-none opacity-[0.06] select-none -rotate-12">
-                      <span className="font-mono text-xs uppercase tracking-[0.35em] text-stone-900 font-bold">
-                        FUJICOLOR CRYSTAL ARCHIVE PAPER
-                      </span>
-                      <span className="font-mono text-xs uppercase tracking-[0.35em] text-stone-900 font-bold ml-12">
-                        FUJIFILM JAPAN &bull; 1998
-                      </span>
-                      <span className="font-mono text-xs uppercase tracking-[0.35em] text-stone-900 font-bold ml-6">
-                        LOKA PHOTO ARCHIVE
-                      </span>
-                    </div>
+                    {/* Top Masking Tape Folded Over — Mirrored to Left Corner on Back! */}
+                    <div className="absolute -top-3 left-4 w-14 h-5 bg-amber-200/75 border border-amber-300/40 shadow-sm rotate-6 pointer-events-none z-10" />
 
                     {/* Watermark Header Bar */}
-                    <div className="flex items-center justify-between border-b border-stone-400/20 pb-1 text-[8px] font-mono text-stone-400 uppercase tracking-widest">
+                    <div className="flex items-center justify-between border-b border-stone-300/40 pb-1 text-[8px] font-mono text-stone-400 uppercase tracking-widest">
                       <span>FUJIFILM COLOR PAPER</span>
                       <span>NO. 07-98</span>
                     </div>
 
-                    {/* Raya's Handwritten Letter (Pure Handwriting Font) */}
-                    <div className="my-auto space-y-2.5 py-1 z-10">
-                      <p className="font-handwriting text-base sm:text-lg leading-[1.3] text-[#1E2A4A] -rotate-1">
-                        Atma...
+                    {/* Raya's Handwritten Letter in Caveat Font */}
+                    <div className="my-auto space-y-1 py-0.5 z-10 text-stone-800">
+                      <p className="font-handwriting text-xs leading-[1.25] text-[#1E2A4A] -rotate-1">
+                        Atma... Terima kasih sudah selalu ada dan nemenin aku keliling kota musim panas ini.
                       </p>
 
-                      <p className="font-handwriting text-[15px] sm:text-[17px] leading-[1.35] text-[#1E2A4A] pl-1">
-                        Terima kasih ya sudah selalu ada dan nemenin aku keliling kota musim panas ini.
-                        Kalau suatu saat nanti dunia terasa terlalu asing dan aku menghilang...
-                        tolong cari aku di bawah pohon rindang depan sekolah kita ya.
+                      <p className="font-handwriting text-[11px] leading-[1.25] text-[#1E2A4A]">
+                        Kalau suatu saat nanti dunia terasa terlalu asing dan aku menghilang... tolong cari aku di bawah pohon rindang sekolah ya.
                       </p>
 
-                      <p className="font-handwriting text-[14px] sm:text-[16px] leading-[1.35] text-[#1E2A4A] pl-1">
-                        Ps: Jangan lupa janji traktir es potong gerbang depan! Dan kucing belang tiga yang kemarin kita temuin... kita namain &ldquo;Loka&rdquo; aja ya!
+                      <p className="font-handwriting text-[10px] leading-[1.25] text-[#1E2A4A]">
+                        Ps: Kucing belang 3 kemarin kita namain &ldquo;Loka&rdquo; aja ya! (=^･ω･^=)
                       </p>
 
-                      {/* Cat doodle & sweet signature */}
-                      <div className="flex items-center justify-between pt-1">
-                        <div className="font-handwriting text-base text-[#1E2A4A] flex items-center gap-1">
-                          <span>(=^･ω･^=)</span>
-                          <span className="text-xs font-mono opacity-60">🐾</span>
-                        </div>
-                        <div className="font-handwriting text-lg sm:text-xl font-bold text-[#8A1C1C] rotate-[-2deg]">
-                          — Raya &hearts;
-                        </div>
+                      <div className="text-right font-handwriting text-xs font-bold text-[#8A1C1C]">
+                        — Raya &hearts;
                       </div>
                     </div>
 
-                    {/* Authentic Studio Rubber Stamp at Bottom */}
-                    <div className="pt-1.5 border-t border-stone-300/30 flex items-center justify-between z-10">
-                      <div className="font-mono text-[7px] text-stone-400">
-                        SURYA PHOTO LAB
-                      </div>
-                      <div className="px-2 py-0.5 rounded border border-indigo-900/30 font-mono text-[8px] text-indigo-900/50 uppercase tracking-widest rotate-[-3deg]">
+                    {/* Studio Stamp at Bottom */}
+                    <div className="border-t border-stone-300/40 pt-1 flex items-center justify-between font-mono text-[7px] text-stone-400 z-10">
+                      <span>SURYA PHOTO LAB</span>
+                      <span className="px-1 py-0.2 rounded border border-indigo-900/30 text-indigo-900/60 uppercase tracking-wider rotate-[-2deg]">
                         14 JULI 1998
-                      </div>
+                      </span>
                     </div>
 
                     {/* ── PEEL FLIP ZONE (LEFT EDGE OF BACK) ── */}
@@ -337,33 +300,22 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
                         e.stopPropagation();
                         setIsFlipped(false);
                       }}
-                      className="absolute top-0 bottom-0 left-0 w-24 sm:w-28 z-30 cursor-pointer flex items-center justify-start pl-2 group"
+                      className="absolute top-0 bottom-0 left-0 w-16 z-30 cursor-pointer flex items-center justify-start pl-1.5 group"
                       title="Balik kembali ke foto depan"
                     >
-                      {/* Tactile Page Curl Indicator on Left Corner */}
+                      {/* Dog-ear corner fold indicator */}
                       <div
-                        className={`absolute top-0 left-0 w-8 h-8 transition-all duration-300 pointer-events-none ${
-                          edgeHover === "left" ? "opacity-100 scale-110" : "opacity-40"
+                        className={`absolute top-0 left-0 w-7 h-7 transition-all duration-300 pointer-events-none ${
+                          edgeHover === "left" ? "opacity-100 scale-110" : "opacity-35"
                         }`}
                       >
                         <div
-                          className="w-0 h-0 border-t-[32px] border-t-transparent border-l-[32px] border-l-amber-900/20 drop-shadow-md"
+                          className="w-0 h-0 border-t-[28px] border-t-transparent border-l-[28px] border-l-amber-900/25 drop-shadow"
                           style={{
-                            filter: "drop-shadow(2px 2px 3px rgba(0,0,0,0.3))",
+                            filter: "drop-shadow(2px 2px 2px rgba(0,0,0,0.3))",
                           }}
                         />
-                        <div className="absolute top-0 left-0 w-0 h-0 border-t-[30px] border-t-white/80 border-l-[30px] border-l-transparent" />
-                      </div>
-
-                      {/* Subtle Edge Peel Hint Arrow */}
-                      <div
-                        className={`font-mono text-[9px] text-amber-900/80 bg-amber-200/90 px-2 py-0.5 rounded shadow border border-amber-300 transition-all duration-300 ${
-                          edgeHover === "left"
-                            ? "opacity-90 translate-x-0"
-                            : "opacity-0 -translate-x-2"
-                        }`}
-                      >
-                        Balik ⮎
+                        <div className="absolute top-0 left-0 w-0 h-0 border-t-[26px] border-t-white/90 border-l-[26px] border-l-transparent" />
                       </div>
                     </div>
                   </div>
@@ -371,68 +323,59 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
               )}
 
               {/* ══════════════════════════════════════════════════════
-                  B. BINDER PAPER (FRONT & MATCHING BACK)
+                  B. BINDER PAPER (EXACT SIZE & FONT MATCHING DESK)
                  ══════════════════════════════════════════════════════ */}
               {propType === "binder" && (
                 <>
-                  {/* ── BINDER FRONT ── */}
+                  {/* ── BINDER FRONT (EXACT MATCH: w-60 sm:w-64, p-3.5, font-reality-heading & font-reality-body) ── */}
                   <div
-                    className="relative w-[300px] sm:w-[360px] aspect-[1/1.38] p-5 rounded-sm bg-[#FFFDF6] text-[#2B2018] shadow-[0_25px_60px_rgba(0,0,0,0.85)] border border-stone-300 flex flex-col justify-between overflow-hidden"
+                    className="relative w-60 sm:w-64 p-3.5 rounded-sm bg-[#FFFDF5] text-[#2B2018] shadow-[0_22px_45px_rgba(0,0,0,0.85)] border border-stone-300/80 flex flex-col justify-between overflow-hidden"
                     style={{
                       backfaceVisibility: "hidden",
                       WebkitBackfaceVisibility: "hidden",
                       backgroundImage: `
-                        repeating-linear-gradient(transparent, transparent 23px, rgba(59, 130, 246, 0.22) 23px, rgba(59, 130, 246, 0.22) 24px)
+                        repeating-linear-gradient(transparent, transparent 21px, rgba(59, 130, 246, 0.2) 21px, rgba(59, 130, 246, 0.2) 22px)
                       `,
-                      lineHeight: "24px",
+                      lineHeight: "22px",
                     }}
                   >
-                    {/* Masking Tape on Top Center */}
-                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-24 h-6 bg-amber-200/80 border border-amber-300/50 shadow-sm rotate-1 pointer-events-none z-10" />
+                    {/* Exact Masking Tape on Top as Desk */}
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-5 bg-amber-200/75 border border-amber-300/40 shadow-sm rotate-1 pointer-events-none z-10" />
 
-                    {/* 3 Binder Hole Punches on Left Margin */}
-                    <div className="absolute top-0 bottom-0 left-2.5 w-3 flex flex-col justify-around py-8 pointer-events-none opacity-25 z-10">
-                      <div className="w-3 h-3 rounded-full bg-stone-900 shadow-inner" />
-                      <div className="w-3 h-3 rounded-full bg-stone-900 shadow-inner" />
-                      <div className="w-3 h-3 rounded-full bg-stone-900 shadow-inner" />
+                    {/* Exact Header Bar as Desk */}
+                    <div className="text-[10px] font-mono uppercase tracking-wider text-red-700 font-bold border-b border-red-200 pb-1 mb-1.5 flex items-center justify-between">
+                      <span>CATATAN BINDER</span>
+                      <span className="text-[9px] text-gray-500">Hal. 12</span>
                     </div>
 
-                    {/* Red Vertical Margin Line on Left */}
-                    <div className="absolute top-0 bottom-0 left-9 w-px bg-red-300/40 pointer-events-none z-10" />
+                    {/* Exact Title as Desk */}
+                    <h4 className="font-reality-heading text-xs font-bold text-[#1C1917] mb-1">
+                      Daftar Impian Sebelum Lulus:
+                    </h4>
 
-                    {/* Content inside margin */}
-                    <div className="pl-7 pr-2">
-                      <div className="text-[10px] font-mono uppercase tracking-wider text-red-800 font-bold border-b border-red-200/60 pb-1 mb-2 flex items-center justify-between">
-                        <span>LEMBAR BINDER SISWA</span>
-                        <span className="text-[9px] text-stone-500">Hal. 12</span>
-                      </div>
+                    {/* Exact List Items & Body Font as Desk */}
+                    <ul className="font-reality-body text-[11px] text-[#44403C] space-y-1">
+                      <li className="flex items-center gap-1.5">
+                        <span className="text-emerald-600 font-bold">☑</span>
+                        <span>Beli es potong di depan gerbang</span>
+                      </li>
+                      <li className="flex items-center gap-1.5">
+                        <span className="text-emerald-600 font-bold">☑</span>
+                        <span>Temani Raya cari kucing belang 3</span>
+                      </li>
+                      <li className="flex items-center gap-1.5">
+                        <span className="text-emerald-600 font-bold">☑</span>
+                        <span>Nonton film di Bioskop Surya</span>
+                      </li>
+                      <li className="flex items-center gap-1.5 text-red-800 font-semibold">
+                        <span className="text-red-700 font-bold">☐</span>
+                        <span>Ungkapkan rahasia tentang masa depan...</span>
+                      </li>
+                    </ul>
 
-                      <h4 className="font-handwriting text-xl sm:text-2xl font-bold text-[#1C1917] mb-2 leading-tight">
-                        Daftar Impian Sebelum Lulus:
-                      </h4>
-
-                      <ul className="font-handwriting text-lg sm:text-xl text-[#2B241E] space-y-1 leading-relaxed">
-                        <li className="flex items-center gap-2">
-                          <span className="text-emerald-700 font-bold text-base">☑</span>
-                          <span>Beli es potong di depan gerbang SMA</span>
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="text-emerald-700 font-bold text-base">☑</span>
-                          <span>Temani Raya cari kucing belang 3</span>
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="text-emerald-700 font-bold text-base">☑</span>
-                          <span>Nonton film di Bioskop Surya akhir pekan</span>
-                        </li>
-                        <li className="flex items-center gap-2 text-red-900 font-semibold">
-                          <span className="text-red-700 font-bold text-base">☐</span>
-                          <span>Ungkapkan rahasia tentang masa depan...</span>
-                        </li>
-                      </ul>
-
-                      <div className="mt-4 pt-2 border-t border-dashed border-stone-300 text-right font-handwriting text-base text-stone-600">
-                        — Ditulis bersama oleh Atma &amp; Raya
-                      </div>
+                    {/* Exact Footer as Desk */}
+                    <div className="mt-2 pt-1 border-t border-dashed border-gray-300 text-[9px] font-mono text-gray-500 italic text-right">
+                      — Tulisan tangan Atma &amp; Raya
                     </div>
 
                     {/* ── PEEL FLIP ZONE (RIGHT EDGE OF FRONT) ── */}
@@ -443,98 +386,70 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
                         e.stopPropagation();
                         setIsFlipped(true);
                       }}
-                      className="absolute top-0 bottom-0 right-0 w-24 sm:w-28 z-30 cursor-pointer flex items-center justify-end pr-2 group"
+                      className="absolute top-0 bottom-0 right-0 w-16 z-30 cursor-pointer flex items-center justify-end pr-1.5 group"
                       title="Balik lembar binder untuk membaca catatan di baliknya"
                     >
-                      {/* Tactile Page Curl Indicator on Right Corner */}
+                      {/* Dog-ear corner fold indicator */}
                       <div
-                        className={`absolute top-0 right-0 w-8 h-8 transition-all duration-300 pointer-events-none ${
-                          edgeHover === "right" ? "opacity-100 scale-110" : "opacity-40"
+                        className={`absolute top-0 right-0 w-7 h-7 transition-all duration-300 pointer-events-none ${
+                          edgeHover === "right" ? "opacity-100 scale-110" : "opacity-35"
                         }`}
                       >
                         <div
-                          className="w-0 h-0 border-t-[32px] border-t-transparent border-r-[32px] border-r-amber-900/20 drop-shadow-md"
+                          className="w-0 h-0 border-t-[28px] border-t-transparent border-r-[28px] border-r-amber-900/25 drop-shadow"
                           style={{
-                            filter: "drop-shadow(-2px 2px 3px rgba(0,0,0,0.3))",
+                            filter: "drop-shadow(-2px 2px 2px rgba(0,0,0,0.3))",
                           }}
                         />
-                        <div className="absolute top-0 right-0 w-0 h-0 border-t-[30px] border-t-white/80 border-r-[30px] border-r-transparent" />
-                      </div>
-
-                      {/* Subtle Edge Peel Hint Arrow */}
-                      <div
-                        className={`font-mono text-[9px] text-amber-900/80 bg-amber-200/90 px-2 py-0.5 rounded shadow border border-amber-300 transition-all duration-300 ${
-                          edgeHover === "right"
-                            ? "opacity-90 translate-x-0"
-                            : "opacity-0 translate-x-2"
-                        }`}
-                      >
-                        ⮌ Balik
+                        <div className="absolute top-0 right-0 w-0 h-0 border-t-[26px] border-t-white/90 border-r-[26px] border-r-transparent" />
                       </div>
                     </div>
                   </div>
 
-                  {/* ── BINDER BACK (MATCHING PAPER TEXTURE & MIRRORED HOLES) ── */}
+                  {/* ── BINDER BACK (EXACT MATCH: w-60 sm:w-64, p-3.5, bg-[#FFFDF5]) ── */}
                   <div
-                    className="absolute inset-0 w-[300px] sm:w-[360px] aspect-[1/1.38] p-5 rounded-sm bg-[#FFFDF6] text-[#2B2018] shadow-[0_25px_60px_rgba(0,0,0,0.85)] border border-stone-300 flex flex-col justify-between overflow-hidden"
+                    className="absolute inset-0 w-60 sm:w-64 p-3.5 rounded-sm bg-[#FFFDF5] text-[#2B2018] shadow-[0_22px_45px_rgba(0,0,0,0.85)] border border-stone-300/80 flex flex-col justify-between overflow-hidden"
                     style={{
                       backfaceVisibility: "hidden",
                       WebkitBackfaceVisibility: "hidden",
                       transform: "rotateY(180deg)",
                       backgroundImage: `
-                        repeating-linear-gradient(transparent, transparent 23px, rgba(59, 130, 246, 0.22) 23px, rgba(59, 130, 246, 0.22) 24px)
+                        repeating-linear-gradient(transparent, transparent 21px, rgba(59, 130, 246, 0.2) 21px, rgba(59, 130, 246, 0.2) 22px)
                       `,
-                      lineHeight: "24px",
+                      lineHeight: "22px",
                     }}
                   >
-                    {/* Masking Tape on Top Center (Back fold) */}
-                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-24 h-6 bg-amber-200/80 border border-amber-300/50 shadow-sm -rotate-1 pointer-events-none z-10" />
+                    {/* Top Masking Tape Folded Over — Mirrored Center on Back */}
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-5 bg-amber-200/75 border border-amber-300/40 shadow-sm -rotate-1 pointer-events-none z-10" />
 
-                    {/* 3 Binder Hole Punches Mirrored to RIGHT Margin! */}
-                    <div className="absolute top-0 bottom-0 right-2.5 w-3 flex flex-col justify-around py-8 pointer-events-none opacity-25 z-10">
-                      <div className="w-3 h-3 rounded-full bg-stone-900 shadow-inner" />
-                      <div className="w-3 h-3 rounded-full bg-stone-900 shadow-inner" />
-                      <div className="w-3 h-3 rounded-full bg-stone-900 shadow-inner" />
+                    {/* Header */}
+                    <div className="text-[10px] font-mono uppercase tracking-wider text-red-700 font-bold border-b border-red-200 pb-1 mb-1 flex items-center justify-between">
+                      <span>CATATAN RAHASIA ATMA</span>
+                      <span className="text-[8px] text-stone-500 italic">JANGAN DIBACA!</span>
                     </div>
 
-                    {/* Red Vertical Margin Line Mirrored to RIGHT */}
-                    <div className="absolute top-0 bottom-0 right-9 w-px bg-red-300/40 pointer-events-none z-10" />
-
-                    {/* Secret Diary Scribbles (Within mirrored margins) */}
-                    <div className="pr-7 pl-2 my-auto space-y-2 z-10">
-                      {/* Header */}
-                      <div className="flex items-center justify-between border-b border-red-800/30 pb-0.5 text-[9px] font-mono text-red-900 font-bold">
-                        <span>🔒 CATATAN RAHASIA ATMA</span>
-                        <span className="text-[8px] text-stone-500 italic">JANGAN DIBACA!</span>
-                      </div>
-
-                      {/* Atma's Handwritten Diary */}
-                      <p className="font-handwriting text-base sm:text-lg leading-[1.35] text-[#1C1917]">
-                        1. Buku catatan merah ini aneh... Tiap kali dipegang Raya, ada denyut hangat dan bisikan suara orang-orang kota. Apakah ini yang disebut SpaceDive?
+                    {/* Atma's Handwritten Diary in Caveat Font */}
+                    <div className="my-auto space-y-1 py-0.5 text-stone-900 z-10">
+                      <p className="font-handwriting text-[12px] sm:text-[13px] leading-[1.3] text-[#1C1917]">
+                        1. Buku catatan merah ini aneh... Tiap kali dipegang Raya, ada denyut hangat dan bisikan suara orang-orang kota. Apakah ini SpaceDive?
                       </p>
 
-                      <p className="font-handwriting text-base sm:text-lg leading-[1.35] text-[#1C1917]">
+                      <p className="font-handwriting text-[12px] sm:text-[13px] leading-[1.3] text-[#1C1917]">
                         2. Raya akhir-akhir ini sering melamun memandangi langit sore. Tatapannya seolah tahu sesuatu yang akan terjadi pada kota ini.
                       </p>
 
-                      <p className="font-handwriting text-base sm:text-lg leading-[1.35] text-[#7A1C1C] font-semibold">
+                      <p className="font-handwriting text-[12px] sm:text-[13px] leading-[1.3] text-[#7A1C1C] font-semibold">
                         3. Apapun yang terjadi setelah kelulusan, aku berjanji tidak akan meninggalkan Raya sendirian di dalam mimpinya.
                       </p>
 
-                      {/* Little Secret Doodle */}
-                      <div className="pt-1 flex items-center justify-between font-handwriting text-lg text-[#1C1917]">
-                        <div className="flex items-center gap-1.5 text-amber-950 font-bold">
-                          <span>📖✨</span>
-                          <span>Buku Merah = Kunci Gerbang</span>
-                        </div>
-                        <span className="font-handwriting text-base text-stone-700 italic">
-                          — Atma, 1998
-                        </span>
+                      <div className="pt-0.5 flex items-center justify-between font-handwriting text-xs text-[#1C1917]">
+                        <span className="text-amber-950 font-bold">📖✨ Buku Merah = Kunci Gerbang</span>
+                        <span className="text-stone-600 italic">— Atma, 1998</span>
                       </div>
                     </div>
 
-                    {/* Stamp at Bottom */}
-                    <div className="pr-7 pl-2 pt-1 border-t border-dashed border-stone-400/30 flex items-center justify-between text-[8px] font-mono text-stone-400 z-10">
+                    {/* Footer */}
+                    <div className="mt-1 pt-1 border-t border-dashed border-gray-300 text-[8px] font-mono text-gray-500 flex justify-between z-10">
                       <span>SMA NEGERI 1 LOKA</span>
                       <span>KODE: SPACEDIVE-1998</span>
                     </div>
@@ -547,33 +462,22 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
                         e.stopPropagation();
                         setIsFlipped(false);
                       }}
-                      className="absolute top-0 bottom-0 left-0 w-24 sm:w-28 z-30 cursor-pointer flex items-center justify-start pl-2 group"
+                      className="absolute top-0 bottom-0 left-0 w-16 z-30 cursor-pointer flex items-center justify-start pl-1.5 group"
                       title="Balik kembali ke halaman depan"
                     >
-                      {/* Tactile Page Curl Indicator on Left Corner */}
+                      {/* Dog-ear corner fold indicator */}
                       <div
-                        className={`absolute top-0 left-0 w-8 h-8 transition-all duration-300 pointer-events-none ${
-                          edgeHover === "left" ? "opacity-100 scale-110" : "opacity-40"
+                        className={`absolute top-0 left-0 w-7 h-7 transition-all duration-300 pointer-events-none ${
+                          edgeHover === "left" ? "opacity-100 scale-110" : "opacity-35"
                         }`}
                       >
                         <div
-                          className="w-0 h-0 border-t-[32px] border-t-transparent border-l-[32px] border-l-amber-900/20 drop-shadow-md"
+                          className="w-0 h-0 border-t-[28px] border-t-transparent border-l-[28px] border-l-amber-900/25 drop-shadow"
                           style={{
-                            filter: "drop-shadow(2px 2px 3px rgba(0,0,0,0.3))",
+                            filter: "drop-shadow(2px 2px 2px rgba(0,0,0,0.3))",
                           }}
                         />
-                        <div className="absolute top-0 left-0 w-0 h-0 border-t-[30px] border-t-white/80 border-l-[30px] border-l-transparent" />
-                      </div>
-
-                      {/* Subtle Edge Peel Hint Arrow */}
-                      <div
-                        className={`font-mono text-[9px] text-amber-900/80 bg-amber-200/90 px-2 py-0.5 rounded shadow border border-amber-300 transition-all duration-300 ${
-                          edgeHover === "left"
-                            ? "opacity-90 translate-x-0"
-                            : "opacity-0 -translate-x-2"
-                        }`}
-                      >
-                        Balik ⮎
+                        <div className="absolute top-0 left-0 w-0 h-0 border-t-[26px] border-t-white/90 border-l-[26px] border-l-transparent" />
                       </div>
                     </div>
                   </div>
