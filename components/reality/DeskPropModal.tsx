@@ -224,12 +224,11 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
                         setIsFlipped(true);
                       }}
                       className="absolute top-0 bottom-0 right-0 w-16 z-30 cursor-pointer flex items-center justify-end pr-1.5 group"
-                      title="Balik foto untuk membaca pesan di baliknya"
                     >
-                      {/* Dog-ear corner fold indicator */}
+                      {/* Dog-ear corner fold indicator (only peeks when hovering right edge) */}
                       <div
                         className={`absolute top-0 right-0 w-7 h-7 transition-all duration-300 pointer-events-none ${
-                          edgeHover === "right" ? "opacity-100 scale-110" : "opacity-35"
+                          edgeHover === "right" ? "opacity-100 scale-110" : "opacity-0"
                         }`}
                       >
                         <div
@@ -301,12 +300,11 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
                         setIsFlipped(false);
                       }}
                       className="absolute top-0 bottom-0 left-0 w-16 z-30 cursor-pointer flex items-center justify-start pl-1.5 group"
-                      title="Balik kembali ke foto depan"
                     >
                       {/* Dog-ear corner fold indicator */}
                       <div
                         className={`absolute top-0 left-0 w-7 h-7 transition-all duration-300 pointer-events-none ${
-                          edgeHover === "left" ? "opacity-100 scale-110" : "opacity-35"
+                          edgeHover === "left" ? "opacity-100 scale-110" : "opacity-0"
                         }`}
                       >
                         <div
@@ -387,12 +385,11 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
                         setIsFlipped(true);
                       }}
                       className="absolute top-0 bottom-0 right-0 w-16 z-30 cursor-pointer flex items-center justify-end pr-1.5 group"
-                      title="Balik lembar binder untuk membaca catatan di baliknya"
                     >
                       {/* Dog-ear corner fold indicator */}
                       <div
                         className={`absolute top-0 right-0 w-7 h-7 transition-all duration-300 pointer-events-none ${
-                          edgeHover === "right" ? "opacity-100 scale-110" : "opacity-35"
+                          edgeHover === "right" ? "opacity-100 scale-110" : "opacity-0"
                         }`}
                       >
                         <div
@@ -463,12 +460,11 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
                         setIsFlipped(false);
                       }}
                       className="absolute top-0 bottom-0 left-0 w-16 z-30 cursor-pointer flex items-center justify-start pl-1.5 group"
-                      title="Balik kembali ke halaman depan"
                     >
                       {/* Dog-ear corner fold indicator */}
                       <div
                         className={`absolute top-0 left-0 w-7 h-7 transition-all duration-300 pointer-events-none ${
-                          edgeHover === "left" ? "opacity-100 scale-110" : "opacity-35"
+                          edgeHover === "left" ? "opacity-100 scale-110" : "opacity-0"
                         }`}
                       >
                         <div
@@ -484,11 +480,6 @@ export function DeskPropModal({ propType, onClose }: DeskPropModalProps) {
                 </>
               )}
             </motion.div>
-
-            {/* Subtle Atmospheric Bottom Guidance (No buttons) */}
-            <div className="mt-5 text-center font-mono text-[9px] sm:text-[10px] text-amber-200/40 uppercase tracking-widest pointer-events-none select-none">
-              Tarik atau klik ujung kertas untuk membalik &bull; Klik di luar untuk meletakkan
-            </div>
           </motion.div>
         </div>
       )}
