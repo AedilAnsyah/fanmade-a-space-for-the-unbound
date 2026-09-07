@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { FaSteam, FaPlaystation, FaXbox, FaGamepad, FaApple } from "react-icons/fa";
+import { FaSteam, FaPlaystation, FaXbox, FaGamepad, FaApple, FaGooglePlay, FaAndroid } from "react-icons/fa";
 import { platforms } from "@/content/platforms";
 import { useLayer } from "@/components/layer/useLayer";
 
@@ -22,6 +22,8 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   FaXbox,
   FaGamepad,
   FaApple,
+  FaGooglePlay,
+  FaAndroid,
 };
 
 const containerVariants = {
@@ -125,7 +127,7 @@ export function PlayNow() {
           variants={itemVariants}
           className="max-w-xl font-dive-body text-base text-dive-text-muted md:text-lg leading-relaxed"
         >
-          Tersedia di PC, PlayStation, Xbox, Nintendo Switch, dan iOS.
+          Tersedia di PC, PlayStation, Xbox, Nintendo Switch, iOS, dan Android.
           Satu ruang selam, satu musim panas terakhir yang akan sulit dilupakan.
         </motion.p>
 

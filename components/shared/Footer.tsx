@@ -165,11 +165,12 @@ export function Footer() {
             </h3>
             <ul className="flex flex-col gap-2 font-dive-body text-xs sm:text-sm text-dive-text-muted">
               {[
-                { name: "Steam (PC)", href: "https://store.steampowered.com/app/633030/A_Space_For_The_Unbound/" },
-                { name: "PlayStation Store", href: "https://store.playstation.com/concept/10003058" },
-                { name: "Nintendo Switch eShop", href: "https://www.nintendo.com/store/products/a-space-for-the-unbound-switch/" },
-                { name: "Xbox Series X|S", href: "https://www.xbox.com/games/store/a-space-for-the-unbound/9n4h49fl89sl" },
-                { name: "iOS App Store", href: "https://apps.apple.com/" },
+                { name: "Steam (PC)", href: "https://store.steampowered.com/app/1201270/A_Space_for_the_Unbound/" },
+                { name: "PlayStation Store", href: "https://www.playstation.com/en-id/games/a-space-for-the-unbound/" },
+                { name: "Xbox Store", href: "https://www.xbox.com/id-ID/games/store/a-space-for-the-unbound/9pg2rz8gvzcj" },
+                { name: "Nintendo Switch eShop", href: "https://www.nintendo.com/us/store/products/a-space-for-the-unbound-switch/?srsltid=AfmBOoqnp3GVxZoEK1ZKCCrptqnicihk4Xv3NAev3ncwfYF4KTNU6QtY" },
+                { name: "iOS App Store", href: "https://apps.apple.com/id/app/a-space-for-the-unbound/id6544796348" },
+                { name: "Google Play Store (Android)", href: "https://play.google.com/store/apps/details?id=com.mojiken.space&hl=id" },
               ].map((p) => (
                 <li key={p.name}>
                   <a
