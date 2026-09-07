@@ -44,9 +44,17 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://menyelam.vercel.app"
   ),
-  title: "MENYELAM — A Space for the Unbound Showcase",
+  title: "Fanmade A Space for the Unbound",
   description:
     "Jelajahi kekuatan SpaceDive dan selami ingatan Atma, Raya, dan Nirmala. Fan-made showcase untuk A Space for the Unbound — game petualangan pixel art dari Mojiken Studio.",
+  icons: {
+    icon: [
+      { url: "/assets/logo_trimmed.webp", type: "image/webp" },
+      { url: "/assets/logo_transparent.webp", type: "image/webp" },
+    ],
+    shortcut: "/assets/logo_trimmed.webp",
+    apple: "/assets/logo_trimmed.webp",
+  },
   keywords: [
     "A Space for the Unbound",
     "Mojiken Studio",
@@ -62,8 +70,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "id_ID",
-    siteName: "MENYELAM",
-    title: "MENYELAM — A Space for the Unbound Showcase",
+    siteName: "Fanmade A Space for the Unbound",
+    title: "Fanmade A Space for the Unbound",
     description:
       "Jelajahi kekuatan SpaceDive dan selami ingatan Atma, Raya, dan Nirmala.",
     images: [
@@ -71,13 +79,13 @@ export const metadata: Metadata = {
         url: "/assets/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "MENYELAM — A Space for the Unbound fan-made showcase",
+        alt: "Fanmade A Space for the Unbound showcase",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "MENYELAM — A Space for the Unbound Showcase",
+    title: "Fanmade A Space for the Unbound",
     description:
       "Jelajahi kekuatan SpaceDive dan selami ingatan Atma, Raya, dan Nirmala.",
     images: ["/assets/og-image.jpg"],
